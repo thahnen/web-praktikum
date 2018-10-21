@@ -3,11 +3,10 @@
 
 import os.path
 import cherrypy
-from cherrypy.lib.static import serve_file
 import app
 
-# Dateipfad mit allen HTML/CSS/JS-Dateien
-content_dir = os.path.dirname(os.path.abspath(__file__))+"/content/"
+# Dateipfad zum Hauptordner
+server_path = os.path.dirname(os.path.abspath(__file__))
 
 class WebServer(object):
 
@@ -15,7 +14,7 @@ class WebServer(object):
     def index(self):
         # irgendwie funktionieren die dort benutzen Dateien aber nicht!
         # irgendwie mit Konfigurationen arbeiten oder so -.-
-        return serve_file(os.path.join(content_dir, "index.html"))
+        return open(server_path + "/content/index.html")
 
     @cherrypy.expose
     def projektdaten(self):
@@ -33,5 +32,23 @@ class WebServer(object):
     def auswertung(self):
         return "Die Seite mit den Auswertungen"
 
+config = {
+    "/" : {
+        "tools.staticdir.root" : server_path
+    },
+    "/css" : {
+        "tools.staticdir.on" : True,
+        # Eine Index-Datei für das Verzeichnis
+        # "tools.staticdir.index" : "index.html",
+        "tools.staticdir.dir" : "./content/css/"
+    },
+    "/js" : {
+        "tools.staticdir.on" : True,
+        # Eine Index-Datei für das Verzeichnis
+        # "tools.staticdir.index" : "index.html",
+        "tools.staticdir.dir" : "./content/js/"
+    }
+}
+
 if __name__ == '__main__':
-    cherrypy.quickstart(WebServer())
+    cherrypy.quickstart(WebServer(), "/", config=config)

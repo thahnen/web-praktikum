@@ -1,14 +1,13 @@
+## coding: utf-8
+## Template für die Projektdaten-Seite
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
+## Head-Teil
 <head>
   <meta charset="utf-8" />
-  <!-- Manuell, da ich nicht weiss, ob cherrypy robots.txt unterstützt! -->
   <meta name="robots" content="noindex,nofollow" />
-  <!-- Nichts wird gechacht, alles neugeladen solange in Entwicklung! -->
   <meta http-equiv="expires" content="0" />
-  <!-- Seite skalierbar machen, auch für mobile Endgeräte -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <!-- Keine Telefonnummern erkennen, für Internetexplorer/Edge siehe html-Tag! -->
   <meta name="format-detection" content="telephone=no" />
   <meta name="author" content="Tobias Hahnen" />
   <title>Landing-Page</title>
@@ -19,6 +18,7 @@
 
   <script src="js/index.js"></script>
 </head>
+## Body-Teil
 <body>
   <h1>CherryPy-Webserver Landingpage</h1>
   <ul>
