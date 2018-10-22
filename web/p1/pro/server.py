@@ -17,15 +17,15 @@ class WebServer(object):
         return open(server_path + "/content/index.html")
 
     @cherrypy.expose
-    def projektdaten(self):
+    def projektdaten(self, projekt_id = 0):
         return "Die Seite der Projektdaten"
 
     @cherrypy.expose
-    def kundendaten(self):
+    def kundendaten(self, kunden_id = 0):
         return "Die Seite der Kundendaten"
 
     @cherrypy.expose
-    def mitarbeiterdaten(self):
+    def mitarbeiterdaten(self, mitarbeiter_id = 0):
         return "Die Seite der Mitarbeiterdaten"
 
     @cherrypy.expose

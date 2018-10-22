@@ -1,0 +1,16 @@
+{
+  "Template" : {
+    "unique_id" : "Eindeutige ID des Kunden",
+    "nummer" : "Interne Nummer des Kunden",
+    "beizeichnung" : "Bezeichnung für den Kunden",
+    "ansprechpartner" : "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!",
+    "ort" : "Ort des Kunden"
+  },
+  "1" : {
+    "unique_id" : 112332566,
+    "nummer" : 14,
+    "bezeichnung" : "Fakebook Inc.",
+    "ansprechpartner" : "Mark Fuckerberg",
+    "ort" : "Hackerway 1, Palo Alto"
+  }
+}

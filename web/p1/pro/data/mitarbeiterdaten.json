@@ -1,0 +1,14 @@
+{
+  "Template" : {
+    "unique_id" : "Eindeutige ID des Mitarbeiters",
+    "name" : "Nachname des Mitarbeiters",
+    "vorname" : "Vorname des Mitarbeiters",
+    "funktion" : "Funktion des Mitarbeiters"
+  },
+  "1" : {
+    "unique_id" : 1198868,
+    "name" : "Krause",
+    "vorname" : "Marvin",
+    "funktion" : "Kann nichts, sieht nur nett aus :>"
+  }
+}
