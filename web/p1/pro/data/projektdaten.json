@@ -1,45 +1,41 @@
 {
-  "Template" : {
-    "unique_id" : "Eindeutige ID des Projekts",
-    "nummer" : "Interne Nummer des Projekts",
-    "beizeichnung" : "Bezeichnung für das Projekt",
-    "beschreibung" : "Kurze Beschreibung des Projekts",
-    "bearbeitungszeitraum" : {
-      "anfang" : "Anfangsdatum des Projekts",
-      "ende" : "Enddatum des Projekts"
+    "Template" : {
+        "unique_id" : "Eindeutige ID des Projekts",
+        "nummer" : "Interne Nummer des Projekts",
+        "beizeichnung" : "Bezeichnung für das Projekt",
+        "beschreibung" : "Kurze Beschreibung des Projekts",
+        "bearbeitungszeitraum" : {
+            "anfang" : "Anfangsdatum des Projekts",
+            "ende" : "Enddatum des Projekts"
+        },
+        "budget" : "Dem Projekt zugewiesenes Budget",
+        "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen",
+        "mitarbeiter_ids" : "Liste aller Mitarbeiter",
+        "zuordnung_arbeit" : "Liste Arbeitseinheiten mit Stunden -> Liste der zugeordneten Mitarbeiter"
     },
-    "budget" : "Dem Projekt zugewiesenes Budget",
-    "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen",
-    "mitarbeiter_ids" : "Liste aller Mitarbeiter",
-    "zuordnung_arbeit" : "Liste Arbeitseinheiten mit Stunden -> Liste der zugeordneten Mitarbeiter"
-  },
-  "1" : {
-    "unique_id" : 12345,
-    "nummer" : 1,
-    "bezeichnung" : "Tolles Projekt",
-    "beschreibung" : "Ein ganz tolles Projekt",
-    "bearbeitungszeitraum" : {
-      "anfang" : "12.10.2018",
-      "ende" : "24.12.2019"
-    },
-    "budget" : 12.8,
-    "kunden_id" : 11234466543,
-    "mitarbeiter_ids" : [
-      1111, 1112, 1113, 1114
-    ],
-    "zuordnung_arbeit" : [
-      {
-        "stunden" : 12,
-        "mitarbeiter_ids" : [
-          1111, 1113
-        ]
-      },
-      {
-        "stunden" : 4,
-        "mitarbeiter_ids" : [
-          1112, 1114
-        ]
-      }
-    ]
-  }
+    "Elements": {
+        "1" : {
+            "unique_id" : 12345,
+            "nummer" : 1,
+            "bezeichnung" : "Tolles Projekt",
+            "beschreibung" : "Ein ganz tolles Projekt",
+            "bearbeitungszeitraum" : {
+                "anfang" : "12.10.2018",
+                "ende" : "24.12.2019"
+            },
+            "budget" : 12.34,
+            "kunden_id" : 1234567890,
+            "mitarbeiter_ids" : [ 1111, 1112, 1113, 1114 ],
+            "zuordnung_arbeit" : [
+                {
+                    "stunden" : 12,
+                    "mitarbeiter_ids" : [ 1111, 1113 ]
+                },
+                {
+                    "stunden" : 4,
+                    "mitarbeiter_ids" : [ 1112, 1114 ]
+                }
+            ]
+        }
+    }
 }

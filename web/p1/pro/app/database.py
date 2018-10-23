@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+#   Zur Verarbeitung der Daten im JSON-Format:
+#   =========================================
 #
-#   Stellt Verarbeitung/ Speicherung von Daten zur Verfügung
+#   1. Einlesen einer JSON-Datei
+#   => Überprüfen, ob Elemente dem Template entsprechen
+#   => wenn nicht: Fehler oder JSON auffüllen
 #
-
-# TODO: Es fehlt noch Überprüfung der JSON-Daten auf Richtigkeit usw.
+#   2. Schreiben von JSON-Daten in Datei
+#   => Überprüfen, ob Elemente dem Template entsprechen
+#   => wenn nicht: Fehler oder JSON auffüllen
+#
+#   DISCLAIMER: Wechselseitiger Ausschuss nicht unbedingt sichergestellt!
+#   => müste noch realisiert werden über Module oder async/ await
 
 import os
 import os.path

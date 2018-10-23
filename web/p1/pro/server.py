@@ -1,6 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+#   Webserver mit Config und Routing:
+#   ================================
+#
+#   1. Config ausgelagert in eigene Datei
+#   TODO: auslagern!
+#   => für statische Ordner und Dateien!
+#   => noch genauere Konfigurationen vornehmen!
+#
+#   2. Routing:
+#   - "/":
+#       => Hauptseite, alle anderen hier verlinkt
+#   - "/projektdaten[?projekt_id=<xxx>]":
+#       => Seite mit allen Projektdaten
+#       => Bei Angabe einer Projekt-ID nur dieses anzeigen (ua. zum bearbeiten)
+#   - "/kundendaten[?kunden_id=<yyy>]":
+#       => Seite mit allen Kundendaten
+#       => Bei Angabe einer Kunden-ID nur diesen anzeigen (ua. zum bearbeiten)
+#       => WENN geändert müssen auch Projektdaten geändert werden?!
+#   - "/mitarbeiterdaten[?mitarbeiter_id=<zzz>]":
+#       => Seite mit allen Mitarbeiterdaten
+#       => Bei Angabe einer Mitarbeiter-ID nur diesen anzeigen (ua. zum bearbeiten)
+#       => WENN geändert müssen auch Projektdaten geändert werden?!
+#   - "/auswertung":
+#       => Eine Projektübersicht?
+
+# TODO: ggf. User-Agent etc auswerten? Irgendwas mit den Daten machen (._.)
+
 import os
 import os.path
 import cherrypy

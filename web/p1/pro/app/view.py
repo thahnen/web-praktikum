@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+#   Zur Erstellung/ Generierung von (Web-)Seiten:
+#   ============================================
 #
-#   Stellt HTML-Seiten zur Verfügung
+#   1. Erstellung mit Template und zugehörigen Daten
+#   => trifft zu auf die Kundendaten/ Prohektdaten/ Mitarbeiterdaten
+#   => trifft auf einzelne Einträge zu (jeweils in URL mitgegeben!)
 #
+#   2. Generierung von nötigem CSS/ JS Code je Seite
+#   => Vermeidung von zu vielen Dateien bzw. unnötigem Laden von Daten!
+
 import os
 import os.path
 from mako.template import Template
