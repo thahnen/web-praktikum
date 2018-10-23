@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Alles importieren, damit es nutzbar ist!
+from .application import *
+from .database import *
+from .view import *
+
+# Alle weiteren (wichtigen) Informationen
 __version__ = "1.0"
 __title__ = "app"
 __summary__ = "All functionality of the Webserver-App"
