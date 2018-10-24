@@ -5,11 +5,11 @@
 #   =========================================
 #
 #   1. Einlesen einer JSON-Datei
-#   => Überprüfen, ob Elemente dem Template entsprechen
+#   => Validierung: Überprüfen, ob Elemente dem Template entsprechen
 #   => wenn nicht: Fehler oder JSON auffüllen
 #
 #   2. Schreiben von JSON-Daten in Datei
-#   => Überprüfen, ob Elemente dem Template entsprechen
+#   => Validierung: Überprüfen, ob Elemente dem Template entsprechen
 #   => wenn nicht: Fehler oder JSON auffüllen
 #
 #   DISCLAIMER: Wechselseitiger Ausschuss nicht unbedingt sichergestellt!
@@ -31,12 +31,11 @@ class Database(object):
     @staticmethod
     def read_json_into_dict(filename):
         file_path = data_path + filename
-        if (not os.path.exists(file_path)) or os.path.isdir(file_path):
-            raise Exception("JSON-File '%s' does not exist or is a directory" % file_path)
+        assert (os.path.exists(file_path) and not os.path.isdir(file_path))
         return json.load(open(file_path))
 
     @staticmethod
-    def write_json_into_file(self, filename, json_dict):
+    def write_json_into_file(filename, json_dict):
         file_path = data_path + filename
         if (not os.path.exists(file_path)) or os.path.isdir(file_path):
             ## ggf erstellen?
