@@ -21,12 +21,16 @@ if os.name != "posix":
 template_path = os.path.dirname(os.path.abspath(__file__))+"/../template/"
 
 class View(object):
-    # Eigentlich so unnötig wie die Hoden vom Papst
-    def __init__(self):
+    # ggf template_path in view_path umändern?
+    def __init__(self, template_path):
         pass
 
     @staticmethod
-    def render_page(pagename, data):
+    def render_static_page(pagename):
+        pass
+
+    @staticmethod
+    def render_dynamic_page(pagename, data):
         page_template_path = template_path + pagename
         if (not os.path.exists(page_template_path)) or os.path.isdir(page_template_path):
             raise Exception("Mako-Template '%s' does not exist or is a directory" % page_template_path)

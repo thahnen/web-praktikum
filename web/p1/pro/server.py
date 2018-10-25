@@ -38,6 +38,7 @@ if os.name != "posix":
     raise Exception("Nicht unter Unix ausgeführt!")
 server_path = os.path.dirname(os.path.abspath(__file__))
 
+
 class WebServer(object):
     def __init__(self):
         self.application = app.Application(server_path)
@@ -53,7 +54,7 @@ class WebServer(object):
     @cherrypy.expose
     def projektdaten(self, projekt_id = 0):
         # return application.get_dynamic_page("projektdaten")
-        return app.View.render_page(
+        return app.View.render_dynamic_page(
             "projektdaten.tpl", app.Database.read_json_into_dict("projektdaten.json")
         )
 
@@ -61,7 +62,7 @@ class WebServer(object):
     @cherrypy.expose
     def kundendaten(self, kunden_id = 0):
         # return application.get_dynamic_page("kundendaten")
-        return app.View.render_page(
+        return app.View.render_dynamic_page(
             "kundendaten.tpl", app.Database.read_json_into_dict("kundendaten.json")
         )
 
@@ -69,7 +70,7 @@ class WebServer(object):
     @cherrypy.expose
     def mitarbeiterdaten(self, mitarbeiter_id = 0):
         # return application.get_dynamic_page("mitarbeiterdaten")
-        return app.View.render_page(
+        return app.View.render_dynamic_page(
             "mitarbeiterdaten.tpl", app.Database.read_json_into_dict("mitarbeiterdaten.json")
         )
 
