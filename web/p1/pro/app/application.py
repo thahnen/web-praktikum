@@ -34,24 +34,14 @@ class Application(object):
         #data_file, params = pagename.split("/")[-1:][0].split("?")
 
         # Parameter sollte unique ID entsprechen, wenn nicht Fehler und so
-        data = self.database.read_json_into_dict(pagename)
-        elements = []
-
-        # Kann weg, wird in der Database.py gemacht!!!
         try:
-            elements = [x for x in data["Elements"]]
-        except TypeError as te:
-            # Ok Brudi, data["Elements"] hat kein Dictionary als Wert
-            # JSON-Element fehlerhaft, vlt leer?
-            # Den Wert überprüfen, verbessern und 404 zurückgeben
-            raise
-        except KeyError as ke:
-            # Ok Brudi, data["Elements"] gibt es nicht
-            # JSON-Datei fehlerhaft :/ irgendwas machen oder gar nichts
-            raise
+            data = self.database.read_json_into_dict(pagename)
+        except app.database.DatabaseException as de:
+            errorcode = de.args[0]["code"]
+            # Gucken welcher Code es war und dementsprechend Seite zurückgeben!
         except Exception as e:
-            # 500 Seite kommt oder so
             raise
+        elements = [x for x in data["Elements"]]
 
         for element in elements:
             try:
