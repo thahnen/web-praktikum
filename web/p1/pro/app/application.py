@@ -8,7 +8,8 @@
 #   Nur um diese Datei irgendwie nützlich zu machen -.-
 #
 #   Server ruft den Kram der Application auf.
-#   Kümmert sich um Validät der Parameter und so
+#   Kümmert sich um Validität der Parameter und Daten
+#   NICHT: Validität der JSON-Dateien
 
 
 import app.database
@@ -24,16 +25,6 @@ class Application(object):
         return open(self.view.render_static_page(pagename))
 
     def get_dynamic_page(self, pagename):
-        return self.view(self.view.render_dynamic_page(
-            pagename, self.database.read_json_into_dict("")
-        ))
-
-    def get_dynamic_page_with_params(self, pagename, parameter):
-        # So wenn anstatt Dateiname die URL abgefragt wird
-        # => entnimmt Websitenname und Parameter aus Webseiten-Pfad
-        #data_file, params = pagename.split("/")[-1:][0].split("?")
-
-        # Parameter sollte unique ID entsprechen, wenn nicht Fehler und so
         try:
             data = self.database.read_json_into_dict(pagename)
         except app.database.DatabaseException as de:
@@ -41,28 +32,44 @@ class Application(object):
             # Gucken welcher Code es war und dementsprechend Seite zurückgeben!
         except Exception as e:
             raise
+
+        # ggf auf "Pagename" testen?
+        return self.view.render_dynamic_page(pagename, data)
+
+    def get_dynamic_page_with_params(self, pagename, parameter):
+        try:
+            data = self.database.read_json_into_dict(pagename)
+        except app.database.DatabaseException as de:
+            errorcode = de.args[0]["code"]
+            # Gucken welcher Code es war und dementsprechend Seite zurückgeben!
+        except Exception as e:
+            raise
+
         elements = [x for x in data["Elements"]]
+        found = False
 
         for element in elements:
             try:
-                # Testen, ob:
-                # {
-                #   "Template" : { ... },
                 #   "Elements" : {
-                #       "1" : { "unique_id" := parameter ist! ... },
-                #       "2" : { "unique_id" := parameter ist! ... },
+                #       "1" : { "unique_id" := parameter testen! ... },
                 #       ...
-                #       "n" : { "unique_id" := parameter ist! ... }
+                #       "n" : { "unique_id" := parameter testen! ... }
                 #   }
-                # }
                 if int(data["Elements"][element]["unique_id"]) == int(parameter):
-                    # mal gucken was passiert wenns geht :o
+                    # Alles andere Löschen, damit nur noch das eine übrig bleibt!
+                    data["Data"] = data["Elements"][element]
+                    del data["Elements"]
+                    found = True
                     break
-                # mal gucken was passiert wenn nicht :o
             except Exception as e:
                 raise
 
-        return "Bruder muss los"
+        if found:
+            # schön das Template zum bearbeiten zurückgeben!
+            pass
+
+        # 404 zurückgeben (so oder so ähnlich ^-^)
+        return self.get_static_page("/content/404.html")
 
     def update_values(self, pagename, values):
         # Update auch der anderen Seiten und so!
