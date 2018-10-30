@@ -1,7 +1,6 @@
 ## coding: utf-8
 <%doc>
     Template für die Projektdaten
-    - vlt. noch Veränderungen am Head-Teil?
     - mehr Sachen im Body neben der Tablle?
     => ausschliesslich für Aufgabe 1!
 </%doc>
@@ -17,13 +16,16 @@
     <meta name="author" content="Tobias Hahnen" />
     <title>Projektdaten</title>
 
-    <!-- Das Favicon für alles den Tab, einfach von der HS geklaut :p -->
+    <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <!--<link rel="stylesheet" type="text/css" href="css/projektdaten.css" />-->
-
-    <!--<script src="js/projektdaten.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <script src="js/view.js" charset="UTF-8"></script>
 </head>
 <body>
+    <%doc>
+        Nav-Bar einfügen!
+    </%doc>
+
     <h1>Projektdaten</h1>
     <table>
         <!-- Table Header Row -->
@@ -43,7 +45,11 @@
         % for object in data_o["Elements"]:
         <tr>
             % for object_key in data_o["Elements"][object]:
+            % if object_key == "unique_id":
+            <td><a href="/projektdaten?projekt_id=${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a></td>
+            % else:
             <td>${data_o["Elements"][object][object_key]}</td>
+            % endif
             % endfor
         </tr>
         % endfor

@@ -66,7 +66,7 @@ class Application(object):
                 return self.get_static_page("500")
 
         if found:
-            return self.view.render_dynamic_page(pagename + "edit", data)
+            return self.view.render_dynamic_page(pagename + "-edit", data)
         return self.get_static_page("404")
 
 
@@ -74,4 +74,4 @@ class Application(object):
     def update_values(self, values):
         # Welche der Seiten gemeint ist muss aus übergebenem JSON ermittelt werden!
         # Update auch der anderen Seiten und so!
-        return "Bruder muss los\n"
+        return '{"code":200}'

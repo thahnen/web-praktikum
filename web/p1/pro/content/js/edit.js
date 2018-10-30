@@ -1,0 +1,60 @@
+/*
+ *  edit.js
+ *  =======
+ *
+ *  Logik für alle Seiten, auf denen man ausgewählte
+ *  - Projektdaten,
+ *  - Kundendaten,
+ *  - Mitarbeiterdaten
+ *  bearbeiten und speichern kann.
+ *
+ *  1. Eigenschaften setzen:
+ *  => Richtiges Nav-Bar-Element fokussieren anhand URL
+ *
+ *  2. "Editieren" gedrückt:
+ *  => alle Input-Felder mit gleicher Klasse "un-disablen"
+ *  => immer wenn "un-focussed" Wert auf Richtigkeit überprüfen?
+ *
+ *  3. "Speichern" gedrückt:
+ *  => überprüfen ob Input-Felder leer?
+ *  => XMLHttpRequest absetzen und auf Antwort warten und reagieren
+*/
+
+(function () {
+    window.onload = function () {
+        // 1. Eigenschaften setzen
+        // Richtiges Nav-Bar-Element hervorheben
+        var url_elem = (((window.location.href).split("/")).slice(-1)[0]).split("?")[0];
+        //document.getElementById(url_elem).setAttribute("style", "font-weight:bold");
+
+
+        // 2. "Editieren" gedrückt
+        document.getElementById("btn--edit").addEventListener("click", function() {
+            console.log("Edit");
+
+            // Alle Inputs zum bearbeiten aktivieren
+            [...document.getElementsByClassName("table-data-input")].map((x) => {
+                x.disabled = false;
+            });
+        });
+
+
+        // 3. "Speichern" gedrückt
+        document.getElementById("btn--save").addEventListener("click", function() {
+            console.log("Save");
+            // Input-Felder auf Richtigkeit überprüfen
+
+            // POST absetzen mit den geänderten Daten
+            var http = new XMLHttpRequest();
+            http.open("POST", "/update");
+            http.setRequestHeader("Content-Type", "application/json");
+            http.onload = function() {
+                // Wenn es Daten zurückgibt, damit weiterarbeiten
+                // Klappt aber auf jeden Fall!
+                console.log(this.responseText);
+                console.log(JSON.parse(this.responseText)["code"]);
+            };
+            http.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
+        });
+    };
+})();

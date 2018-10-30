@@ -29,17 +29,15 @@ class Database(object):
         self.data_path = data_path
 
 
+    # read_json_into_dict throws Exception
     def read_json_into_dict(self, filename):
         file_path = self.data_path + filename
-        # anstatt assert try-except um json.load?
-        assert (
-            os.path.exists(file_path) and not os.path.isdir(file_path)
-        )
+
+        assert (os.path.exists(file_path) and not os.path.isdir(file_path))
 
         data = json.load(open(file_path))
         # Validate if JSON-File is correct -> auslagern in eigene Funktion?
         try:
-            # das ist hässlich und wird noch ersetzt
             # anstatt des try-Blocks ein if?
             dummy__elems = [x for x in data["Elements"]]
         except TypeError as te:
@@ -51,13 +49,10 @@ class Database(object):
             if "Template" in data:
                 data["Elements"] = {}
             else:
-                # Datei durch JSON-Template ersetzen (aus Datei oder Hardcode?)
-                #data = json.load(open("Pfad zum jeweiligen Template"))
-                pass
+                data = json.load(open(file_path + ".tpl"))
 
             with open(file_path, "w") as datei:
                 json.dump(data)
-            # Fehler aber kein passender Fehlercode?
             raise
         except KeyError as ke:
             # data["Elements"] gibt es nicht!
@@ -68,28 +63,23 @@ class Database(object):
             if "Template" in data:
                 data["Elements"] = {}
             else:
-                # Datei durch JSON-Template ersetzen (aus Datei oder Hardcode?)
-                #data = json.load(open("Pfad zum jeweiligen Template"))
-                pass
+                data = json.load(open(file_path + ".tpl"))
 
             with open(file_path, "w") as datei:
                 json.dump(data)
-            # Fehler aber kein passender Fehlercode?
             raise
         except Exception as e:
-            # Irgendwas anderes ist passiert
             raise
 
         # Return data if everything is fine
         return data
 
 
+    # write_json_into_file(...) throws Exception
     def write_json_into_file(self, filename, json_dict, update=False):
         file_path = self.data_path + filename
-        # anstatt assert try-except um json.load?
-        assert (
-            os.path.exists(file_path) and not os.path.isdir(file_path)
-        )
+
+        assert (os.path.exists(file_path) and not os.path.isdir(file_path))
 
         data = json.load(open(file_path))
         elements = [x for x in data["Elements"]]

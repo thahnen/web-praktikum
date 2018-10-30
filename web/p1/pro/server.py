@@ -5,12 +5,7 @@
 #   Webserver mit Config und Routing:
 #   ================================
 #
-#   1. Config ausgelagert in eigene Datei
-#   TODO: auslagern!
-#   => für statische Ordner und Dateien!
-#   => noch genauere Konfigurationen vornehmen!
-#
-#   2. Routing:
+#   1. Routing:
 #   - "/":
 #       => Hauptseite, alle anderen hier verlinkt
 #   - "/projektdaten[?projekt_id=<xxx>]":
@@ -79,10 +74,8 @@ class WebServer(object):
 
 
     # Seite um Werte zu updaten mit Hilfe XMLHTTPREQUEST statt POST aus Formular!
-    # Zum Testen mit curl:
-    # >> curl -H "Content-Type: application/json" --re{"Test" : 123}' 127.0.0.1:8080/update <<
+    # curl -H "Content-Type: application/json" --request POST -d '{"test" : 1234}' 127.0.0.1:8080/update
     @cherrypy.expose
-    #@cherrypy.tools.json_out() # ohne es klappt aber Rückgabe als json nicht!
     @cherrypy.tools.json_in()
     def update(self):
         # Überprüfen ob GET oder POST von "/update" aufgerufen wurde!
@@ -90,10 +83,8 @@ class WebServer(object):
             input_json = cherrypy.request.json
         except Exception as e:
             return self.application.get_static_page("404")
-        # funktioniert leider nicht, sonst wäre normale Rückgabe möglich!
-        #cherrypy.response.headers["Content-Type"] = "application/json"
+        # Rückgabe von JSON im String? (bsp. '{"Test" : 1234}')
         return self.application.update_values(input_json)
-        #return '{"json": "true"}'
 
 
 config = {
@@ -102,13 +93,11 @@ config = {
     },
     "/css" : {
         "tools.staticdir.on" : True,
-        # Eine Index-Datei für das Verzeichnis
         # "tools.staticdir.index" : "index.html",
         "tools.staticdir.dir" : "./content/css/"
     },
     "/js" : {
         "tools.staticdir.on" : True,
-        # Eine Index-Datei für das Verzeichnis
         # "tools.staticdir.index" : "index.html",
         "tools.staticdir.dir" : "./content/js/"
     }
