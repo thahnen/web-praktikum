@@ -2,59 +2,60 @@
 # -*- coding: utf-8 -*-
 
 
-#   Stellt API-Funktionen bereit:
-#   ============================
+#   Stellt API-Funktionen für den Server bereit:
+#   ===========================================
 #
-#   Nur um diese Datei irgendwie nützlich zu machen -.-
-#
-#   Server ruft den Kram der Application auf.
-#   Kümmert sich um Validität der Parameter und Daten
+#   Datei kümmert sich um Validität der Parameter und Daten
 #   NICHT: Validität der JSON-Dateien
+#
+#   GGF keine Fehlercode-Seiten statisch sondern dynamisch generieren :3
+#   => mit angegebenem Grund zum debuggen in Zukunft möglich
+#   => nur ein traurige 404 und böse 500 Seite :D
 
 
 import app.database
 import app.view
 
+
 class Application(object):
     def __init__(self, server_path):
         self.server_path = server_path
+        self.content_path = self.server_path + "/content/"
         self.database = app.Database(server_path+"/data/")
         self.view = app.View(server_path+"/template/")
 
-    def get_static_page(self, pagename):
-        return open(self.view.render_static_page(pagename))
 
+    # Handhabt statische Seiten
+    def get_static_page(self, pagename):
+        try:
+            return self.view.render_static_page(self.content_path + pagename + ".html")
+        except Exception as e:
+            # Nur Fehler 500 zurückgeben; kann auch zur Exception führen xD
+            return self.view.render_static_page(self.content_path + "500.html")
+
+
+    # Handhabt dynamische Seiten
     def get_dynamic_page(self, pagename):
         try:
-            data = self.database.read_json_into_dict(pagename)
-        except app.database.DatabaseException as de:
-            errorcode = de.args[0]["code"]
-            # Gucken welcher Code es war und dementsprechend Seite zurückgeben!
+            data = self.database.read_json_into_dict(pagename + ".json")
         except Exception as e:
-            raise
+            return self.get_static_page("500")
 
-        # ggf auf "Pagename" testen?
         return self.view.render_dynamic_page(pagename, data)
 
+
+    # Handhabt dynamische Seiten MIT Parametern
     def get_dynamic_page_with_params(self, pagename, parameter):
         try:
-            data = self.database.read_json_into_dict(pagename)
-        except app.database.DatabaseException as de:
-            errorcode = de.args[0]["code"]
-            # Gucken welcher Code es war und dementsprechend Seite zurückgeben!
+            data = self.database.read_json_into_dict(pagename + ".json")
         except Exception as e:
-            raise
+            return self.get_static_page("500")
 
         elements = [x for x in data["Elements"]]
         found = False
 
         for element in elements:
             try:
-                #   "Elements" : {
-                #       "1" : { "unique_id" := parameter testen! ... },
-                #       ...
-                #       "n" : { "unique_id" := parameter testen! ... }
-                #   }
                 if int(data["Elements"][element]["unique_id"]) == int(parameter):
                     # Alles andere Löschen, damit nur noch das eine übrig bleibt!
                     data["Data"] = data["Elements"][element]
@@ -62,15 +63,15 @@ class Application(object):
                     found = True
                     break
             except Exception as e:
-                raise
+                return self.get_static_page("500")
 
         if found:
-            # schön das Template zum bearbeiten zurückgeben!
-            pass
+            return self.view.render_dynamic_page(pagename + "edit", data)
+        return self.get_static_page("404")
 
-        # 404 zurückgeben (so oder so ähnlich ^-^)
-        return self.get_static_page("/content/404.html")
 
-    def update_values(self, pagename, values):
+    # Funktion um JSON-Daten zu ändern
+    def update_values(self, values):
+        # Welche der Seiten gemeint ist muss aus übergebenem JSON ermittelt werden!
         # Update auch der anderen Seiten und so!
-        return "Bruder muss los"
+        return "Bruder muss los\n"

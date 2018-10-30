@@ -25,22 +25,22 @@ import json
 
 
 class Database(object):
-    # Eigentlich so unnötig wie die Hoden vom Papst
     def __init__(self, data_path):
         self.data_path = data_path
 
+
     def read_json_into_dict(self, filename):
-        file_path = data_path + filename
+        file_path = self.data_path + filename
+        # anstatt assert try-except um json.load?
         assert (
             os.path.exists(file_path) and not os.path.isdir(file_path)
         )
 
         data = json.load(open(file_path))
         # Validate if JSON-File is correct -> auslagern in eigene Funktion?
-        # vlt anderes Try nutzen?
-        # Except-Blöcke zusammenfassen?
         try:
             # das ist hässlich und wird noch ersetzt
+            # anstatt des try-Blocks ein if?
             dummy__elems = [x for x in data["Elements"]]
         except TypeError as te:
             # data["Elements"] kein Dictionary (irgendwas anderes)
@@ -58,7 +58,7 @@ class Database(object):
             with open(file_path, "w") as datei:
                 json.dump(data)
             # Fehler aber kein passender Fehlercode?
-            raise DatabaseException({"code" : 418})
+            raise
         except KeyError as ke:
             # data["Elements"] gibt es nicht!
             # auf data["Template"] überprüfen, wenn nicht vorhanden:
@@ -75,17 +75,18 @@ class Database(object):
             with open(file_path, "w") as datei:
                 json.dump(data)
             # Fehler aber kein passender Fehlercode?
-            raise DatabaseException({"code" : 418})
+            raise
         except Exception as e:
             # Irgendwas anderes ist passiert
-            # 500 Seite senden und Fehler loggen! (Logging kommt später)
-            raise DatabaseException({"code" : 500})
+            raise
 
         # Return data if everything is fine
         return data
 
+
     def write_json_into_file(self, filename, json_dict, update=False):
-        file_path = data_path + filename
+        file_path = self.data_path + filename
+        # anstatt assert try-except um json.load?
         assert (
             os.path.exists(file_path) and not os.path.isdir(file_path)
         )
@@ -101,12 +102,3 @@ class Database(object):
 
         # New Element!
         pass
-
-
-# Mögliche Exceptions zum abfangen!
-class DatabaseException(Exception):
-    """
-        Alle möglichen Fehler mit der Datenbank.
-        Aufruf (bsp): raise DatabaseException({"code" : 404})
-    """
-    pass

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 #   Zur Erstellung/ Generierung von (Web-)Seiten:
 #   ============================================
 #
@@ -8,32 +9,31 @@
 #   => trifft zu auf die Kundendaten/ Prohektdaten/ Mitarbeiterdaten
 #   => trifft auf einzelne Einträge zu (jeweils in URL mitgegeben!)
 #
+#   TODO: 
 #   2. Generierung von nötigem CSS/ JS Code je Seite
 #   => Vermeidung von zu vielen Dateien bzw. unnötigem Laden von Daten!
 
-import os
+
 import os.path
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
-if os.name != "posix":
-    raise Exception("Programm läuft nicht unter Unix!")
-template_path = os.path.dirname(os.path.abspath(__file__))+"/../template/"
 
 class View(object):
-    # ggf template_path in view_path umändern?
     def __init__(self, template_path):
-        pass
+        self.template_path = template_path
 
-    @staticmethod
-    def render_static_page(pagename):
-        pass
 
-    @staticmethod
-    def render_dynamic_page(pagename, data):
-        page_template_path = template_path + pagename
+    # Gibt statische Seite zurück (nichts besonderes)
+    def render_static_page(self, pagename):
+        return open(pagename)
+
+
+    # Gibt dynamische Seite anhand eines Templates zurück
+    def render_dynamic_page(self, pagename, data):
+        page_template_path = self.template_path + pagename + ".tpl"
         if (not os.path.exists(page_template_path)) or os.path.isdir(page_template_path):
             raise Exception("Mako-Template '%s' does not exist or is a directory" % page_template_path)
 
-        template = TemplateLookup(directories = template_path).get_template(pagename)
+        template = TemplateLookup(directories = self.template_path).get_template(pagename + ".tpl")
         return template.render(data_o = data)
