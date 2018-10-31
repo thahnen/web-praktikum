@@ -9,7 +9,7 @@
  *  bearbeiten und speichern kann.
  *
  *  1. Eigenschaften setzen:
- *  => Richtiges Nav-Bar-Element fokussieren anhand URL
+ *  => Verbergen der Fehlermeldung
  *
  *  2. "Editieren" gedrückt:
  *  => alle Input-Felder mit gleicher Klasse "un-disablen"
@@ -23,10 +23,6 @@
 (function () {
     window.onload = function () {
         // 1. Eigenschaften setzen
-        // Richtiges Nav-Bar-Element hervorheben
-        var url_elem = (((window.location.href).split("/")).slice(-1)[0]).split("?")[0];
-        //document.getElementById(url_elem).setAttribute("style", "font-weight:bold");
-
         // Verbergen der möglichen Fehlermeldung!
         var failure = document.querySelector(".div--failure");
         failure.style.setProperty("--max-height", failure.scrollHeight + "px");
@@ -58,6 +54,10 @@
                 console.log(this.responseText);
                 console.log(JSON.parse(this.responseText)["code"]);
             };
+
+            // Kommt in JSON-Datei wenn alle das gleiche Template nutzen!
+            var url_elem = (((window.location.href).split("/")).slice(-1)[0]).split("?")[0];
+
             http.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
 
             // Fehlermeldung anzeigen!

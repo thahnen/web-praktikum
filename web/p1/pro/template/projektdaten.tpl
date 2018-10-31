@@ -16,6 +16,10 @@
     <script src="js/view.js" charset="UTF-8"></script>
 </head>
 <body>
+    <!--
+        SPÄTER ähnlich Kundendaten machen!
+    -->
+
     <h1>Projektdaten</h1>
     <table>
         <!-- Table Header Row -->

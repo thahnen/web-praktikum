@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="Tobias Hahnen" />
+    <!-- Später "Kundendaten" generieren damit man nur ein Template braucht! -->
     <title>Kundendaten: ${data_o["Data"]["unique_id"]}</title>
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
@@ -17,23 +18,16 @@
 </head>
 <body>
     <div class="div--header">
+        <!-- Später "Kundendaten" generieren damit man nur ein Template braucht! -->
         <h1>Kundendaten: ${data_o["Data"]["unique_id"]}</h1>
     </div>
 
     <div class="div--navbar">
         <ul class="ul--navbar">
-            <li>
-                <a href="/">Index</a>
-            </li>
-            <li>
-                <a href="/projektdaten">Projektdaten</a>
-            </li>
-            <li>
-                <a href="/kundendaten">Kundendaten</a>
-            </li>
-            <li>
-                <a href="/mitarbeiterdaten">Mitarbeiterdaten</a>
-            </li>
+            <li><a href="/">Index</a></li>
+            <li><a href="/projektdaten">Projektdaten</a></li>
+            <li><a href="/kundendaten">Kundendaten</a></li>
+            <li><a href="/mitarbeiterdaten">Mitarbeiterdaten</a></li>
         </ul>
     </div>
 
