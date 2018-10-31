@@ -27,13 +27,17 @@
         var url_elem = (((window.location.href).split("/")).slice(-1)[0]).split("?")[0];
         //document.getElementById(url_elem).setAttribute("style", "font-weight:bold");
 
+        // Verbergen der möglichen Fehlermeldung!
+        var failure = document.querySelector(".div--failure");
+        failure.style.setProperty("--max-height", failure.scrollHeight + "px");
+
 
         // 2. "Editieren" gedrückt
         document.getElementById("btn--edit").addEventListener("click", function() {
             console.log("Edit");
 
             // Alle Inputs zum bearbeiten aktivieren
-            [...document.getElementsByClassName("table-data-input")].map((x) => {
+            [...document.getElementsByClassName("input--data")].map((x) => {
                 x.disabled = false;
             });
         });
@@ -55,6 +59,9 @@
                 console.log(JSON.parse(this.responseText)["code"]);
             };
             http.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
+
+            // Fehlermeldung anzeigen!
+            failure.style.setProperty("max-height", "var(--max-height)");
         });
     };
 })();

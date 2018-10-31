@@ -1,10 +1,4 @@
 ## coding: utf-8
-<%doc>
-    Template für die Mitarbeiterdaten
-    - mehr Sachen im Body neben der Tablle?
-    => ausschliesslich für Aufgabe 1!
-</%doc>
-
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
 <head>
@@ -22,10 +16,6 @@
     <script src="js/view.js" charset="UTF-8"></script>
 </head>
 <body>
-    <%doc>
-        Nav-Bar einfügen!
-    </%doc>
-
     <h1>Mitarbeiterdaten</h1>
     <table>
         <!-- Table Header Row -->

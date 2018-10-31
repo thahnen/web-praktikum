@@ -1,8 +1,4 @@
 ## coding: utf-8
-<%doc>
-    Template zum editieren einzelner Kundendaten!
-</%doc>
-
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
 <head>
@@ -20,37 +16,69 @@
     <script src="js/edit.js" charset="UTF-8"></script>
 </head>
 <body>
-    <%doc>
-        Nav-Bar einfügen!
-    </%doc>
+    <div class="div--header">
+        <h1>Kundendaten: ${data_o["Data"]["unique_id"]}</h1>
+    </div>
 
-    <h1>Kundendaten: ${data_o["Data"]["unique_id"]}</h1>
-    <div>
+    <div class="div--navbar">
+        <ul class="ul--navbar">
+            <li>
+                <a href="/">Index</a>
+            </li>
+            <li>
+                <a href="/projektdaten">Projektdaten</a>
+            </li>
+            <li>
+                <a href="/kundendaten">Kundendaten</a>
+            </li>
+            <li>
+                <a href="/mitarbeiterdaten">Mitarbeiterdaten</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="div--failure">
+        <!-- Vom XMLHttpRequest Fehler auswerten? -->
+        <h2 class="h2--failure">Speichern fehlgeschlagen!</h2>
+    </div>
+
+    <div class="div--tbl">
         <table>
             <!-- Table Header Row -->
-            <tr>
+            <tr class="tbl--header">
                 % for key in data_o["Template"]:
-                <th>${key}</th>
+                <th class="tbl--header--elem">${key}</th>
                 % endfor
             </tr>
             <!-- Erste Zeile nur mit den Erläuterungen, kann weg -->
-            <tr>
+            <tr class="tbl--header">
                 % for key in data_o["Template"]:
-                <th>${data_o["Template"][key]}</th>
+                <th class="tbl--header--elem">${data_o["Template"][key]}</th>
                 % endfor
             </tr>
 
             <!-- Table Data Row -->
-            <tr>
+            <tr class="tbl--data">
                 % for key in data_o["Data"]:
-                <td class="table-data">
-                    <input class="table-data-input" type="text" value="${data_o["Data"][key]}" disabled required>
+                <td class="tbl--data--elem">
+                    % if key != "unique_id":
+                    <input class="input--data" type="text" value="${data_o["Data"][key]}" disabled required>
+                    % else:
+                    ${data_o["Data"][key]}
+                    % endif
                 </td>
                 % endfor
             </tr>
         </table>
     </div>
-    <button type="button" id="btn--edit">Editieren</button>
-    <button type="button" id="btn--save">Speichern</button>
+
+    <div class="div--btn">
+        <button type="button" id="btn--edit">
+            <span>Editieren</span>
+        </button>
+        <button type="button" id="btn--save">
+            <span>Speichern</span>
+        </button>
+    </div>
 </body>
 </html>
