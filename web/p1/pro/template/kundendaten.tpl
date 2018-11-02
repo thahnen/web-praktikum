@@ -13,7 +13,6 @@
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="css/view.css" />
-    <script src="js/view.js" charset="UTF-8"></script>
 </head>
 <body>
     <div class="div--header">
@@ -61,10 +60,21 @@
         </table>
     </div>
 
+    <p id="p--new">Neues Element hinzufügen</p>
     <div class="div--new">
         <!-- Neues Element hinzufügen mittels ausklappbarem Div -->
         <!-- Wenn auf "Neues Element hinzufügen" gedrückt wurde -->
-        <p>Neues Element hinzufügen</p>
+        <ul>
+            <!-- li's ebenfalls generieren! -->
+            <li>
+                <input class="input--data" type="text" name="" value="Test123">
+            </li>
+        </ul>
+        <button type="button" id="btn--new">
+            <span>Hinzufügen</span>
+        </button>
     </div>
+
+    <script src="js/view.js" charset="UTF-8"></script>
 </body>
 </html>

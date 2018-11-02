@@ -14,7 +14,6 @@
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="css/edit.css" />
-    <script src="js/edit.js" charset="UTF-8"></script>
 </head>
 <body>
     <div class="div--header">
@@ -56,7 +55,7 @@
                 % for key in data_o["Data"]:
                 <td class="tbl--data--elem">
                     % if key != "unique_id":
-                    <input class="input--data" type="text" value="${data_o["Data"][key]}" disabled required>
+                    <input class="input--data" type="text" value="${data_o["Data"][key]}" disabled required />
                     % else:
                     ${data_o["Data"][key]}
                     % endif
@@ -74,5 +73,7 @@
             <span>Speichern</span>
         </button>
     </div>
+
+    <script src="js/edit.js" charset="UTF-8"></script>
 </body>
 </html>
