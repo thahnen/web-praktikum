@@ -29,11 +29,6 @@
         </ul>
     </div>
 
-    <div class="div--failure">
-        <!-- Vom XMLHttpRequest Fehler auswerten? -->
-        <h2 class="h2--failure">Speichern fehlgeschlagen!</h2>
-    </div>
-
     <div class="div--tbl">
         <table>
             <!-- Table Header Row -->
@@ -48,11 +43,6 @@
                 <th class="tbl--header--elem">${data_o["Template"][key]}</th>
                 % endfor
             </tr>
-
-            <!--
-                Table New Elements Row:
-                neues Element hinzufügen, oder aber auslagern?
-            -->
 
             <!-- Table Elements Row -->
             % for object in data_o["Elements"]:
@@ -71,15 +61,10 @@
         </table>
     </div>
 
-    <!-- Das kann noch irgendwie verbessert werden :D -->
-    <div class="div--btn">
-        <button type="button" id="btn--edit">
-            <span>Editieren</span>
-        </button>
-        <button type="button" id="btn--save">
-            <span>Speichern</span>
-        </button>
+    <div class="div--new">
+        <!-- Neues Element hinzufügen mittels ausklappbarem Div -->
+        <!-- Wenn auf "Neues Element hinzufügen" gedrückt wurde -->
+        <p>Neues Element hinzufügen</p>
     </div>
-
 </body>
 </html>

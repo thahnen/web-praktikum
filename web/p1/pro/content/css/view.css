@@ -1,1 +1,9 @@
 @import url("standard.css"); /* beinhaltet Navbar, Tabelle usw. (Edit.css + View.css) */
+
+
+/* Div: Neuer Eintrag (ausklappbar) */
+.div--new {
+    transition: max-height 0.5s;
+    overflow: hidden;
+    max-height: 0;
+}

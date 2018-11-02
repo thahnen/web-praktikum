@@ -2,54 +2,7 @@
 
 
 /*
-    General
-*/
-h1, h2, ul, table, button {
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-}
-
-div { margin-top: 1%; }
-
-
-/*
-    Div: Headline
-*/
-h1 {
-    text-shadow: 0 2px lightgray;
-    font-weight: bold;
-    color: gray;
-}
-
-
-/*
-    Div: Navbar
-*/
-.ul--navbar {
-    display: flex;
-    padding-left: 0;
-}
-
-.ul--navbar:hover li:not(:hover) { opacity: 0.5; }
-
-li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0 0.75rem;
-    transition: opacity 0.2s;
-    border-left: 2px solid #d2d5e4;
-}
-
-li:last-child { border-right: 2px solid #d2d5e4; }
-
-a {
-    color: black;
-    text-decoration: none;
-}
-
-
-/*
-    Div: Failure
+    Div: Failure (ausklappbar)
 */
 .div--failure {
     transition: max-height 0.5s;
@@ -57,28 +10,6 @@ a {
     max-height: 0;
 }
 
-
-/*
-    Alles für die Tabellen
-*/
-table, th, td { border: 1px solid gray; }
-
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-
-input {
-    margin-left: -2%;
-    width: 100%;
-}
-
-.div--tbl {
-    /* Vertikaler Scroll-Balken falls Tabelle zu breit */
-    overflow-x: auto;
-}
-
-.tbl--header { background-color: #f5f5f5; }
 
 /*
     Alles für die Knöpfe
