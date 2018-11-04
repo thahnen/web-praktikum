@@ -20,6 +20,13 @@
             "bezeichnung" : "Micro-Soft",
             "ansprechpartner" : "Bill Gates",
             "ort" : "Irgendwo im Nirgendwo"
+        },
+        "3" : {
+            "unique_id" : 11223344556677889900,
+            "nummer" : 44,
+            "bezeichnung" : "Hahnen Industries",
+            "ansprechpartner" : "Tobias Hahnen",
+            "ort" : "Moers, NRW, Deutschland"
         }
     }
 }

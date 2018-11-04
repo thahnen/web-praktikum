@@ -2,8 +2,19 @@
 
 
 /* Div: Neuer Eintrag (ausklappbar) */
-.div--new {
+.tbl--infos {
     transition: max-height 0.5s;
     overflow: hidden;
     max-height: 0;
+}
+
+.a--elem {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 16ch;
+}
+
+.a--elem:visited {
+    color: green;
 }

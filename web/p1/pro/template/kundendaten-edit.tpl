@@ -1,38 +1,18 @@
 ## coding: utf-8
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
-<head>
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta http-equiv="expires" content="0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="author" content="Tobias Hahnen" />
-    <!-- Später "Kundendaten" generieren damit man nur ein Template braucht! -->
-    <title>Kundendaten: ${data_o["Data"]["unique_id"]}</title>
-
-    <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
-    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="css/edit.css" />
-</head>
+<%include file="header-edit.tpl"/>
 <body>
     <div class="div--header">
-        <!-- Später "Kundendaten" generieren damit man nur ein Template braucht! -->
-        <h1>Kundendaten: ${data_o["Data"]["unique_id"]}</h1>
+        <!-- Später Headline generieren damit man nur ein Template braucht! -->
+        <h1 id="headline">${data_o["Data"]["unique_id"]}</h1>
     </div>
 
-    <div class="div--navbar">
-        <ul class="ul--navbar">
-            <li><a href="/">Index</a></li>
-            <li><a href="/projektdaten">Projektdaten</a></li>
-            <li><a href="/kundendaten">Kundendaten</a></li>
-            <li><a href="/mitarbeiterdaten">Mitarbeiterdaten</a></li>
-        </ul>
-    </div>
+    <%include file="navbar.tpl"/>
 
     <div class="div--failure">
         <!-- Vom XMLHttpRequest Fehler auswerten? -->
-        <h2 class="h2--failure">Speichern fehlgeschlagen!</h2>
+        <h2>Speichern fehlgeschlagen!</h2>
     </div>
 
     <div class="div--tbl">
@@ -40,13 +20,14 @@
             <!-- Table Header Row -->
             <tr class="tbl--header">
                 % for key in data_o["Template"]:
-                <th class="tbl--header--elem">${key}</th>
+                <th class="tbl--header--elem">${data_o["Template"][key]}</th>
                 % endfor
             </tr>
+
             <!-- Erste Zeile nur mit den Erläuterungen, kann weg -->
             <tr class="tbl--header">
                 % for key in data_o["Template"]:
-                <th class="tbl--header--elem">${data_o["Template"][key]}</th>
+                <th class="tbl--header--elem">${key}</th>
                 % endfor
             </tr>
 
@@ -65,14 +46,7 @@
         </table>
     </div>
 
-    <div class="div--btn">
-        <button type="button" id="btn--edit">
-            <span>Editieren</span>
-        </button>
-        <button type="button" id="btn--save">
-            <span>Speichern</span>
-        </button>
-    </div>
+    <%include file="buttons-edit.tpl"/>
 
     <script src="js/edit.js" charset="UTF-8"></script>
 </body>

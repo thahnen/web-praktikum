@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="Tobias Hahnen" />
+    <!-- Später Titel generieren damit man nur ein Template braucht! -->
     <title>Kundendaten</title>
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
@@ -16,27 +17,20 @@
 </head>
 <body>
     <div class="div--header">
+        <!-- Später Headline generieren damit man nur ein Template braucht! -->
         <h1>Kundendaten: Überblick</h1>
     </div>
 
-    <div class="div--navbar">
-        <ul class="ul--navbar">
-            <li><a href="/">Index</a></li>
-            <li><a href="/projektdaten">Projektdaten</a></li>
-            <li><a href="/kundendaten">Kundendaten</a></li>
-            <li><a href="/mitarbeiterdaten">Mitarbeiterdaten</a></li>
-        </ul>
+    <%include file="navbar.tpl"/>
+
+    <div class="div--failure">
+        <!-- Vom XMLHttpRequest Fehler auswerten? -->
+        <h2 class="h2--failure">Neu hinzufügen fehlgeschlagen!</h2>
     </div>
 
     <div class="div--tbl">
         <table>
             <!-- Table Header Row -->
-            <tr class="tbl--header">
-                % for key in data_o["Template"]:
-                <th class="tbl--header--elem">${key}</th>
-                % endfor
-            </tr>
-            <!-- Erste Zeile nur mit den Erläuterungen, kann weg -->
             <tr class="tbl--header">
                 % for key in data_o["Template"]:
                 <th class="tbl--header--elem">${data_o["Template"][key]}</th>
@@ -49,7 +43,8 @@
                 % for object_key in data_o["Elements"][object]:
                 <td class="tbl--data--elem">
                     % if object_key == "unique_id":
-                    <a href="/kundendaten?kunden_id=${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
+                    <!-- muss noch an jeweiligen Link angepasst werden (Kundendaten bzw. Mitarbeiterdaten) -->
+                    <a class="a--elem" href="/kundendaten?kunden_id=${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
                     % else:
                     ${data_o["Elements"][object][object_key]}
                     % endif
@@ -57,21 +52,22 @@
                 % endfor
             </tr>
             % endfor
+
+            <!-- Kommt in ein eigenes aufklappbares Div! -->
+            <!-- Leeres Element zum hinzufügen -->
+            <tr class="tbl--header">
+                % for key in data_o["Template"]:
+                <th class="tbl--header--elem">
+                    <input class="input--new" type="text" value="<${key}>" required />
+                </th>
+                % endfor
+            </tr>
         </table>
     </div>
 
-    <p id="p--new">Neues Element hinzufügen</p>
-    <div class="div--new">
-        <!-- Neues Element hinzufügen mittels ausklappbarem Div -->
-        <!-- Wenn auf "Neues Element hinzufügen" gedrückt wurde -->
-        <ul>
-            <!-- li's ebenfalls generieren! -->
-            <li>
-                <input class="input--data" type="text" name="" value="Test123">
-            </li>
-        </ul>
+    <div class="div--btn">
         <button type="button" id="btn--new">
-            <span>Hinzufügen</span>
+            <span>Neu hinzufügen</span>
         </button>
     </div>
 

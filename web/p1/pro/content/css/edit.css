@@ -2,16 +2,6 @@
 
 
 /*
-    Div: Failure (ausklappbar)
-*/
-.div--failure {
-    transition: max-height 0.5s;
-    overflow: hidden;
-    max-height: 0;
-}
-
-
-/*
     Alles für die Knöpfe
 */
 button {
