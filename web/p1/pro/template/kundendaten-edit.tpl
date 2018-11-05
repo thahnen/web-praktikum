@@ -12,7 +12,7 @@
 
     <div class="div--failure">
         <!-- Vom XMLHttpRequest Fehler auswerten? -->
-        <h2>Speichern fehlgeschlagen!</h2>
+        <h2 id="header--failure">Speichern fehlgeschlagen!</h2>
     </div>
 
     <div class="div--tbl">
@@ -27,7 +27,7 @@
             <!-- Erste Zeile nur mit den Erläuterungen, kann weg -->
             <tr class="tbl--header">
                 % for key in data_o["Template"]:
-                <th class="tbl--header--elem">${key}</th>
+                <th class="tbl--header--elem tbl--header--info">${key}</th>
                 % endfor
             </tr>
 
@@ -35,11 +35,7 @@
             <tr class="tbl--data">
                 % for key in data_o["Data"]:
                 <td class="tbl--data--elem">
-                    % if key != "unique_id":
-                    <input class="input--data" type="text" value="${data_o["Data"][key]}" disabled required />
-                    % else:
-                    ${data_o["Data"][key]}
-                    % endif
+                    <input class="input--data" type="text" value="${data_o["Data"][key]}" required />
                 </td>
                 % endfor
             </tr>

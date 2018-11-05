@@ -29,7 +29,7 @@ class Database(object):
         self.data_path = data_path
 
 
-    # read_json_into_dict throws Exception
+    # read_json_into_dict() throws Exception
     def read_json_into_dict(self, filename):
         file_path = self.data_path + filename
 
@@ -77,18 +77,81 @@ class Database(object):
 
     # write_json_into_file(...) throws Exception
     def write_json_into_file(self, filename, json_dict, update=False):
-        file_path = self.data_path + filename
+        #
+        #   1) Erhaltene Daten mit Template aus JSON auf Richtigkeit prüfen
+        #   2) Update oder neues Element hinzufügen?
+        #   => 2.1) Update:
+        #       2.1.1) Muss die "Projektdaten.json" auch geändert werden?
+        #       => 2.1.1.1) ja:
+        #           2[...]1) Alte Daten zwischenspeichern und Neue Daten updaten
+        #           2[...]2) "Projektdaten.json" updaten
+        #           2[...]3) Alles ok, es passiert nichts [Application erkennt das]
+        #       => 2.1.1.2) nein:
+        #           2[...]1) Neue Daten updaten
+        #           2[...]2) Alles ok, es passiert nichts [Application erkennt das]
+        #   => 2.2) Neu:
+        #       2.2.1) Index für neuen Eintrag herausfinden
+        #       2.2.2) Neue Daten eintragen mit neuem Index
+        #       2.2.3) Alles ok, es passiert nichts [Application erkennt das]
+        #
+
+        file_path = filename[0].lower() + filename[1::]
+        file_path = self.data_path + file_path + ".json"
 
         assert (os.path.exists(file_path) and not os.path.isdir(file_path))
 
         data = json.load(open(file_path))
         elements = [x for x in data["Elements"]]
-        # Test for Update or new Element
-        if update:
-            # Update den Rest gleich mit (nur bei projektdaten.json)
-            update_all = True if filename == "kundendaten.json" else False
+        templates = [x for x in data["Template"]]
+        json_data = [x for x in json_dict]
+        print(elements)
 
+
+        # 1) Auf Richtigkeit prüfen (alles Template-Items erfüllt und nicht doppelt!)
+        # 1.1) Beide Dicts gleich lang (muss, sonst falsches JSON übergeben)
+        if len(templates) != len(json_data):
+            raise
+        else:
+            # 1.2) Beide Keys der Dicts auch gleich (muss, sonst falsches JSON übergeben)
+            for x in xrange(0, len(templates)):
+                if templates[x] != json_data[x]:
+                    raise
+
+        gefunden = False
+        for elem in elements:
+            if data["Elements"][elem]["unique_id"] == json_dict["unique_id"]:
+                gefunden = True
+
+
+        # 2) Update oder neues Element?
+        if update:
+            # 2.1) Update
+            # Testen ob die unique_id auch einer bestehenden entspricht!
+            if not gefunden: raise
+
+            # 2.1.1) Muss "Projektdaten.json" geändert werden?
+            if (filename == "Kundendaten" or filename == "Mitarbeiterdaten"):
+                # 2.1.1.1) Ja (kein direktes Update "Projektdaten")
+                pass
+                return
+
+            # 2.1.1.2) Nein (direktes Update "Projektdaten")
+            pass
             return
 
-        # New Element!
-        pass
+        # 2.2) Neu
+        # Testen, ob unique_id einer bestehenden entspricht
+        if gefunden: raise
+        # 2.2.1) Letzte Index-Nummer bekommen
+        letzte = -1
+        for elem in elements:
+            # Kein Try-Except weil Indizes nur Nummern sein können!
+            index = int(elem)
+            letzte = index if (index > letzte) else letzte
+
+        letzte += 1
+        data["Elements"][str(letzte)] = json_dict
+
+        # 2.2.2) Neue Daten eintragen
+        with open(file_path, "w") as json_file:
+            json.dump(data, json_file)

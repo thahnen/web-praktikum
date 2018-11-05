@@ -34,6 +34,7 @@
         // 1.1) Verbergen der Fehlermeldung
         var failure = document.querySelector(".div--failure");
         failure.style.setProperty("--max-height", failure.scrollHeight + "px");
+        var offen = false;
 
         // 1.2) Titel und Header richtig setzen
         var link = window.location.href.split("/").slice(-1)[0].split("?")[0];
@@ -45,21 +46,22 @@
 
         // 2) "Editieren" gedrückt
         document.getElementById("btn--edit").addEventListener("click", function() {
-            console.log("Edit");
-
             // Alle Inputs zum bearbeiten aktivieren
             [...document.getElementsByClassName("input--data")].map((x) => {
                 x.disabled = false;
+                if (offen) {
+                    failure.style.removeProperty("max-height", "var(--max-height)");
+                }
             });
         });
 
 
         // 3) Input-Event-Listener hinzufügen
-        [...document.getElementsByClassName("input--edit")].forEach((x) => {
+        [...document.getElementsByClassName("input--data")].forEach((x) => {
             // 3.1) onClick-Event-Listener
             x.addEventListener("click", function() {
                 if (offen) {
-                    div_failure.style.removeProperty("max-height", "var(--max-height)");
+                    failure.style.removeProperty("max-height", "var(--max-height)");
                 }
             });
 
@@ -72,8 +74,22 @@
 
         // 4) "Speichern" gedrückt
         document.getElementById("btn--save").addEventListener("click", function() {
-            console.log("Save");
-            // Input-Felder auf Richtigkeit überprüfen
+            // Input-Felder auf Richtigkeit überprüfen macht das Backend
+            var header = [...document.getElementsByClassName("tbl--header--info")];
+            var inputs = [...document.getElementsByClassName("input--data")];
+
+            var request = {
+                "link" : link,
+                "method" : "edit",
+                "data" : {}
+            };
+
+            for (var i = 0; i < inputs.length; i++) {
+                request["data"][header[i].innerHTML] = inputs[i].value;
+            }
+
+            // DEBUG
+            console.log(JSON.stringify(request));
 
             // POST absetzen mit den geänderten Daten
             var http = new XMLHttpRequest();
@@ -82,17 +98,20 @@
             http.onload = function() {
                 // Wenn es Daten zurückgibt, damit weiterarbeiten
                 // Klappt aber auf jeden Fall!
-                console.log(this.responseText);
-                console.log(JSON.parse(this.responseText)["code"]);
+                var rueckgabe = JSON.parse(this.responseText);
+                console.log(rueckgabe);
+                console.log(rueckgabe["code"]);
+                if (rueckgabe["code"] != 200) {
+                    var header_failure = document.getElementById("header--failure");
+                    header_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
+                    if (!offen) {
+                        failure.style.setProperty("max-height", "var(--max-height)");
+                        offen = !offen;
+                    }
+                }
             };
 
-            // Kommt in JSON-Datei wenn alle das gleiche Template nutzen!
-            var url_elem = link;
-
-            http.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
-
-            // Fehlermeldung anzeigen!
-            failure.style.setProperty("max-height", "var(--max-height)");
+            http.send(JSON.stringify(request));
         });
     };
 }());

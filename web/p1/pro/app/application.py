@@ -70,8 +70,45 @@ class Application(object):
         return self.get_static_page("404")
 
 
-    # Funktion um JSON-Daten zu ändern
+    # Handhabt das Updaten und Neu-Hinzufügen von Daten
     def update_values(self, values):
+        #
+        #   1) Link ( values["link"] ) auswerten und auf Richtigkeit prüfen
+        #   => 1.1) Link nicht "Kundendaten" / "Mitarbeiterdaten" / "Projektdaten":
+        #       1.1.1) Fehler zurückgeben: { "code" : 500 }
+        #   2) Methode ( values["methode"] ) auswerten und auf Richtigkeit prüfen:
+        #   => 2.1) "edit" (aka Werte werden geupdatet):
+        #       2.1.1) Daten jeweils updaten && Alles klar zurückgeben: { "code" : 200 }
+        #   => 2.2) "new" (aka neue Werte kommen hinzu):
+        #       2.2.1) Daten neu hinzufügen && Alles klar zurückgeben: { "code" : 200 }
+        #   => 2.3) Irgendwas anderes:
+        #       2.3.1) Fehler zurückgeben: { "code" : 500 }
+        #
+
         # Welche der Seiten gemeint ist muss aus übergebenem JSON ermittelt werden!
         # Update auch der anderen Seiten und so!
-        return '{"code":200}'
+        page = values["link"]
+
+        # 1) Link überprüfen
+        if page not in ["Kundendaten", "Mitarbeiterdaten", "Projektdaten"]:
+            # 1.1) Fehler :(
+            return '{ "code" : 501 }'
+
+        # 2) Methode überprüfen
+        try:
+            if values["method"] == "edit":
+                # 2.1) Update
+                self.database.write_json_into_file(page, values["data"], update=True)
+            elif values["method"] == "new":
+                # 2.2) Neu hinzufügen
+                self.database.write_json_into_file(page, values["data"])
+            else:
+                raise
+        except Exception as e:
+            # 2.3) Irgendwas anderes (falsches) bzw
+            #       irgendwas beim Speichern ging schief!
+            # Abarbeitung anhand des Exception-Codes!
+            return '{ "code" : 502 }'
+
+        # 2.1.1) + 2.2.1) Alles klärchen :)
+        return '{ "code" : 200 }'

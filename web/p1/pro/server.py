@@ -73,17 +73,26 @@ class WebServer(object):
         return self.application.get_dynamic_page_with_params("mitarbeiterdaten", mitarbeiter_id)
 
 
-    # Seite um Werte zu updaten mit Hilfe XMLHTTPREQUEST statt POST aus Formular!
+    # Seite um Werte zu updaten mit Hilfe XMLHttpRequest statt POST aus Formular!
     # curl -H "Content-Type: application/json" --request POST -d '{"test" : 1234}' 127.0.0.1:8080/update
     @cherrypy.expose
     @cherrypy.tools.json_in()
     def update(self):
-        # Überprüfen ob GET oder POST von "/update" aufgerufen wurde!
+        # Erhaltene Daten nach der Form:
+        # {
+        #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
+        #   "method" : "<edit/new>",
+        #   "data" {
+        #       [...] Eingegebene Daten nach dem jeweiligen Template [...]
+        #   }
+        # }
+
         try:
+            # War ein POST :)
             input_json = cherrypy.request.json
         except Exception as e:
+            # War ein GET :(
             return self.application.get_static_page("404")
-        # Rückgabe von JSON im String? (bsp. '{"Test" : 1234}')
         return self.application.update_values(input_json)
 
 
@@ -93,12 +102,10 @@ config = {
     },
     "/css" : {
         "tools.staticdir.on" : True,
-        # "tools.staticdir.index" : "index.html",
         "tools.staticdir.dir" : "./content/css/"
     },
     "/js" : {
         "tools.staticdir.on" : True,
-        # "tools.staticdir.index" : "index.html",
         "tools.staticdir.dir" : "./content/js/"
     }
 }
