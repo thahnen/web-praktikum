@@ -103,12 +103,13 @@ class Application(object):
                 # 2.2) Neu hinzufügen
                 self.database.write_json_into_file(page, values["data"])
             else:
-                raise
+                raise Exception({"code" : 104})
         except Exception as e:
             # 2.3) Irgendwas anderes (falsches) bzw
             #       irgendwas beim Speichern ging schief!
             # Abarbeitung anhand des Exception-Codes!
-            return '{ "code" : 502 }'
+            print(e.args[0]["code"])
+            return '{ "code" : %s }' % e.args[0]["code"]
 
         # 2.1.1) + 2.2.1) Alles klärchen :)
         return '{ "code" : 200 }'

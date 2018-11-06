@@ -110,16 +110,18 @@ class Database(object):
         # 1) Auf Richtigkeit prüfen (alles Template-Items erfüllt und nicht doppelt!)
         # 1.1) Beide Dicts gleich lang (muss, sonst falsches JSON übergeben)
         if len(templates) != len(json_data):
-            raise
+            raise Exception({"code" : 100})
         else:
             # 1.2) Beide Keys der Dicts auch gleich (muss, sonst falsches JSON übergeben)
-            for x in xrange(0, len(templates)):
+            for x in range(0, len(templates)):
                 if templates[x] != json_data[x]:
-                    raise
+                    raise Exception({"code" : 101})
 
         gefunden = False
+        update_elem = None
         for elem in elements:
-            if data["Elements"][elem]["unique_id"] == json_dict["unique_id"]:
+            if str(data["Elements"][elem]["unique_id"]) == json_dict["unique_id"]:
+                update_elem = elem
                 gefunden = True
 
 
@@ -127,21 +129,22 @@ class Database(object):
         if update:
             # 2.1) Update
             # Testen ob die unique_id auch einer bestehenden entspricht!
-            if not gefunden: raise
+            if not gefunden: raise Exception({"code" : 102})
 
             # 2.1.1) Muss "Projektdaten.json" geändert werden?
             if (filename == "Kundendaten" or filename == "Mitarbeiterdaten"):
                 # 2.1.1.1) Ja (kein direktes Update "Projektdaten")
                 pass
-                return
 
             # 2.1.1.2) Nein (direktes Update "Projektdaten")
-            pass
+            data["Elements"][elem] = json_dict
+            with open(file_path, "w") as json_file:
+                json.dump(data, json_file)
             return
 
         # 2.2) Neu
         # Testen, ob unique_id einer bestehenden entspricht
-        if gefunden: raise
+        if gefunden: raise Exception({"code" : 103})
         # 2.2.1) Letzte Index-Nummer bekommen
         letzte = -1
         for elem in elements:
