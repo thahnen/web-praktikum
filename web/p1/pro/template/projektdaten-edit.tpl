@@ -47,6 +47,6 @@
 
     <%include file="buttons-edit.tpl"/>
 
-    <script src="js/edit.js" charset="UTF-8"></script>
+    <script src="/js/edit.js" charset="UTF-8"></script>
 </body>
 </html>

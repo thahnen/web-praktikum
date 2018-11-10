@@ -37,7 +37,8 @@
         var offen = false;
 
         // 1.2) Titel und Header richtig setzen
-        var link = window.location.href.split("/").slice(-1)[0].split("?")[0];
+        // var link = window.location.href.split("/").slice(-2)[0].split("?")[0]
+        var link = window.location.href.split("/")[3].split("?")[0];
         link = link.charAt(0).toUpperCase() + link.slice(1);
         document.title = link + ": " + document.title;
         var headline = document.getElementById("headline");
@@ -47,7 +48,7 @@
         // 2) "Editieren" gedrückt
         document.getElementById("btn--edit").addEventListener("click", function() {
             // Alle Inputs zum bearbeiten aktivieren
-            [...document.getElementsByClassName("input--data")].map((x) => {
+            [...document.getElementsByClassName("input--data")].forEach((x) => {
                 x.disabled = false;
                 if (offen) {
                     failure.style.removeProperty("max-height", "var(--max-height)");

@@ -13,7 +13,7 @@
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <link rel="stylesheet" type="text/css" href="/css/view.css" />
 </head>
 <body>
     <div class="div--header">
@@ -44,7 +44,7 @@
                 <td class="tbl--data--elem">
                     % if object_key == "unique_id":
                     <!-- muss noch an jeweiligen Link angepasst werden (Kundendaten bzw. Mitarbeiterdaten) -->
-                    <a class="a--elem" href="/mitarbeiterdaten?mitarbeiter_id=${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
+                    <a class="a--elem" href="/mitarbeiterdaten/${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
                     % else:
                     ${data_o["Elements"][object][object_key]}
                     % endif
@@ -71,6 +71,6 @@
         </button>
     </div>
 
-    <script src="js/view.js" charset="UTF-8"></script>
+    <script src="/js/view.js" charset="UTF-8"></script>
 </body>
 </html>

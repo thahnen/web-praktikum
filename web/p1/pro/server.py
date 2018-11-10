@@ -52,6 +52,8 @@ class WebServer(object):
     # Seite mit allen Projektdaten
     @cherrypy.expose
     def projektdaten(self, projekt_id = None):
+        # Beinhaltet sowohl:  /projektdaten/<projekt_id>
+        #           als auch: /projektdaten?projekt_id=<projekt_id>
         if not projekt_id:
             return self.application.get_dynamic_page("projektdaten")
         return self.application.get_dynamic_page_with_params("projektdaten", projekt_id)
@@ -60,6 +62,8 @@ class WebServer(object):
     # Seite mit allen Kundendaten
     @cherrypy.expose
     def kundendaten(self, kunden_id = None):
+        # Beinhaltet sowohl:  /kundendaten/<kunden_id>
+        #           als auch: /kundendaten?kunden_id=<kunden_id>
         if not kunden_id:
             return self.application.get_dynamic_page("kundendaten")
         return self.application.get_dynamic_page_with_params("kundendaten", kunden_id)
@@ -68,6 +72,8 @@ class WebServer(object):
     # Seite mit allen Mitarbeiterdaten
     @cherrypy.expose
     def mitarbeiterdaten(self, mitarbeiter_id = None):
+        # Beinhaltet sowohl:  /mitarbeiterdaten/<mitarbeiter_id>
+        #           als auch: /mitarbeiterdaten?mitarbeiter_id=<mitarbeiter_id>
         if not mitarbeiter_id:
             return self.application.get_dynamic_page("mitarbeiterdaten")
         return self.application.get_dynamic_page_with_params("mitarbeiterdaten", mitarbeiter_id)

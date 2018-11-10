@@ -46,7 +46,12 @@ Verweise:
         "budget" : "Dem Projekt zugewiesenes Budget",
         "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen",
         "mitarbeiter_ids" : "[ Liste aller Mitarbeiter ]",
-        "zuordnung_arbeit" : "[ Liste Arbeitseinheiten mit { Stunden -> Liste der zugeordneten Mitarbeiter } ]"
+        "zuordnung_arbeit" : {
+            "1...n" : {
+                "stunden" : "Aufwandsstunden für das jeweilige Arbeitspaket",
+                "mitarbeiter_ids" : "[ Liste aller dem Arbeitspaket zugeordneten Mitarbeiter ]"
+            }
+        }
     },
     "Elements" : {
         "1...n" : {

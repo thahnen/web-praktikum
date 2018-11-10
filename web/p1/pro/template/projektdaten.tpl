@@ -12,7 +12,7 @@
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="css/view.css" />
+    <link rel="stylesheet" type="text/css" href="/css/view.css" />
 </head>
 <body>
     <div class="div--header">
@@ -41,7 +41,7 @@
                 % for object_key in data_o["Elements"][object]:
                 <td class="tbl--data--elem">
                     % if object_key == "unique_id":
-                    <a class="a--elem" href="/projektdaten?projekt_id=${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
+                    <a class="a--elem" href="/projektdaten/${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
                     % else:
                     ${data_o["Elements"][object][object_key]}
                     % endif
@@ -68,6 +68,6 @@
         </button>
     </div>
 
-    <script src="js/view.js" charset="UTF-8"></script>
+    <script src="/js/view.js" charset="UTF-8"></script>
 </body>
 </html>

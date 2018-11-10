@@ -14,5 +14,5 @@
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="css/edit.css" />
+    <link rel="stylesheet" type="text/css" href="/css/edit.css" />
 </head>
