@@ -26,16 +26,16 @@
             "budget" : 12.34,
             "kunden_id" : 1234567890,
             "mitarbeiter_ids" : [ 1111, 1112, 1113, 1114 ],
-            "zuordnung_arbeit" : [
-                {
+            "zuordnung_arbeit" : {
+                "1" : {
                     "stunden" : 12,
                     "mitarbeiter_ids" : [ 1111, 1113 ]
                 },
-                {
+                "2" : {
                     "stunden" : 4,
                     "mitarbeiter_ids" : [ 1112, 1114 ]
                 }
-            ]
+            }
         }
     }
 }

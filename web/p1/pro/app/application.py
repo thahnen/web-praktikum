@@ -34,7 +34,7 @@ class Application(object):
             return self.view.render_static_page(self.content_path + "500.html")
 
 
-    # Handhabt dynamische Seiten
+    # Handhabt dynamische Seiten (zusammenfassen mit get_dynamic_page_with_params(...))
     def get_dynamic_page(self, pagename):
         try:
             data = self.database.read_json_into_dict(pagename + ".json")
@@ -44,21 +44,23 @@ class Application(object):
         return self.view.render_dynamic_page(pagename, data)
 
 
-    # Handhabt dynamische Seiten MIT Parametern
+    # Handhabt dynamische Seiten MIT Parametern (zusammenfassen mit get_dynamic_page(...))
     def get_dynamic_page_with_params(self, pagename, parameter):
         try:
             data = self.database.read_json_into_dict(pagename + ".json")
         except Exception as e:
             return self.get_static_page("500")
 
-        elements = [x for x in data["Elements"]]
+        if parameter == "neu":
+            return self.view.render_dynamic_page(pagename + "-new", data["Template"])
+
         found = False
 
-        for element in elements:
+        for elem in data["Elements"]:
             try:
-                if int(data["Elements"][element]["unique_id"]) == int(parameter):
+                if int(data["Elements"][elem]["unique_id"]) == int(parameter):
                     # Alles andere Löschen, damit nur noch das eine übrig bleibt!
-                    data["Data"] = data["Elements"][element]
+                    data["Data"] = data["Elements"][elem]
                     del data["Elements"]
                     found = True
                     break
@@ -70,29 +72,29 @@ class Application(object):
         return self.get_static_page("404")
 
 
-    # Handhabt das Updaten und Neu-Hinzufügen von Daten
+    # update_values() throws Exception
     def update_values(self, values):
         #
         #   1) Link ( values["link"] ) auswerten und auf Richtigkeit prüfen
-        #   => 1.1) Link nicht "Kundendaten" / "Mitarbeiterdaten" / "Projektdaten":
-        #       1.1.1) Fehler zurückgeben: { "code" : 500 }
+        #   => Link nicht "Kundendaten" / "Mitarbeiterdaten" / "Projektdaten":
+        #          - Fehler zurückgeben: { "code" : 404 }
         #   2) Methode ( values["methode"] ) auswerten und auf Richtigkeit prüfen:
         #   => 2.1) "edit" (aka Werte werden geupdatet):
-        #       2.1.1) Daten jeweils updaten && Alles klar zurückgeben: { "code" : 200 }
+        #           - Daten jeweils updaten && Alles klar zurückgeben: { "code" : 200 }
         #   => 2.2) "new" (aka neue Werte kommen hinzu):
-        #       2.2.1) Daten neu hinzufügen && Alles klar zurückgeben: { "code" : 200 }
+        #          - Daten neu hinzufügen && Alles klar zurückgeben: { "code" : 200 }
         #   => 2.3) Irgendwas anderes:
-        #       2.3.1) Fehler zurückgeben: { "code" : 500 }
+        #           - Fehler zurückgeben: { "code" : 500 }
         #
 
-        # Welche der Seiten gemeint ist muss aus übergebenem JSON ermittelt werden!
-        # Update auch der anderen Seiten und so!
+        # Annahme values["link"] und values["data"] existiert!
+        assert(values.has_key("link") and  values.has_key("data"))
+
         page = values["link"]
 
         # 1) Link überprüfen
         if page not in ["Kundendaten", "Mitarbeiterdaten", "Projektdaten"]:
-            # 1.1) Fehler :(
-            return '{ "code" : 501 }'
+            return '{ "code" : 404 }'
 
         # 2) Methode überprüfen
         try:
@@ -103,13 +105,12 @@ class Application(object):
                 # 2.2) Neu hinzufügen
                 self.database.write_json_into_file(page, values["data"])
             else:
-                raise Exception({"code" : 104})
+                raise Exception({"code" : 500})
         except Exception as e:
             # 2.3) Irgendwas anderes (falsches) bzw
             #       irgendwas beim Speichern ging schief!
-            # Abarbeitung anhand des Exception-Codes!
             print(e.args[0]["code"])
             return '{ "code" : %s }' % e.args[0]["code"]
 
-        # 2.1.1) + 2.2.1) Alles klärchen :)
+        # Alles klärchen :)
         return '{ "code" : 200 }'

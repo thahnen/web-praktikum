@@ -4,23 +4,24 @@
 
 #   Zur Verarbeitung der Daten im JSON-Format:
 #   =========================================
+#   REVIEW: bis auf weitere Validierung alles fertig!
 #
-#   1. Einlesen einer JSON-Datei
-#   => Validierung: Überprüfen, ob Elemente dem Template entsprechen
-#   => wenn nicht: Fehler oder JSON auffüllen
+#   1. Validierung der JSON-Daten
+#       => Testen, ob Datei existiert
+#       => Testen, ob "Template" und "Elements" vorhanden
+#       Da kommt noch:
+#       => Testen, ob "Template" dem JSON-Template entspricht
+#       => Testen, ob Elemente in "Elements" dem "Template" entspricht
 #
-#   2. Schreiben von JSON-Daten in Datei
-#   => Validierung: Überprüfen, ob Elemente dem Template entsprechen
-#   => wenn nicht: Fehler oder JSON auffüllen
+#   2. Einlesen einer JSON-Datei
+#       => Rückgabe der validierten JSON-Dateien
 #
-#   Fehlende Funktion(en):
-#   - boolean test_on_integrity(JSON data):
-#       => überprüft, ob "Template" und "Elements" vorhanden
-#       => überprüft, ob alle Elemente dem Template entsprechen (wenn "Elements" nicht leer)
+#   3. Schreiben von JSON-Daten in Datei
+#       => Überprüfung ob Update oder neues Element
+#       => Überprüfung ob andere JSON-Dateien auch verändert werden müssen
 
 
 import os
-import os.path
 import json
 
 
@@ -29,49 +30,26 @@ class Database(object):
         self.data_path = data_path
 
 
+    # validate_integrity() throws Exception
+    def validate_integrity(self, file_path):
+        # Annahme, dass JSON-Datei exisitert
+        assert (os.path.exists(file_path) and not os.path.isdir(file_path))
+        data = json.load(open(file_path))
+
+        # Kurze Validierung, genauere folgt irgendwann ^^
+        assert ("Template" in data and "Elements" in data)
+
+        return data
+
+
     # read_json_into_dict() throws Exception
     def read_json_into_dict(self, filename):
         file_path = self.data_path + filename
 
-        assert (os.path.exists(file_path) and not os.path.isdir(file_path))
+        # Validierung der JSON-Datei
+        data = self.validate_integrity(file_path)
 
-        data = json.load(open(file_path))
-        # Validate if JSON-File is correct -> auslagern in eigene Funktion?
-        try:
-            # anstatt des try-Blocks ein if?
-            dummy__elems = [x for x in data["Elements"]]
-        except TypeError as te:
-            # data["Elements"] kein Dictionary (irgendwas anderes)
-            # auf data["Template"] überprüfen, wenn nicht vorhanden:
-            #   => JSON-Datei durch Template ersetzen und 404 oä.
-            # wenn doch vorhanden:
-            #   => data["Elements"] = {} setzen und 404 oä.
-            if "Template" in data:
-                data["Elements"] = {}
-            else:
-                data = json.load(open(file_path + ".tpl"))
-
-            with open(file_path, "w") as datei:
-                json.dump(data)
-            raise
-        except KeyError as ke:
-            # data["Elements"] gibt es nicht!
-            # auf data["Template"] überprüfen, wenn nicht vorhanden:
-            #   => JSON-Datei durch Template ersetzen und 404 oä.
-            # wenn doch vorhanden:
-            #   => data["Elements"] = {} setzen und 404 oä.
-            if "Template" in data:
-                data["Elements"] = {}
-            else:
-                data = json.load(open(file_path + ".tpl"))
-
-            with open(file_path, "w") as datei:
-                json.dump(data)
-            raise
-        except Exception as e:
-            raise
-
-        # Return data if everything is fine
+        # Wenn alles ok so zurückgeben
         return data
 
 
@@ -81,41 +59,40 @@ class Database(object):
         #   1) Erhaltene Daten mit Template aus JSON auf Richtigkeit prüfen
         #   2) Update oder neues Element hinzufügen?
         #   => 2.1) Update:
-        #       2.1.1) Muss die "Projektdaten.json" auch geändert werden?
-        #       => 2.1.1.1) ja:
-        #           2[...]1) Alte Daten zwischenspeichern und Neue Daten updaten
-        #           2[...]2) "Projektdaten.json" updaten
-        #           2[...]3) Alles ok, es passiert nichts [Application erkennt das]
-        #       => 2.1.1.2) nein:
-        #           2[...]1) Neue Daten updaten
-        #           2[...]2) Alles ok, es passiert nichts [Application erkennt das]
+        #       - Muss die "Projektdaten.json" auch geändert werden?
+        #       => ja:
+        #           - Alte Daten zwischenspeichern und Neue Daten updaten
+        #           - "Projektdaten.json" updaten
+        #           - Alles ok, es passiert nichts [Application erkennt das]
+        #       => nein:
+        #           - Neue Daten updaten
+        #           - Alles ok, es passiert nichts [Application erkennt das]
         #   => 2.2) Neu:
-        #       2.2.1) Index für neuen Eintrag herausfinden
-        #       2.2.2) Neue Daten eintragen mit neuem Index
-        #       2.2.3) Alles ok, es passiert nichts [Application erkennt das]
+        #       - Index für neuen Eintrag herausfinden
+        #       - Neue Daten eintragen mit neuem Index
+        #       - Alles ok, es passiert nichts [Application erkennt das]
         #
 
         file_path = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
 
-        assert (os.path.exists(file_path) and not os.path.isdir(file_path))
+        # Validierung der JSON-Datei
+        data = self.validate_integrity(file_path)
 
-        data = json.load(open(file_path))
         elements = [x for x in data["Elements"]]
         templates = [x for x in data["Template"]]
         json_data = [x for x in json_dict]
-        print(elements)
 
 
         # 1) Auf Richtigkeit prüfen (alles Template-Items erfüllt und nicht doppelt!)
         # 1.1) Beide Dicts gleich lang (muss, sonst falsches JSON übergeben)
         if len(templates) != len(json_data):
-            raise Exception({"code" : 100})
+            raise Exception()
         else:
             # 1.2) Beide Keys der Dicts auch gleich (muss, sonst falsches JSON übergeben)
             for x in range(0, len(templates)):
                 if templates[x] != json_data[x]:
-                    raise Exception({"code" : 101})
+                    raise Exception()
 
         gefunden = False
         update_elem = None
@@ -128,33 +105,64 @@ class Database(object):
         # 2) Update oder neues Element?
         if update:
             # 2.1) Update
-            # Testen ob die unique_id auch einer bestehenden entspricht!
-            if not gefunden: raise Exception({"code" : 102})
+            if not gefunden:
+                # Objekt hat keine gültige unique_id, ggf anders reagieren?
+                raise Exception()
 
-            # 2.1.1) Muss "Projektdaten.json" geändert werden?
-            if (filename == "Kundendaten" or filename == "Mitarbeiterdaten"):
-                # 2.1.1.1) Ja (kein direktes Update "Projektdaten")
-                pass
+            if (filename != "Projektdaten"):
+                # Projektdaten mitändern!
+                project_path = self.data_path + "projektdaten.json"
 
-            # 2.1.1.2) Nein (direktes Update "Projektdaten")
+                # Validierung der JSON-Datei
+                project_data = self.validate_integrity(file_path)
+
+                # Alte ID abspeichern nach der gesucht werden soll!
+                alte_id = data["Elements"][elem]["unique_id"]
+
+                if filename == "Kundendaten":
+                    # Nur nach Kunden-ID suchen
+                    for elem in project_data["Elements"]:
+                        if str(project_data["Elements"][elem]["unique_id"]) == alte_id:
+                            # Alte ID gefunden -> durch neue ID ersetzen
+                            project_data["Elements"][elem]["unique_id"] = json_dict["unique_id"]
+                else:
+                    # Nach allen Vorkommen der Mitarbeiter-ID suchen
+                    for elem in project_data["Elements"]:
+                        # 1. in Liste project_data["Elements"][elem]["mitarbeiter_ids"] gucken
+                        alle_ids = project_data["Elements"][elem]["mitarbeiter_ids"]
+                        if alte_id in alle_ids:
+                            project_data["Elements"][elem]["mitarbeiter_ids"][alle_ids.index(alte_id)] = json_dict["unique_id"]
+
+                        # 2. in allen Elementen n von project_data["Elements"][elem]["zuordnung_arbeit"]
+                        #   => in Liste ...[elem]["zuordnung_arbeit"][n]["mitarbeiter_ids"] gucken
+                        for key in project_data["Elements"][elem]["zuordnung_arbeit"]:
+                            alle_ids = project_data["Elements"][elem]["zuordnung_arbeit"][key]["mitarbeiter_ids"]
+                            if alte_id in alle_ids:
+                                project_data["Elements"][elem]["zuordnung_arbeit"][key]["mitarbeiter_ids"][alle_ids.index(alte_id)] = json_dict["unique_id"]
+
+                with open(project_path, "w") as project_file:
+                    json.dump(project_data, project_file)
+
+            # Projektdaten: d.h. es muss nichts anderes geändert werden
             data["Elements"][elem] = json_dict
             with open(file_path, "w") as json_file:
                 json.dump(data, json_file)
             return
 
         # 2.2) Neu
-        # Testen, ob unique_id einer bestehenden entspricht
-        if gefunden: raise Exception({"code" : 103})
-        # 2.2.1) Letzte Index-Nummer bekommen
+        # DISCLAIMER: Wenn neue Projekte hinzugefügt werden nicht prüfen ob Kunden/ Mitarbeiter exisiteren!
+
+        if gefunden:
+            # Objekt mit der unique_id gibt es schon, ggf anders reagieren?
+            raise Exception()
+
         letzte = -1
         for elem in elements:
-            # Kein Try-Except weil Indizes nur Nummern sein können!
             index = int(elem)
             letzte = index if (index > letzte) else letzte
 
         letzte += 1
         data["Elements"][str(letzte)] = json_dict
 
-        # 2.2.2) Neue Daten eintragen
         with open(file_path, "w") as json_file:
             json.dump(data, json_file)

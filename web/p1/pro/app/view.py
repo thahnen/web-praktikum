@@ -9,12 +9,12 @@
 #   => trifft zu auf die Kundendaten/ Prohektdaten/ Mitarbeiterdaten
 #   => trifft auf einzelne Einträge zu (jeweils in URL mitgegeben!)
 #
-#   TODO: 
+#   TODO:
 #   2. Generierung von nötigem CSS/ JS Code je Seite
 #   => Vermeidung von zu vielen Dateien bzw. unnötigem Laden von Daten!
 
 
-import os.path
+import os
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
