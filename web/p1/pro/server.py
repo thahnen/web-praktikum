@@ -134,7 +134,7 @@ class WebServer(object):
     def POST_Projektdaten_Add(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Bearbeiten der Projektdaten
@@ -143,7 +143,7 @@ class WebServer(object):
     def POST_Projektdaten_Update(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Löschen der Projektdaten
@@ -152,7 +152,7 @@ class WebServer(object):
     def POST_Projektdaten_Delete(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Hinzufügen der Kundendaten
@@ -161,7 +161,7 @@ class WebServer(object):
     def POST_Kundendaten_Add(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Bearbeiten der Kundendaten
@@ -170,7 +170,7 @@ class WebServer(object):
     def POST_Kundendaten_Update(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Löschen der Kundendaten
@@ -179,7 +179,7 @@ class WebServer(object):
     def POST_Kundendaten_Delete(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Hinzufügen der Mitarbeiterdaten
@@ -188,7 +188,7 @@ class WebServer(object):
     def POST_Mitarbeiterdaten_Add(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Bearbeiten der Mitarbeiterdaten
@@ -197,7 +197,7 @@ class WebServer(object):
     def POST_Mitarbeiterdaten_Update(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Löschen der Mitarbeiterdaten
@@ -206,7 +206,7 @@ class WebServer(object):
     def POST_Mitarbeiterdaten_Delete(self):
         if cherrypy.request.method == "POST":
             return
-        return "404"
+        return self.application.get_static_page("404")
 
 
     #############################################################################
@@ -258,8 +258,11 @@ class WebServer(object):
         # Erhaltene Daten nach der Form:
         # {
         #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
-        #   "method" : "<edit/new>",
-        #   "data" {
+        #   "method" : "<edit/new/delete>",
+        #   1. wenn "delete":
+        #   "data" : unique_id
+        #   2. sonst:
+        #   "data" : {
         #       [...] Eingegebene Daten nach dem jeweiligen Template [...]
         #   }
         # }

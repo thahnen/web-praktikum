@@ -1,1 +1,32 @@
-{"Template": {"unique_id": "Eindeutige ID des Kunden", "nummer": "Interne Nummer des Kunden", "beizeichnung": "Bezeichnung f\u00fcr den Kunden", "ansprechpartner": "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!", "ort": "Ort des Kunden"}, "Elements": {"1": {"unique_id": 112332566, "nummer": 14, "bezeichnung": "Fakebook Inc.", "ansprechpartner": "Mark Fuckerberg", "ort": "Hackerway 1, Palo Alto"}, "2": {"unique_id": 1234567890, "nummer": 12, "bezeichnung": "Micro-Soft", "ansprechpartner": "Bill Gates", "ort": "Irgendwo im Nirgendwo"}, "3": {"unique_id": "102030405060708090", "nummer": "1414", "beizeichnung": "Hahnen Industries", "ansprechpartner": "Tobias Hahnen", "ort": "Greta-Rothe-Strasse 32"}}}
+{
+    "Template": {
+        "unique_id": "Eindeutige ID des Kunden",
+        "nummer": "Interne Nummer des Kunden",
+        "beizeichnung": "Bezeichnung f\u00fcr den Kunden",
+        "ansprechpartner": "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!",
+        "ort": "Ort des Kunden"
+    },
+    "Elements": {
+        "1": {
+            "unique_id": 112332566,
+            "nummer": 14,
+            "bezeichnung": "Fakebook Inc.",
+            "ansprechpartner": "Mark Fuckerberg",
+            "ort": "Hackerway 1, Palo Alto"
+        },
+        "2": {
+            "unique_id": 1234567890,
+            "nummer": 12,
+            "bezeichnung": "Micro-Soft",
+            "ansprechpartner": "Bill Gates",
+            "ort": "Irgendwo im Nirgendwo"
+        },
+        "3": {
+            "unique_id": "102030405060708090",
+            "nummer": "1414",
+            "beizeichnung": "Hahnen Industries",
+            "ansprechpartner": "Tobias Hahnen",
+            "ort": "Greta-Rothe-Strasse 32"
+        }
+    }
+}

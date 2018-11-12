@@ -42,9 +42,9 @@ h2 {
     padding-left: 0;
 }
 
-.ul--navbar:hover li:not(:hover) { opacity: 0.5; }
+.ul--navbar:hover .li--navbar:not(:hover) { opacity: 0.5; }
 
-li {
+.li--navbar {
     list-style-type: none;
     margin: 0;
     padding: 0 0.75rem;
@@ -52,7 +52,7 @@ li {
     border-left: 2px solid #d2d5e4;
 }
 
-li:last-child { border-right: 2px solid #d2d5e4; }
+.li--navbar:last-child { border-right: 2px solid #d2d5e4; }
 
 a {
     color: black;

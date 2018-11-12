@@ -7,10 +7,10 @@
 </%doc>
     <div class="div--navbar">
         <ul class="ul--navbar">
-            <li><a href="/">Index</a></li>
-            <li><a href="/auswertung">Auswertung</a></li>
-            <li><a href="/projektdaten">Projektdaten</a></li>
-            <li><a href="/kundendaten">Kundendaten</a></li>
-            <li><a href="/mitarbeiterdaten">Mitarbeiterdaten</a></li>
+            <li class="li--navbar"><a href="/">Index</a></li>
+            <li class="li--navbar"><a href="/auswertung">Auswertung</a></li>
+            <li class="li--navbar"><a href="/projektdaten">Projektdaten</a></li>
+            <li class="li--navbar"><a href="/kundendaten">Kundendaten</a></li>
+            <li class="li--navbar"><a href="/mitarbeiterdaten">Mitarbeiterdaten</a></li>
         </ul>
     </div>

@@ -83,7 +83,9 @@ class Application(object):
         #           - Daten jeweils updaten && Alles klar zurückgeben: { "code" : 200 }
         #   => 2.2) "new" (aka neue Werte kommen hinzu):
         #          - Daten neu hinzufügen && Alles klar zurückgeben: { "code" : 200 }
-        #   => 2.3) Irgendwas anderes:
+        #   => 2.3) "delete" (aka Werte werden gelöscht):
+        #          - Daten jeweils löschen && Alles klar zurückgeben : {"code" : 200}
+        #   => 2.4) Irgendwas anderes:
         #           - Fehler zurückgeben: { "code" : 500 }
         #
 
@@ -104,6 +106,10 @@ class Application(object):
             elif values["method"] == "new":
                 # 2.2) Neu hinzufügen
                 self.database.write_json_into_file(page, values["data"])
+            elif values["method"] == "delete":
+                # 2.3) Löschen
+                # fehlt noch!
+                raise
             else:
                 raise Exception({"code" : 500})
         except Exception as e:

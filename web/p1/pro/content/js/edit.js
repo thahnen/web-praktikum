@@ -10,8 +10,7 @@
  *
  *  1) Eigenschaften setzen:
  *  => Verbergen der Fehlermeldung
- *  => Titel und Header richtig setzen:
- *      - nur bei Mitarbeiterdaten und Kundendaten (?) da gleiches Template!
+ *  => Titel und Header richtig setzen
  *
  *  2) "Editieren" gedrückt:
  *  => alle Input-Felder mit gleicher Klasse "un-disablen"
