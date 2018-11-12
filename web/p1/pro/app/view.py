@@ -4,6 +4,7 @@
 
 #   Zur Erstellung/ Generierung von (Web-)Seiten:
 #   ============================================
+#   REVIEW: Bis auf mögliches TODO soweit es geht fertig! 
 #
 #   1. Erstellung mit Template und zugehörigen Daten
 #   => trifft zu auf die Kundendaten/ Prohektdaten/ Mitarbeiterdaten

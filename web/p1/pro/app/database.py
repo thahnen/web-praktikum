@@ -4,21 +4,44 @@
 
 #   Zur Verarbeitung der Daten im JSON-Format:
 #   =========================================
-#   REVIEW: bis auf weitere Validierung alles fertig!
 #
 #   1. Validierung der JSON-Daten
+#       validate_integrity() -> Dictionary | Exception
+#       ----------------------------------------------
 #       => Testen, ob Datei existiert
 #       => Testen, ob "Template" und "Elements" vorhanden
-#       Da kommt noch:
+#       Das kommt noch:
 #       => Testen, ob "Template" dem JSON-Template entspricht
 #       => Testen, ob Elemente in "Elements" dem "Template" entspricht
 #
 #   2. Einlesen einer JSON-Datei
+#       read_json_into_dict() -> Dictionary | Exception
+#       -----------------------------------------------
 #       => Rückgabe der validierten JSON-Dateien
 #
 #   3. Schreiben von JSON-Daten in Datei
+#       write_json_into_file() -> Nichts | Exception
+#       --------------------------------------------
 #       => Überprüfung ob Update oder neues Element
-#       => Überprüfung ob andere JSON-Dateien auch verändert werden müssen
+#
+#   4. Update von JSON-Daten
+#       update_json_into_file() -> Nichts | Exception
+#       ------------------------------------------
+#       => Übergebenes JSON mit Datei vergleichen
+#       => Überprüfen, ob andere JSON-Dateien mitgeändert werden müssen
+#
+#   5. Hinzufügen von JSON-Daten
+#       add_json_into_file() -> Nichts | Exception
+#       ------------------------------------------
+#       => Bestehende JSON-Datei auf letztes Element überprüfen sowie "unique_id"
+#       => Neues Element dahinter einfügen
+#
+#   6. Löschen von JSON-Daten
+#       remove_json_from_file() -> Nichts | Exception
+#       ---------------------------------------------
+#       => Bestehende JSON-Datei auf übergebenes Element vergleichen
+#       => Element suchen und entfernen
+#
 
 
 import os
@@ -54,6 +77,7 @@ class Database(object):
 
 
     # write_json_into_file(...) throws Exception
+    # TODO: Irgendwas funktioniert noch nicht mit dem Update!!!
     def write_json_into_file(self, filename, json_dict, update=False):
         #
         #   1) Erhaltene Daten mit Template aus JSON auf Richtigkeit prüfen

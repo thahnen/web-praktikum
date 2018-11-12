@@ -13,7 +13,7 @@ Element | Abschnitt
 ---
 
 <a name="dateien" />
-### Dateien
+## Dateien
 Es gibt lt. Aufgabenstellung drei JSON-Dateien:
 1. [projektdaten.json](projektdaten.json)
     * beinhaltet alle Projekte und die dazugehörigen Daten
@@ -26,8 +26,8 @@ Es gibt lt. Aufgabenstellung drei JSON-Dateien:
 ---
 
 <a name="json-template" />
-### JSON-Template
-#### **projektdaten.json**
+## JSON-Template
+### **projektdaten.json**
 Verweise:
 - kunden_id : [Auftraggeber](kundendaten.json) des Projekts
 - mitarbeiter_id : Beteiligte  [Mitarbeiter](mitarbeiterdaten.sjon) des Projekts
@@ -45,11 +45,11 @@ Verweise:
         },
         "budget" : "Dem Projekt zugewiesenes Budget",
         "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen",
-        "mitarbeiter_ids" : "[ Liste aller Mitarbeiter ]",
+        "mitarbeiter_ids" : "Liste aller Mitarbeiter",
         "zuordnung_arbeit" : {
             "1...n" : {
                 "stunden" : "Aufwandsstunden für das jeweilige Arbeitspaket",
-                "mitarbeiter_ids" : "[ Liste aller dem Arbeitspaket zugeordneten Mitarbeiter ]"
+                "mitarbeiter_ids" : "Liste aller dem Arbeitspaket zugeordneten Mitarbeiter"
             }
         }
     },
@@ -61,7 +61,7 @@ Verweise:
 }
 ```
 
-#### **kundendaten.json**
+### **kundendaten.json**
 Verweise:
 - mitarbeiter_id : Ggf. [Ansprechpartner](mitarbeiterdaten.json) in der JSON-Datei
 
@@ -72,7 +72,7 @@ Verweise:
         "nummer" : "Interne Nummer des Kunden",
         "beizeichnung" : "Bezeichnung für den Kunden",
         "ansprechpartner" : "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!",
-        "ort" : "Ort des Kunden"
+        "ort" : "Adresse des Kunden"
     },
     "Elements" : {
         "1...n" : {
@@ -82,7 +82,7 @@ Verweise:
 }
 ```
 
-#### **mitarbeiterdaten.json**
+### **mitarbeiterdaten.json**
 Verweise:
 - *keine*
 
@@ -105,8 +105,9 @@ Verweise:
 ---
 
 <a name="template-files" />
-### Template-Dateien
+## Template-Dateien
 Werden verwendet, wenn die Integrität der JSON-Dateien nicht gewährleistet ist oder fehlerhafte Daten nicht wieder hergestellt werden können.
+Um bei der Validierung die Datei wiederherstellen zu können!
 
 **TODO**: Templates hinzufügen!
 

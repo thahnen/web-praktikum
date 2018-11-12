@@ -21,11 +21,14 @@
  *  => onInput:
  *      - Update der Unique-ID basierend auf allen Werten (kommt ggf später!)
  *      - "Neues Element Hinzufügen"-Button an-/ ausschalten
+ *  => alle Inputs deaktivieren
  *
  *  4) "Speichern" gedrückt:
  *  => überprüfen ob Input-Felder leer?
  *  => XMLHttpRequest absetzen und auf Antwort warten und reagieren
 */
+
+// TODO: Unique_id soll nicht änderbar sein! Auch in HTML ändern!
 
 (function () {
     window.onload = function () {
@@ -69,6 +72,9 @@
             x.addEventListener("input", function() {
                 console.log("Noch nichts");
             })
+
+            // 3.3) Alle Inputs deaktivieren
+            x.disabled = true;
         });
 
 
@@ -99,15 +105,15 @@
                 // Wenn es Daten zurückgibt, damit weiterarbeiten
                 // Klappt aber auf jeden Fall!
                 var rueckgabe = JSON.parse(this.responseText);
-                console.log(rueckgabe);
-                console.log(rueckgabe["code"]);
+                var header_failure = document.getElementById("header--failure");
                 if (rueckgabe["code"] != 200) {
-                    var header_failure = document.getElementById("header--failure");
                     header_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
-                    if (!offen) {
-                        failure.style.setProperty("max-height", "var(--max-height)");
-                        offen = !offen;
-                    }
+                } else {
+                    header_failure.innerHTML = "Update erfolgreich!";
+                }
+                if (!offen) {
+                    failure.style.setProperty("max-height", "var(--max-height)");
+                    offen = !offen;
                 }
             };
 

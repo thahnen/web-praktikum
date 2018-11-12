@@ -1,13 +1,13 @@
 ## coding: utf-8
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
-<%include file="header-view.tpl"/>
+<%include file="/elements/header-view.tpl"/>
 <body>
     <div class="div--header">
         <h1 id="headline">: Überblick</h1>
     </div>
 
-    <%include file="navbar.tpl"/>
+    <%include file="/elements/navbar.tpl"/>
 
     <div class="div--failure">
         <!-- Vom XMLHttpRequest Fehler auswerten? -->
@@ -67,7 +67,7 @@
         </table>
     </div>
 
-    <%include file="buttons-view.tpl"/>
+    <%include file="/elements/buttons-view.tpl"/>
 
     <script src="/js/view.js" charset="UTF-8"></script>
 </body>

@@ -1,13 +1,13 @@
 ## coding: utf-8
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
-<%include file="header-edit.tpl"/>
+<%include file="/elements/header-edit.tpl"/>
 <body>
     <div class="div--header">
         <h1 id="headline">${data_o["Data"]["unique_id"]}</h1>
     </div>
 
-    <%include file="navbar.tpl"/>
+    <%include file="/elements/navbar.tpl"/>
 
     <div class="div--failure">
         <!-- Vom XMLHttpRequest Fehler auswerten? -->
@@ -45,7 +45,7 @@
         </table>
     </div>
 
-    <%include file="buttons-edit.tpl"/>
+    <%include file="/elements/buttons-edit.tpl"/>
 
     <script src="/js/edit.js" charset="UTF-8"></script>
 </body>

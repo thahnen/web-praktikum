@@ -8,9 +8,6 @@
 #   Datei kümmert sich um Validität der Parameter und Daten
 #   NICHT: Validität der JSON-Dateien
 #
-#   GGF keine Fehlercode-Seiten statisch sondern dynamisch generieren :3
-#   => mit angegebenem Grund zum debuggen in Zukunft möglich
-#   => nur ein traurige 404 und böse 500 Seite :D
 
 
 import app.database
@@ -73,6 +70,7 @@ class Application(object):
 
 
     # update_values() throws Exception
+    # TODO: irgendwas funktioniert noch nicht mit dem Update!!!
     def update_values(self, values):
         #
         #   1) Link ( values["link"] ) auswerten und auf Richtigkeit prüfen
@@ -90,7 +88,7 @@ class Application(object):
         #
 
         # Annahme values["link"] und values["data"] existiert!
-        assert(values.has_key("link") and  values.has_key("data"))
+        assert("link" in values and "data" in values)
 
         page = values["link"]
 
