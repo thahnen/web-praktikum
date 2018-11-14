@@ -4,7 +4,7 @@
 
 #   Zur Erstellung/ Generierung von (Web-)Seiten:
 #   ============================================
-#   REVIEW: Bis auf mögliches TODO soweit es geht fertig! 
+#   REVIEW: Bis auf mögliches TODO soweit es geht fertig!
 #
 #   1. Erstellung mit Template und zugehörigen Daten
 #   => trifft zu auf die Kundendaten/ Prohektdaten/ Mitarbeiterdaten
@@ -33,8 +33,9 @@ class View(object):
     # Gibt dynamische Seite anhand eines Templates zurück
     def render_dynamic_page(self, pagename, data):
         page_template_path = self.template_path + pagename + ".tpl"
-        if (not os.path.exists(page_template_path)) or os.path.isdir(page_template_path):
-            raise Exception("Mako-Template '%s' does not exist or is a directory" % page_template_path)
+
+        # Annahme, dass Template-Datei existiert
+        assert (os.path.exists(page_template_path)) and not os.path.isdir(page_template_path)
 
         template = TemplateLookup(directories = self.template_path).get_template(pagename + ".tpl")
         return template.render(data_o = data)

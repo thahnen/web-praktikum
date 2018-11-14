@@ -70,7 +70,6 @@ class Application(object):
 
 
     # update_values() throws Exception
-    # TODO: irgendwas funktioniert noch nicht mit dem Update!!!
     def update_values(self, values):
         #
         #   1) Link ( values["link"] ) auswerten und auf Richtigkeit prüfen
@@ -87,8 +86,8 @@ class Application(object):
         #           - Fehler zurückgeben: { "code" : 500 }
         #
 
-        # Annahme values["link"] und values["data"] existiert!
-        assert("link" in values and "data" in values)
+        # Annahme values["link"] und values["method"] values["data"] existiert!
+        assert("link" in values and "method" in values and "data" in values)
 
         page = values["link"]
 
@@ -100,21 +99,18 @@ class Application(object):
         try:
             if values["method"] == "edit":
                 # 2.1) Update
-                self.database.write_json_into_file(page, values["data"], update=True)
+                self.database.update_json_into_file(page, values["data"])
             elif values["method"] == "new":
                 # 2.2) Neu hinzufügen
-                self.database.write_json_into_file(page, values["data"])
+                self.database.add_json_into_file(page, values["data"])
             elif values["method"] == "delete":
                 # 2.3) Löschen
-                # fehlt noch!
-                raise
+                self.database.remove_json_from_file(page, values["data"])
             else:
-                raise Exception({"code" : 500})
+                raise
         except Exception as e:
-            # 2.3) Irgendwas anderes (falsches) bzw
-            #       irgendwas beim Speichern ging schief!
-            print(e.args[0]["code"])
-            return '{ "code" : %s }' % e.args[0]["code"]
+            # 2.3) Irgendwas anderes (falsches) bzw irgendwas beim Speichern ging schief!
+            return '{ "code" : 500 }'
 
         # Alles klärchen :)
         return '{ "code" : 200 }'

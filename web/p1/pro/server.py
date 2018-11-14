@@ -255,7 +255,7 @@ class WebServer(object):
     @cherrypy.expose
     @cherrypy.tools.json_in()
     def update(self):
-        # Erhaltene Daten nach der Form:
+        # Erhaltene Daten (input_json) nach der Form:
         # {
         #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
         #   "method" : "<edit/new/delete>",
