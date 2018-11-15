@@ -2,50 +2,15 @@
 # -*- coding: utf-8 -*-
 
 
+# REVIEW: Diese Datei ist für Aufgabe 1.2 um es etwas einfacher zu gestalten & zu trennen!
+
+
 #   Webserver mit Config und Routing:
 #   ================================
 #
 #   - "/":
 #       => Hauptseite, alle anderen hier verlinkt
-#       => Verlinkungen auf unterschiedliche Seiten für Aufgabe 1 und 2 !!!
 #
-#   AUFGABE 1:
-#   Hinzufügen über Link, dann POST-Formular
-#   Bearbeiten über Link, dann POST-Formular
-#   Löschen über POST-Formular
-#
-#   - "/projektdaten_1":
-#   - "/projektdaten_1/<projekt_id>":
-#   - "/projektdaten_1/neu":
-#       => siehe AUFGABE 2
-#
-#   - "/kundendaten_1":
-#   - "/kundendaten_1/<kunden_id>":
-#   - "/kundendaten_1/neu":
-#       => siehe AUFGABE 2
-#
-#   - "/mitarbeiterdaten_1":
-#   - "/mitarbeiterdaten_1/<mitarbeiter_id>":
-#   - "/mitarbeiterdaten_1/neu":
-#       => siehe AUFGABE 2
-#
-#   - "/POST_Projektdaten_Add":
-#   - "/POST_Projektdaten_Update":
-#   - "/POST_Projektdaten_Delete":
-#       => Jeweilige POST-Aktion für die Projektdaten
-#
-#   - "/POST_Kundendaten_Add":
-#   - "/POST_Kundendaten_Update":
-#   - "/POST_Kundendaten_Delete":
-#       => Jeweilige POST-Aktion für die Kundendaten
-#
-#   - "/POST_Mitarbeiterdaten_Add":
-#   - "/POST_Mitarbeiterdaten_Update":
-#   - "/POST_Mitarbeiterdaten_Delete":
-#       => Jeweilige POST-Aktion für die Mitarbeiterdaten
-#
-#
-#   AUFGABE 2:
 #   Hinzufügen über Button, dann XMLHttpRequest
 #   Bearbeiten über JavaScript-Auswahl, dann Button, dann XMLHttpRequest
 #   Löschen über JavaScript-Auswahl, dann Button, dann XMLHttpRequest
@@ -59,7 +24,7 @@
 #
 #   - "/kundendaten":
 #       => Seite mit allen Kundendaten
-#   - "/kundendaten/<projekt_id>":
+#   - "/kundendaten/<kunden_id>":
 #       => Seite mit Angaben des Kundens der angegebenen Kunden-ID zum bearbeiten
 #   - "/kundendaten/neu":
 #       => Seite zum hinzufügen eines neuen Kunden
@@ -91,129 +56,6 @@ class WebServer(object):
     def index(self):
         return self.application.get_static_page("index")
 
-
-    #############################################################################
-    #                                                                           #
-    #                               AUFGABE 1                                   #
-    #                                                                           #
-    #############################################################################
-
-    # Seite mit allen Projektdaten
-    @cherrypy.expose
-    def projektdaten_1(self, projekt_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /projektdaten_1
-        #   /projektdaten_1/<projekt_id>
-        #   /projektdaten_1/neu
-        return self.application.get_static_page("404")
-
-
-    # Seite mit allen Kundendaten
-    @cherrypy.expose
-    def kundendaten_1(self, kunden_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /kundendaten_1
-        #   /kundendaten_1/<kunden_id>
-        #   /kundendaten_1/neu
-        return self.application.get_static_page("404")
-
-
-    # Seite mit allen Mitarbeiterdaten
-    @cherrypy.expose
-    def mitarbeiterdaten_1(self, mitarbeiter_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /mitarbeiterdaten_1
-        #   /mitarbeiterdaten_1/<mitarbeiter_id>
-        #   /mitarbeiterdaten_1/neu
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Hinzufügen der Projektdaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Projektdaten_Add(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Bearbeiten der Projektdaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Projektdaten_Update(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Löschen der Projektdaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Projektdaten_Delete(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Hinzufügen der Kundendaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Kundendaten_Add(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Bearbeiten der Kundendaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Kundendaten_Update(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Löschen der Kundendaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Kundendaten_Delete(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Hinzufügen der Mitarbeiterdaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Mitarbeiterdaten_Add(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Bearbeiten der Mitarbeiterdaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Mitarbeiterdaten_Update(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    # POST-Aktion zum Löschen der Mitarbeiterdaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Mitarbeiterdaten_Delete(self):
-        if cherrypy.request.method == "POST":
-            return
-        return self.application.get_static_page("404")
-
-
-    #############################################################################
-    #                                                                           #
-    #                               AUFGABE 2                                   #
-    #                                                                           #
-    #############################################################################
 
     # Seite mit allen Projektdaten
     @cherrypy.expose

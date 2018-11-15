@@ -14,6 +14,7 @@ echo "1. Hinzufuegen"
 echo "2. Update"
 echo "3. Loeschen"
 
+# Bevor hier was passiert müssen erst alle Seiten (Webseiten usw) angepasst werden!
 echo "Muss neuem Stand angepasst werden !!!"
 exit
 
@@ -195,18 +196,15 @@ P_ADD() {
 		"nummer" : 44444,
 		"bezeichnung" : "Test-Bezeichnung",
 		"beschreibung" : "Test-Beschreibung",
-		"bearbeitungszeitraum" : {
-			"anfang" : "Test-Anfang",
-			"ende" : "Test-Ende"
-		},
+		"bearbeitungszeitraum" : 6,
 		"budget" : 123.45,
 		"kunden_id" : 12321,
 		"mitarbeiter_ids" : [11111, 11112, 11113, 11114],
 		"zuordnung_arbeit" : {
-			"1" : {
-				"stunden" : 44444,
-				"mitarbeiter_ids" : [11111, 11114]
-			}
+			"11111" : [2, 12, 3, 13, 4, 14],
+			"11112" : [3, 13, 4, 14, 5, 15],
+			"11113" : [4, 14, 5, 15, 6, 16],
+			"11114" : [5, 15, 6, 16, 7, 17]
 		}
 	}
 }
@@ -223,18 +221,14 @@ P_UPDATE() {
 		"nummer" : 45454,
 		"bezeichnung" : "Bezeichnung-Test",
 		"beschreibung" : "Beschreibung-Test",
-		"bearbeitungszeitraum" : {
-			"anfang" : "Anfang-Test",
-			"ende" : "Ende-Test"
-		},
+		"bearbeitungszeitraum" : 3,
 		"budget" : 543.21,
 		"kunden_id" : 32123,
-		"mitarbeiter_ids" : [11111, 21111, 31111, 41111],
+		"mitarbeiter_ids" : [11111, 21111, 31111],
 		"zuordnung_arbeit" : {
-			"1" : {
-				"stunden" : 45454,
-				"mitarbeiter_ids" : [11111, 41111]
-			}
+			"11111" : [1, 2, 3],
+			"21111" : [11, 22, 33],
+			"31111" : [12, 34, 56]
 		}
 	}
 }

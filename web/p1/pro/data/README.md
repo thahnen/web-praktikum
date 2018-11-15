@@ -9,6 +9,7 @@ Element | Abschnitt
 *Dateien* | [--> Klick mich <--](#dateien)
 *JSON-Template* | [--> Klick mich <--](#json-template)
 *Template-Dateien* | [--> Klick mich <--](#template-files)
+*Test-Umgebung* | [--> Klick mich <--](#test-case)
 
 ---
 
@@ -112,3 +113,8 @@ Um bei der Validierung die Datei wiederherstellen zu können!
 - [Projektdaten](/template/projektdaten.json)
 - [Kundendaten](/template/kundendaten-tpl.json)
 - [Mitarbeiterdaten](/template/mitarbeiterdaten-tpl.json)
+
+<a name="test-case"></a>
+## Test-Umgebung
+Mithilfe dem Bash-Skript [test-post.sh](test-post.sh) können Funktionen auf alle JSON-Dateien getestet werden.
+Dabei werden gleichzeitig auch die Python-Funktionen auf ihre Richtigkeit getestet!
