@@ -1,0 +1,10 @@
+{
+    "Template": {
+        "unique_id": "Eindeutige ID des Mitarbeiters (int)",
+        "name": "Nachname des Mitarbeiters (string)",
+        "vorname": "Vorname des Mitarbeiters (sting)",
+        "funktion": "Funktion des Mitarbeiters (string)"
+    },
+    "Elements": {
+    }
+}

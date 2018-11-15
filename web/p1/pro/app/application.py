@@ -27,7 +27,6 @@ class Application(object):
         try:
             return self.view.render_static_page(self.content_path + pagename + ".html")
         except Exception as e:
-            # Nur Fehler 500 zurückgeben; kann auch zur Exception führen xD
             return self.view.render_static_page(self.content_path + "500.html")
 
 
@@ -35,10 +34,9 @@ class Application(object):
     def get_dynamic_page(self, pagename):
         try:
             data = self.database.read_json_into_dict(pagename + ".json")
+            return self.view.render_dynamic_page(pagename, data)
         except Exception as e:
             return self.get_static_page("500")
-
-        return self.view.render_dynamic_page(pagename, data)
 
 
     # Handhabt dynamische Seiten MIT Parametern (zusammenfassen mit get_dynamic_page(...))
@@ -49,7 +47,10 @@ class Application(object):
             return self.get_static_page("500")
 
         if parameter == "neu":
-            return self.view.render_dynamic_page(pagename + "-new", data["Template"])
+            try:
+                return self.view.render_dynamic_page(pagename + "-new", data["Template"])
+            except Exception as e:
+                return self.get_static_page("500")
 
         found = False
 
@@ -64,17 +65,17 @@ class Application(object):
             except Exception as e:
                 return self.get_static_page("500")
 
-        if found:
-            return self.view.render_dynamic_page(pagename + "-edit", data)
-        return self.get_static_page("404")
+        try:
+            if found:
+                return self.view.render_dynamic_page(pagename + "-edit", data)
+            return self.get_static_page("404")
+        except Exception as e:
+            return self.get_static_page("500")
 
 
-    # update_values() throws Exception
     def update_values(self, values):
         #
         #   1) Link ( values["link"] ) auswerten und auf Richtigkeit prüfen
-        #   => Link nicht "Kundendaten" / "Mitarbeiterdaten" / "Projektdaten":
-        #          - Fehler zurückgeben: { "code" : 404 }
         #   2) Methode ( values["methode"] ) auswerten und auf Richtigkeit prüfen:
         #   => 2.1) "edit" (aka Werte werden geupdatet):
         #           - Daten jeweils updaten && Alles klar zurückgeben: { "code" : 200 }
@@ -82,17 +83,20 @@ class Application(object):
         #          - Daten neu hinzufügen && Alles klar zurückgeben: { "code" : 200 }
         #   => 2.3) "delete" (aka Werte werden gelöscht):
         #          - Daten jeweils löschen && Alles klar zurückgeben : {"code" : 200}
-        #   => 2.4) Irgendwas anderes:
-        #           - Fehler zurückgeben: { "code" : 500 }
         #
 
-        # Annahme values["link"] und values["method"] values["data"] existiert!
-        assert("link" in values and "method" in values and "data" in values)
+        # Annahme "values" richtig aufgebaut existiert!
+        try:
+            assert ("link" in values and "method" in values and "data" in values)
+        except Exception as e:
+            return '{ "code" : 500 }'
 
         page = values["link"]
 
         # 1) Link überprüfen
-        if page not in ["Kundendaten", "Mitarbeiterdaten", "Projektdaten"]:
+        try:
+            assert (page in ["Kundendaten", "Mitarbeiterdaten", "Projektdaten"])
+        except Exception as e:
             return '{ "code" : 404 }'
 
         # 2) Methode überprüfen
@@ -109,7 +113,6 @@ class Application(object):
             else:
                 raise
         except Exception as e:
-            # 2.3) Irgendwas anderes (falsches) bzw irgendwas beim Speichern ging schief!
             return '{ "code" : 500 }'
 
         # Alles klärchen :)

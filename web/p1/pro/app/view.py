@@ -2,13 +2,18 @@
 # -*- coding: utf-8 -*-
 
 
+# REVIEW: Fast alles über Annahmen (assert's), um Fehlerbehandlung kümmert sich die App!
+
+
 #   Zur Erstellung/ Generierung von (Web-)Seiten:
 #   ============================================
-#   REVIEW: Bis auf mögliches TODO soweit es geht fertig!
 #
-#   1. Erstellung mit Template und zugehörigen Daten
-#   => trifft zu auf die Kundendaten/ Prohektdaten/ Mitarbeiterdaten
-#   => trifft auf einzelne Einträge zu (jeweils in URL mitgegeben!)
+#   1. Statische Seite zurückgeben
+#   => einfach aus Datei einlesen
+#
+#   2. Dynamische Seite zurückgeben
+#   => anhand des Seitennamens und des dazugehörigen Templates
+#   => Füllung des Templates aus mitgegebenen Daten
 #
 #   TODO:
 #   2. Generierung von nötigem CSS/ JS Code je Seite
@@ -25,12 +30,12 @@ class View(object):
         self.template_path = template_path
 
 
-    # Gibt statische Seite zurück (nichts besonderes)
+    # render_static_page(...) throws Exception
     def render_static_page(self, pagename):
         return open(pagename)
 
 
-    # Gibt dynamische Seite anhand eines Templates zurück
+    # render_dynamic_page(...) throws Exception
     def render_dynamic_page(self, pagename, data):
         page_template_path = self.template_path + pagename + ".tpl"
 

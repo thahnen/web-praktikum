@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 
+# REVIEW: Fast alles über Annahmen (assert's), um Fehlerbehandlung kümmert sich die App!
+
+
 #   Zur Verarbeitung der Daten im JSON-Format:
 #   =========================================
 #
 #   1. Validierung der JSON-Daten
-#       validate_integrity() -> Dictionary | Exception
-#       ----------------------------------------------
 #       => Testen, ob Datei existiert
 #       => Testen, ob "Template" und "Elements" vorhanden
 #       Das kommt noch:
@@ -15,26 +16,18 @@
 #       => Testen, ob Elemente in "Elements" dem "Template" entspricht
 #
 #   2. Einlesen einer JSON-Datei
-#       read_json_into_dict() -> Dictionary | Exception
-#       -----------------------------------------------
 #       => Rückgabe der validierten JSON-Dateien
 #
 #   3. Update von JSON-Daten
-#       update_json_into_file() -> Nichts | Exception
-#       ------------------------------------------
 #       => Übergebenes JSON mit Datei vergleichen
 #       => Element in Datei updaten
 #       => Überprüfen, ob andere JSON-Dateien mitgeändert werden müssen
 #
 #   4. Hinzufügen von JSON-Daten
-#       add_json_into_file() -> Nichts | Exception
-#       ------------------------------------------
 #       => Bestehende JSON-Datei auf letztes Element überprüfen sowie "unique_id"
 #       => Neues Element dahinter einfügen
 #
 #   5. Löschen von JSON-Daten
-#       remove_json_from_file() -> Nichts | Exception
-#       ---------------------------------------------
 #       => Bestehende JSON-Datei auf übergebenes Element vergleichen
 #       => Element suchen und entfernen
 #
@@ -65,11 +58,7 @@ class Database(object):
     def read_json_into_dict(self, filename):
         file_path = self.data_path + filename
 
-        # Validierung der JSON-Datei
-        data = self.validate_integrity(file_path)
-
-        # Wenn alles ok so zurückgeben
-        return data
+        return self.validate_integrity(file_path)
 
 
     # update_json_into_file(...) throws Exception
@@ -86,8 +75,8 @@ class Database(object):
         file_path = self.data_path + file_path + ".json"
 
         json_data = self.validate_integrity(file_path)
-        print(json_data)
-        print("")
+        print(json_data) #DEBUG
+        print("") #DEBUG
 
         # Iteriere durch alle Elemente
         for elem in json_data["Elements"]:
@@ -98,8 +87,8 @@ class Database(object):
                 json_data["Elements"][elem] = update_dict
                 break
 
-        print(json_data)
-        print("")
+        print(json_data) #DEBUG
+        print("") #DEBUG
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out)
 
@@ -118,8 +107,8 @@ class Database(object):
         file_path = self.data_path + file_path + ".json"
 
         json_data = self.validate_integrity(file_path)
-        print(json_data)
-        print("")
+        print(json_data) #DEBUG
+        print("") #DEBUG
 
         index = 0
 
@@ -135,8 +124,8 @@ class Database(object):
 
         json_data["Elements"][str(index)] = add_dict
 
-        print(json_data)
-        print("")
+        print(json_data) #DEBUG
+        print("") #DEBUG
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out)
 
@@ -149,8 +138,8 @@ class Database(object):
         file_path = self.data_path + file_path + ".json"
 
         json_data = self.validate_integrity(file_path)
-        print(json_data)
-        print("")
+        print(json_data) #DEBUG
+        print("") #DEBUG
 
         for elem in json_data["Elements"]:
             if int(json_data["Elements"][elem]["unique_id"]) == unique_id:
@@ -159,7 +148,7 @@ class Database(object):
                 del json_data["Elements"][elem]
                 break
 
-        print(json_data)
-        print("")
+        print(json_data) #DEBUG
+        print("") #DEBUG
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out)

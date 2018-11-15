@@ -105,7 +105,7 @@ class WebServer(object):
         #   /projektdaten_1
         #   /projektdaten_1/<projekt_id>
         #   /projektdaten_1/neu
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # Seite mit allen Kundendaten
@@ -115,7 +115,7 @@ class WebServer(object):
         #   /kundendaten_1
         #   /kundendaten_1/<kunden_id>
         #   /kundendaten_1/neu
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # Seite mit allen Mitarbeiterdaten
@@ -125,7 +125,7 @@ class WebServer(object):
         #   /mitarbeiterdaten_1
         #   /mitarbeiterdaten_1/<mitarbeiter_id>
         #   /mitarbeiterdaten_1/neu
-        return "404"
+        return self.application.get_static_page("404")
 
 
     # POST-Aktion zum Hinzufügen der Projektdaten
@@ -270,16 +270,18 @@ class WebServer(object):
         try:
             # War ein POST :)
             input_json = cherrypy.request.json
+            # Gibt auch Infos zurück, wenn Input fehlerhaft!
             return self.application.update_values(input_json)
         except Exception as e:
-            # War ein GET oder Input war fehlerhaft!
+            # War ein GET :(
             return self.application.get_static_page("404")
 
 
     # Seite mit allen nötigen Informationen (?)
     @cherrypy.expose
     def auswertung(self):
-        return "Die Seite mit den Auswertungen"
+        # hier kommt noch die Auswertung hin, bis auf weiteres nur 500.html zum testen!
+        return self.application.get_static_page("500")
 
 
 config = {

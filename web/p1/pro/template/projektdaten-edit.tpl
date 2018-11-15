@@ -11,7 +11,7 @@
 
     <div class="div--failure">
         <!-- Vom XMLHttpRequest Fehler auswerten? -->
-        <h2>Speichern fehlgeschlagen!</h2>
+        <h2 class="h2--failure">Fehler</h2>
     </div>
 
     <div class="div--tbl">

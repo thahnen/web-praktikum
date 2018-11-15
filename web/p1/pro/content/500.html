@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de" x-ms-format-detection="none">
+<head>
+    <!-- ====================================================================
+         * Copyright (C) 2017-2018 Hahnen Industries - All Rights Reserved
+         *
+         * This file is part of GDT.
+         * Unauthorized copying of this file or the software, via any medium
+         * is strictly prohibited and can not be distributed without the express
+         * permission of Hahnen Industries representated by Tobias Hahnen
+         *
+         * Written by Tobias Hahnen <tobias.hahnen@stud.hn.de>, March 2018
+        ===================================================================== -->
+
+        <meta charset="utf-8" />
+        <!-- Manuell, da ich nicht weiss, ob cherrypy robots.txt unterstützt! -->
+        <meta name="robots" content="noindex,nofollow" />
+        <!-- Nichts wird gechacht, alles neugeladen solange in Entwicklung! -->
+        <meta http-equiv="expires" content="0" />
+        <!-- Seite skalierbar machen, auch für mobile Endgeräte -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <!-- Keine Telefonnummern erkennen, für Internetexplorer/Edge siehe html-Tag! -->
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="author" content="Tobias Hahnen" />
+        <title>500 :o</title>
+
+    <style media="screen">
+        body { cursor: default; background-color: lightgray; }
+
+        h4 { text-shadow: 0 calc(1px * 0.5) darkgray; }
+
+        h2, h4 { text-align: center; color: #616161; }
+
+        h2 { text-shadow: 0 1px darkgray; font-family: cursive; }
+
+        .div--wrapper {
+            position: fixed;
+            top: 28vh;
+            left: 30vw;
+            width: 50vw;
+            margin-top: -5vh;
+            margin-left: -5vw;
+            border: none;
+        }
+
+        .txt--500 {
+            text-align: center;
+            text-shadow: 0 2px darkgray;
+            font-size: 10vh;
+            font-weight: bold;
+            color: #616161;
+        }
+    </style>
+</head>
+<body>
+    <div class="div--wrapper">
+        <p class="txt--500">500</p>
+        <h2>Die schlimmsten Fehler werden gemacht in der Absicht, einen begangenen Fehler wieder gut zu machen.</h2>
+        <h4>Jean Paul</h4>
+    </div>
+
+<script type="text/javascript">
+    document.addEventListener("click", function() { window.location.href = "/index"; })
+</script>
+</body>

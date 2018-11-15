@@ -27,24 +27,30 @@
             % for object in data_o["Elements"]:
             <tr class="tbl--data">
                 % for object_key in data_o["Elements"][object]:
+                % if object_key == "bearbeitungszeitraum":
+                <!-- Irgendwie schön eine Zeitspanne anzeigen -->
                 <td class="tbl--data--elem">
-                    % if object_key == "bearbeitungszeitraum":
-                    <!-- Irgendwie schön eine Zeitspanne anzeigen -->
                     <ul>
                         <li>Beginn: ${data_o["Elements"][object][object_key]["anfang"]}</li>
                         <li>Ende: ${data_o["Elements"][object][object_key]["ende"]}</li>
                     </ul>
-                    % elif object_key == "kunden_id":
+                </td>
+                % elif object_key == "kunden_id":
+                <td class="tbl--data--elem">
                     <a class="a--elem" href="/kundendaten/${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
-                    % elif object_key == "mitarbeiter_ids":
-                    <!-- Irgendwie schön die Mitarbeiterliste anzeigen -->
+                </td>
+                % elif object_key == "mitarbeiter_ids":
+                <!-- Irgendwie schön die Mitarbeiterliste anzeigen -->
+                <td class="tbl--data--elem">
                     <ul>
                         % for id in data_o["Elements"][object][object_key]:
                         <li><a class="a--elem" href="/mitarbeiterdaten/${id}">${id}</a></li>
                         % endfor
                     </ul>
-                    % elif object_key == "zuordnung_arbeit":
-                    <!-- Irgendwie schön die Zuordnung anzeigen -->
+                </td>
+                % elif object_key == "zuordnung_arbeit":
+                <!-- Irgendwie schön die Zuordnung anzeigen -->
+                <td class="tbl--data--elem">
                     <ul>
                         % for zu_o in data_o["Elements"][object][object_key]:
                         <li>
@@ -57,10 +63,10 @@
                         </li>
                         % endfor
                     </ul>
-                    % else:
-                    ${data_o["Elements"][object][object_key]}
-                    % endif
                 </td>
+                % else:
+                <td class="tbl--data--elem">${data_o["Elements"][object][object_key]}</td>
+                % endif
                 % endfor
             </tr>
             % endfor

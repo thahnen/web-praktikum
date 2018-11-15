@@ -12,19 +12,19 @@ Element | Abschnitt
 
 ---
 
-<a name="view" />
+<a name="view"></a>
 ## Übersicht
 ...
 
 ---
 
-<a name="new" />
+<a name="new"></a>
 ## Hinzufügen
 ...
 
 ---
 
-<a name="edit" />
+<a name="edit"></a>
 ## Editieren
 ...
 

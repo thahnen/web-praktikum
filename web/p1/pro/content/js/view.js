@@ -108,7 +108,42 @@ var highlighted_entry = null;
 
         // 5. "Eintrag löschen" gedrückt
         document.getElementById("btn--delete").addEventListener("click", function() {
-            // XMLHttpRequest und so weiter
+            if (confirm("Wollen sie das Element wirklich löschen?")) {
+                // XMLHttpRequest und so weiter
+                // nach der Auswertung anstatt Seite neuladen, auf der Seite Element löschen!
+                var unique_id = Number(highlighted_entry.firstElementChild.innerHTML);
+
+                var request = {
+                    "link" : link,
+                    "method" : "delete",
+                    "data" : unique_id
+                };
+
+                // DEBUG
+                console.log(JSON.stringify(request));
+
+                // POST absetzen mit den geänderten Daten
+                var http = new XMLHttpRequest();
+                http.open("POST", "/update");
+                http.setRequestHeader("Content-Type", "application/json");
+                http.onload = function() {
+                    // Wenn es Daten zurückgibt, damit weiterarbeiten
+                    // Klappt aber auf jeden Fall!
+                    var rueckgabe = JSON.parse(this.responseText);
+                    var h2_failure = document.querySelector(".h2--failure");
+                    if (rueckgabe["code"] != 200) {
+                        h2_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
+                    } else {
+                        h2_failure.innerHTML = "Loeschen erfolgreich!";
+                    }
+                    if (!offen) {
+                        div_failure.style.setProperty("max-height", "var(--max-height)");
+                        offen = !offen;
+                    }
+                };
+
+                http.send(JSON.stringify(request));
+            }
         });
     };
-}());
+})();

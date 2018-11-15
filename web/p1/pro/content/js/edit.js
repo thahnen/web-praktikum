@@ -14,14 +14,10 @@
  *
  *  2) "Editieren" gedrückt:
  *  => alle Input-Felder mit gleicher Klasse "un-disablen"
- *  => immer wenn "un-focussed" Wert auf Richtigkeit überprüfen?
  *
  *  3) Input-Event-Listener hinzufügen
  *  => onClick: Verbergen der Fehlermeldung
- *  => onInput:
- *      - Update der Unique-ID basierend auf allen Werten (kommt ggf später!)
- *      - "Neues Element Hinzufügen"-Button an-/ ausschalten
- *  => alle Inputs deaktivieren
+ *  => alle Inputs deaktivieren (sonst wären sie bei Seitenaufruf editierbar!)
  *
  *  4) "Speichern" gedrückt:
  *  => überprüfen ob Input-Felder leer?
@@ -34,8 +30,8 @@
     window.onload = function () {
         // 1) Eigenschaften setzen
         // 1.1) Verbergen der Fehlermeldung
-        var failure = document.querySelector(".div--failure");
-        failure.style.setProperty("--max-height", failure.scrollHeight + "px");
+        var div_failure = document.querySelector(".div--failure");
+        div_failure.style.setProperty("--max-height", div_failure.scrollHeight + "px");
         var offen = false;
 
         // 1.2) Titel und Header richtig setzen
@@ -53,7 +49,8 @@
             [...document.getElementsByClassName("input--data")].forEach((x) => {
                 x.disabled = false;
                 if (offen) {
-                    failure.style.removeProperty("max-height", "var(--max-height)");
+                    div_failure.style.removeProperty("max-height", "var(--max-height)");
+                    offen = !offen;
                 }
             });
         });
@@ -64,60 +61,58 @@
             // 3.1) onClick-Event-Listener
             x.addEventListener("click", function() {
                 if (offen) {
-                    failure.style.removeProperty("max-height", "var(--max-height)");
+                    div_failure.style.removeProperty("max-height", "var(--max-height)");
+                    offen = !offen;
                 }
             });
 
-            // 3.2) onInput-Event-Listener
-            x.addEventListener("input", function() {
-                console.log("Noch nichts");
-            })
-
-            // 3.3) Alle Inputs deaktivieren
+            // 3.2) Alle Inputs deaktivieren (sonst wären sie bei Seitenaufruf editierbar!)
             x.disabled = true;
         });
 
 
         // 4) "Speichern" gedrückt
         document.getElementById("btn--save").addEventListener("click", function() {
-            // Input-Felder auf Richtigkeit überprüfen macht das Backend
-            var header = [...document.getElementsByClassName("tbl--header--info")];
-            var inputs = [...document.getElementsByClassName("input--data")];
+            if (confirm("Wollen sie das Element wirklich editieren?")) {
+                // Input-Felder auf Richtigkeit überprüfen macht das Backend
+                var header = [...document.getElementsByClassName("tbl--header--info")];
+                var inputs = [...document.getElementsByClassName("input--data")];
 
-            var request = {
-                "link" : link,
-                "method" : "edit",
-                "data" : {}
-            };
+                var request = {
+                    "link" : link,
+                    "method" : "edit",
+                    "data" : {}
+                };
 
-            for (var i = 0; i < inputs.length; i++) {
-                request["data"][header[i].innerHTML] = inputs[i].value;
+                for (var i = 0; i < inputs.length; i++) {
+                    request["data"][header[i].innerHTML] = inputs[i].value;
+                }
+
+                // DEBUG
+                console.log(JSON.stringify(request));
+
+                // POST absetzen mit den geänderten Daten
+                var http = new XMLHttpRequest();
+                http.open("POST", "/update");
+                http.setRequestHeader("Content-Type", "application/json");
+                http.onload = function() {
+                    // Wenn es Daten zurückgibt, damit weiterarbeiten
+                    // Klappt aber auf jeden Fall!
+                    var rueckgabe = JSON.parse(this.responseText);
+                    var h2_failure = document.querySelector(".h2--failure");
+                    if (rueckgabe["code"] != 200) {
+                        h2_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
+                    } else {
+                        h2_failure.innerHTML = "Update erfolgreich!";
+                    }
+                    if (!offen) {
+                        div_failure.style.setProperty("max-height", "var(--max-height)");
+                        offen = !offen;
+                    }
+                };
+
+                http.send(JSON.stringify(request));
             }
-
-            // DEBUG
-            console.log(JSON.stringify(request));
-
-            // POST absetzen mit den geänderten Daten
-            var http = new XMLHttpRequest();
-            http.open("POST", "/update");
-            http.setRequestHeader("Content-Type", "application/json");
-            http.onload = function() {
-                // Wenn es Daten zurückgibt, damit weiterarbeiten
-                // Klappt aber auf jeden Fall!
-                var rueckgabe = JSON.parse(this.responseText);
-                var header_failure = document.getElementById("header--failure");
-                if (rueckgabe["code"] != 200) {
-                    header_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
-                } else {
-                    header_failure.innerHTML = "Update erfolgreich!";
-                }
-                if (!offen) {
-                    failure.style.setProperty("max-height", "var(--max-height)");
-                    offen = !offen;
-                }
-            };
-
-            http.send(JSON.stringify(request));
         });
     };
-}());
+})();

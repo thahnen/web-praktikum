@@ -100,43 +100,171 @@ echo ""
 ################################################################################
 
 
-# das kommt weg wenn der Rest da ist!
-exit
 # Mitarbeiterdaten.json testen
 echo ""
 echo "Mitarbeiterdaten.json"
 
-# Noch für Mitarbeiter machen
 M_ADD() {
 	cat <<EOF
 {
-	"link" : "Kundendaten",
+	"link" : "Mitarbeiterdaten",
 	"method" : "new",
 	"data" : {
+		"unique_id" : 77777,
+		"name" : "Test-Name",
+		"vorname" : "Test-Vorname",
+		"funktion" : "Test-Funktion"
 	}
 }
 EOF
 }
 
-# Noch für Mitarbeiter machen
 M_UPDATE() {
 	cat <<EOF
 {
-	"link" : "Kundendaten",
+	"link" : "Mitarbeiterdaten",
 	"method" : "edit",
 	"data" : {
+		"unique_id" : 77777,
+		"name" : "Name-Test",
+		"vorname" : "Vorname-Test",
+		"funktion" : "Funktion-Test"
 	}
 }
 EOF
 }
 
-# Noch für Mitarbeiter machen
 M_DELETE() {
 	cat <<EOF
 {
-	"link" : "Kundendaten",
+	"link" : "Mitarbeiterdaten",
 	"method" : "delete",
-	"data" : 11111
+	"data" : 77777
 }
 EOF
 }
+
+echo "1. Hinzufuegen:"
+echo $(M_ADD)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(M_ADD)" 127.0.0.1:8080/update
+echo ""
+
+echo "2. Update:"
+echo $(M_UPDATE)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(M_UPDATE)" 127.0.0.1:8080/update
+echo ""
+
+echo "3. Loeschen:"
+echo $(M_DELETE)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json"  --request POST --data "$(M_DELETE)" 127.0.0.1:8080/update
+echo ""
+
+read -n 1 -p "Weiter (y|n): " ANSWER
+if test "$ANSWER" != "y"; then
+	echo ""
+	exit
+fi
+echo ""
+
+
+################################################################################
+################################################################################
+################################################################################
+
+
+# Projektdaten.json testen
+echo ""
+echo "Projektdaten.json"
+
+P_ADD() {
+	cat <<EOF
+{
+	"link" : "Projektdaten",
+	"method" : "new",
+	"data" : {
+		"unique_id" : 88888,
+		"nummer" : 44444,
+		"bezeichnung" : "Test-Bezeichnung",
+		"beschreibung" : "Test-Beschreibung",
+		"bearbeitungszeitraum" : {
+			"anfang" : "Test-Anfang",
+			"ende" : "Test-Ende"
+		},
+		"budget" : 123.45,
+		"kunden_id" : 12321,
+		"mitarbeiter_ids" : [11111, 11112, 11113, 11114],
+		"zuordnung_arbeit" : {
+			"1" : {
+				"stunden" : 44444,
+				"mitarbeiter_ids" : [11111, 11114]
+			}
+		}
+	}
+}
+EOF
+}
+
+P_UPDATE() {
+	cat <<EOF
+{
+	"link" : "Projektdaten",
+	"method" : "edit",
+	"data" : {
+		"unique_id" : 88888,
+		"nummer" : 45454,
+		"bezeichnung" : "Bezeichnung-Test",
+		"beschreibung" : "Beschreibung-Test",
+		"bearbeitungszeitraum" : {
+			"anfang" : "Anfang-Test",
+			"ende" : "Ende-Test"
+		},
+		"budget" : 543.21,
+		"kunden_id" : 32123,
+		"mitarbeiter_ids" : [11111, 21111, 31111, 41111],
+		"zuordnung_arbeit" : {
+			"1" : {
+				"stunden" : 45454,
+				"mitarbeiter_ids" : [11111, 41111]
+			}
+		}
+	}
+}
+EOF
+}
+
+P_DELETE() {
+	cat <<EOF
+{
+	"link" : "Projektdaten",
+	"method" : "delete",
+	"data" : 88888
+}
+EOF
+}
+
+echo "1. Hinzufuegen:"
+echo $(P_ADD)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(P_ADD)" 127.0.0.1:8080/update
+echo ""
+
+echo "2. Update:"
+echo $(P_UPDATE)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(P_UPDATE)" 127.0.0.1:8080/update
+echo ""
+
+echo "3. Loeschen:"
+echo $(P_DELETE)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json"  --request POST --data "$(P_DELETE)" 127.0.0.1:8080/update
+echo ""

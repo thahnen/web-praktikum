@@ -5,8 +5,6 @@
 Das Praktikumsprojekt bestehend aus zwei Aufgaben für 3 Praktikumstermine.
 Der Inhalt ist ein "Projektinformationssystem", alle Feinheiten siehe Technik usw.
 
-- [ ] **Es muss noch alle READMEs gemacht werden**
-
 ## ~~Team~~-Member:
 1. Tobias Hahnen (1218710)
 2. ???

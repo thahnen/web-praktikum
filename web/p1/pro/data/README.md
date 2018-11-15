@@ -1,5 +1,5 @@
 # JSON-Dateien
-Stand: 29.10.2018 | Version: **1.0.0**
+Stand: 29.10.2018 (soweit fertig) | Version: **1.1.1**
 
 ---
 
@@ -12,7 +12,7 @@ Element | Abschnitt
 
 ---
 
-<a name="dateien" />
+<a name="dateien"></a>
 ## Dateien
 Es gibt lt. Aufgabenstellung drei JSON-Dateien:
 1. [projektdaten.json](projektdaten.json)
@@ -25,7 +25,7 @@ Es gibt lt. Aufgabenstellung drei JSON-Dateien:
 
 ---
 
-<a name="json-template" />
+<a name="json-template"></a>
 ## JSON-Template
 ### **projektdaten.json**
 Verweise:
@@ -35,21 +35,21 @@ Verweise:
 ```json
 {
     "Template" : {
-        "unique_id" : "Eindeutige ID des Projekts",
-        "nummer" : "Interne Nummer des Projekts",
-        "beizeichnung" : "Bezeichnung für das Projekt",
-        "beschreibung" : "Kurze Beschreibung des Projekts",
+        "unique_id" : "Eindeutige ID des Projekts (int)",
+        "nummer" : "Interne Nummer des Projekts (int)",
+        "beizeichnung" : "Bezeichnung fuer das Projekt (string)",
+        "beschreibung" : "Kurze Beschreibung des Projekts (string)",
         "bearbeitungszeitraum" : {
-            "anfang" : "Anfangsdatum des Projekts",
-            "ende" : "Enddatum des Projekts"
+            "anfang" : "Anfangsdatum des Projekts (date)",
+            "ende" : "Enddatum des Projekts (date)"
         },
-        "budget" : "Dem Projekt zugewiesenes Budget",
-        "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen",
-        "mitarbeiter_ids" : "Liste aller Mitarbeiter",
+        "budget" : "Dem Projekt zugewiesenes Budget (float)",
+        "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen (int)",
+        "mitarbeiter_ids" : "Liste aller Mitarbeiter (List[int])",
         "zuordnung_arbeit" : {
             "1...n" : {
-                "stunden" : "Aufwandsstunden für das jeweilige Arbeitspaket",
-                "mitarbeiter_ids" : "Liste aller dem Arbeitspaket zugeordneten Mitarbeiter"
+                "stunden" : "Aufwandsstunden fuer das jeweilige Arbeitspaket (int)",
+                "mitarbeiter_ids" : "Liste aller dem Arbeitspaket zugeordneten Mitarbeiter (List[int])"
             }
         }
     },
@@ -68,11 +68,11 @@ Verweise:
 ```json
 {
     "Template" : {
-        "unique_id" : "Eindeutige ID des Kunden",
-        "nummer" : "Interne Nummer des Kunden",
-        "beizeichnung" : "Bezeichnung für den Kunden",
-        "ansprechpartner" : "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!",
-        "ort" : "Adresse des Kunden"
+        "unique_id" : "Eindeutige ID des Kunden (int)",
+        "nummer" : "Interne Nummer des Kunden (int)",
+        "beizeichnung" : "Bezeichnung fuer den Kunden (string)",
+        "ansprechpartner" : "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID! (string)",
+        "ort" : "Adresse des Kunden (string)"
     },
     "Elements" : {
         "1...n" : {
@@ -88,11 +88,11 @@ Verweise:
 
 ```json
 {
-    "Template" : {
-        "unique_id" : "Eindeutige ID des Mitarbeiters",
-        "name" : "Nachname des Mitarbeiters",
-        "vorname" : "Vorname des Mitarbeiters",
-        "funktion" : "Funktion des Mitarbeiters"
+    "Template": {
+        "unique_id" : "Eindeutige ID des Mitarbeiters (int)",
+        "name" : "Nachname des Mitarbeiters (string)",
+        "vorname" : "Vorname des Mitarbeiters (sting)",
+        "funktion" : "Funktion des Mitarbeiters (string)"
     },
     "Elements" : {
         "1...n" : {
@@ -104,13 +104,11 @@ Verweise:
 
 ---
 
-<a name="template-files" />
+<a name="template-files"></a>
 ## Template-Dateien
 Werden verwendet, wenn die Integrität der JSON-Dateien nicht gewährleistet ist oder fehlerhafte Daten nicht wieder hergestellt werden können.
 Um bei der Validierung die Datei wiederherstellen zu können!
 
-**TODO**: Templates hinzufügen!
-
-- [Projektdaten]()
-- [Kundendaten]()
-- [Mitarbeiterdaten]()
+- [Projektdaten](/template/projektdaten.json)
+- [Kundendaten](/template/kundendaten-tpl.json)
+- [Mitarbeiterdaten](/template/mitarbeiterdaten-tpl.json)
