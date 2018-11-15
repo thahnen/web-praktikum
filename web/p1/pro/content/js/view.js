@@ -3,7 +3,7 @@
  *  =======
  *
  *  Logik für alle Seiten, auf denen man ausgewählte
- *  - Projektdaten,
+ *  - Projektdaten
  *  - Kundendaten,
  *  - Mitarbeiterdaten
  *  ansehen und löschen kann.
@@ -135,6 +135,10 @@ var highlighted_entry = null;
                         h2_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
                     } else {
                         h2_failure.innerHTML = "Loeschen erfolgreich!";
+
+                        // Nachdem es erfolgreich war: Element auch aus Tabelle löschen!
+                        highlighted_entry.remove();
+                        highlighted_entry = null;
                     }
                     if (!offen) {
                         div_failure.style.setProperty("max-height", "var(--max-height)");

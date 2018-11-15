@@ -4,7 +4,7 @@
 <%include file="/elements/header-view.tpl"/>
 <body>
     <div class="div--header">
-        <h1 id="headline">: Überblick</h1>
+        <h1 id="headline">: Übersicht</h1>
     </div>
 
     <%include file="/elements/navbar.tpl"/>

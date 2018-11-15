@@ -46,9 +46,10 @@ class Application(object):
         except Exception as e:
             return self.get_static_page("500")
 
+        print(parameter)
         if parameter == "neu":
             try:
-                return self.view.render_dynamic_page(pagename + "-new", data["Template"])
+                return self.view.render_dynamic_page(pagename + "-new", data)
             except Exception as e:
                 return self.get_static_page("500")
 

@@ -3,7 +3,6 @@
  *  =======
  *
  *  Logik für alle Seiten, auf denen man ausgewählte
- *  - Projektdaten,
  *  - Kundendaten,
  *  - Mitarbeiterdaten
  *  neu hinzufügen kann.
@@ -14,7 +13,6 @@
  *
  *  2) Input-Event-Listener hinzufügen
  *  => onClick: Verbergen der Fehlermeldung
- *  => alle Inputs deaktivieren (sonst wären sie bei Seitenaufruf editierbar!)
  *
  *  3) "Hinzufügen" gedrückt:
  *  => alle Input-Felder mit gleicher Klasse "un-disablen"
@@ -33,9 +31,9 @@
         // var link = window.location.href.split("/").slice(-2)[0].split("?")[0]
         var link = window.location.href.split("/")[3].split("?")[0];
         link = link.charAt(0).toUpperCase() + link.slice(1);
-        document.title = link + ": " + document.title;
+        document.title = link + document.title;
         var headline = document.getElementById("headline");
-        headline.innerHTML = link + ": " + headline.innerHTML;
+        headline.innerHTML = link + headline.innerHTML;
 
 
         // 2) Input-Event-Listener hinzufügen
@@ -47,14 +45,11 @@
                     offen = !offen;
                 }
             });
-
-            // 2.2) Alle Inputs deaktivieren (sonst wären sie bei Seitenaufruf editierbar!)
-            x.disabled = true;
         });
 
 
         // 4) "Hinzufuegen" gedrückt
-        document.getElementById("btn--add").addEventListener("click", function() {
+        document.getElementById("btn--new").addEventListener("click", function() {
             if (confirm("Wollen sie das Element wirklich hinzufuegen?")) {
                 // Input-Felder auf Richtigkeit überprüfen macht das Backend
                 var header = [...document.getElementsByClassName("tbl--header--info")];

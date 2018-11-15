@@ -3,7 +3,6 @@
  *  =======
  *
  *  Logik für alle Seiten, auf denen man ausgewählte
- *  - Projektdaten,
  *  - Kundendaten,
  *  - Mitarbeiterdaten
  *  bearbeiten und speichern kann.

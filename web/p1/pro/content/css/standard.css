@@ -20,6 +20,8 @@ div { margin-top: 1%; }
 
 table { width: 99%; }
 
+input, select { width: 100%; }
+
 
 /* Div: Headline */
 h1, h2 {

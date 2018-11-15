@@ -1,5 +1,5 @@
 # JSON-Dateien
-Stand: 29.10.2018 (soweit fertig) | Version: **1.1.1**
+Stand: 29.10.2018 | Version: **1.1.1**
 
 ---
 
@@ -32,6 +32,10 @@ Verweise:
 - kunden_id : [Auftraggeber](kundendaten.json) des Projekts
 - mitarbeiter_id : Beteiligte  [Mitarbeiter](mitarbeiterdaten.sjon) des Projekts
 
+**INFO**:
+- Bearbeitungszeitraum geändert in: Wochen (int)
+- Zuordnung der Arbeit geändert in: (1-n) Mitarbeiter -> (1-n) Anzahl Stunden pro Woche
+
 ```json
 {
     "Template" : {
@@ -39,18 +43,14 @@ Verweise:
         "nummer" : "Interne Nummer des Projekts (int)",
         "beizeichnung" : "Bezeichnung fuer das Projekt (string)",
         "beschreibung" : "Kurze Beschreibung des Projekts (string)",
-        "bearbeitungszeitraum" : {
-            "anfang" : "Anfangsdatum des Projekts (date)",
-            "ende" : "Enddatum des Projekts (date)"
-        },
+        "bearbeitungszeitraum" : "Anzahl Wochen (int)",
         "budget" : "Dem Projekt zugewiesenes Budget (float)",
         "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen (int)",
         "mitarbeiter_ids" : "Liste aller Mitarbeiter (List[int])",
         "zuordnung_arbeit" : {
-            "1...n" : {
-                "stunden" : "Aufwandsstunden fuer das jeweilige Arbeitspaket (int)",
-                "mitarbeiter_ids" : "Liste aller dem Arbeitspaket zugeordneten Mitarbeiter (List[int])"
-            }
+            "1. mitarbeiter_id" : "Liste mit Wochenstunden, |Liste| = Anzahl Wochen List(int)",
+            "2. mitarbeiter_id" : "...",
+            "..." : "..."
         }
     },
     "Elements" : {
