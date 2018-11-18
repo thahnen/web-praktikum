@@ -14,10 +14,6 @@ echo "1. Hinzufuegen"
 echo "2. Update"
 echo "3. Loeschen"
 
-# Bevor hier was passiert müssen erst alle Seiten (Webseiten usw) angepasst werden!
-echo "Muss neuem Stand angepasst werden !!!"
-exit
-
 
 ################################################################################
 ################################################################################

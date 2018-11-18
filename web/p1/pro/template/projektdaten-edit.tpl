@@ -1,8 +1,26 @@
 ## coding: utf-8
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
-<%include file="/elements/header-edit.tpl"/>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta http-equiv="expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" content="Tobias Hahnen" />
+    <title>${data_o["Data"]["unique_id"]}</title>
+
+    <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
+    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/css/edit.css" />
+</head>
 <body>
+    <!--
+        TODO:
+        1. Veränderung des Bearbeitungszeitraums verändert Zuordnung Arbeit dynamisch!
+        2. Eigene JS/CSS Datei (Mitarbeiter-IDs/Kunden-IDs laden)
+        3. Bessere Ansicht
+    -->
     <div class="div--header">
         <h1 id="headline">${data_o["Data"]["unique_id"]}</h1>
     </div>
@@ -10,12 +28,11 @@
     <%include file="/elements/navbar.tpl"/>
 
     <div class="div--failure">
-        <!-- Vom XMLHttpRequest Fehler auswerten? -->
         <h2 class="h2--failure">Fehler</h2>
     </div>
 
     <div class="div--tbl">
-        <table>
+        <table class="tbl--projects">
             <!-- Table Header Row -->
             <tr class="tbl--header">
                 % for key in data_o["Template"]:
@@ -47,6 +64,7 @@
 
     <%include file="/elements/buttons-edit.tpl"/>
 
+    <!--<script src="/js/edit-projekt.js" charset="utf-8"></script>-->
     <script src="/js/edit.js" charset="UTF-8"></script>
 </body>
 </html>

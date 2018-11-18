@@ -30,7 +30,6 @@
 #   5. Löschen von JSON-Daten
 #       => Bestehende JSON-Datei auf übergebenes Element vergleichen
 #       => Element suchen und entfernen
-#
 
 
 import os
@@ -44,8 +43,8 @@ class Database(object):
 
     # validate_integrity() throws Exception
     def validate_integrity(self, file_path):
-        # Annahme, dass JSON-Datei existiert
         assert (os.path.exists(file_path) and not os.path.isdir(file_path))
+
         data = json.load(open(file_path))
 
         # Kurze Validierung, genauere folgt irgendwann ^^
@@ -90,7 +89,7 @@ class Database(object):
         print(json_data) #DEBUG
         print("") #DEBUG
         with open(file_path, "w") as json_out:
-            json.dump(json_data, json_out)
+            json.dump(json_data, json_out, indent=4)
 
 
     # add_json_into_file(...) throws Exception
@@ -101,7 +100,6 @@ class Database(object):
         #   "unique_id" : XYZ,
         #   "..." : ...;
         # }
-        #
 
         file_path = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
@@ -127,7 +125,7 @@ class Database(object):
         print(json_data) #DEBUG
         print("") #DEBUG
         with open(file_path, "w") as json_out:
-            json.dump(json_data, json_out)
+            json.dump(json_data, json_out, indent=4)
 
 
     # remove_json_from_file(...) throws Exception
@@ -151,4 +149,4 @@ class Database(object):
         print(json_data) #DEBUG
         print("") #DEBUG
         with open(file_path, "w") as json_out:
-            json.dump(json_data, json_out)
+            json.dump(json_data, json_out, indent=4)

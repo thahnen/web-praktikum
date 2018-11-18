@@ -1,1 +1,49 @@
-{"Template": {"unique_id": "Eindeutige ID des Projekts", "nummer": "Interne Nummer des Projekts", "beizeichnung": "Bezeichnung f\u00fcr das Projekt", "beschreibung": "Kurze Beschreibung des Projekts", "bearbeitungszeitraum": {"anfang": "Anfangsdatum des Projekts", "ende": "Enddatum des Projekts"}, "budget": "Dem Projekt zugewiesenes Budget", "kunden_id": "Die eindeutige ID des Kunden zum zuordnen", "mitarbeiter_ids": "Liste aller Mitarbeiter", "zuordnung_arbeit": {"1...n": {"stunden": "Aufwandsstunden f\u00fcr das jeweilige Arbeitspaket", "mitarbeiter_ids": "Liste aller dem Arbeitspaket zugeordneten Mitarbeiter"}}}, "Elements": {"1": {"unique_id": 1191123, "nummer": 42, "beizeichnung": "Ein Tolles Projekt", "beschreibung": "Ja ist es wirklich", "bearbeitungszeitraum": {"anfang": "01.01.2018", "ende": "31.12.2019"}, "budget": 12.2, "kunden_id": 112332566, "mitarbeiter_ids": [1111, 1112, 1113, 1114], "zuordnung_arbeit": {"1": {"stunden": 14, "mitarbeiter_ids": [1111, 1114]}}}}}
+{
+    "Template": {
+        "unique_id": "Eindeutige ID des Projekts (int)",
+        "nummer": "Interne Nummer des Projekts (int)",
+        "bezeichnung": "Bezeichnung fuer das Projekt (string)",
+        "beschreibung": "Kurze Beschreibung des Projekts (string)",
+        "bearbeitungszeitraum": "Anzahl Wochen (int)",
+        "budget": "Dem Projekt zugewiesenes Budget (float)",
+        "kunden_id": "Die eindeutige ID des Kunden zum zuordnen (int)",
+        "mitarbeiter_ids": "Liste aller Mitarbeiter (List[int])",
+        "zuordnung_arbeit": {
+            "1. mitarbeiter_id": "Liste mit Wochenstunden, |Liste|=Anzahl Wochen (List[int])",
+            "2. mitarbeiter_id": "...",
+            "...": "..."
+        }
+    },
+    "Elements": {
+        "1": {
+            "unique_id": 1191123,
+            "nummer": 42,
+            "bezeichnung": "Ein Tolles Projekt",
+            "beschreibung": "Ja ist es wirklich",
+            "bearbeitungszeitraum": 4,
+            "budget": 12.2,
+            "kunden_id": 112332566,
+            "mitarbeiter_ids": [1111,1112,1113,1114],
+            "zuordnung_arbeit": {
+                "1111": [12,2,3,4],
+                "1112": [13,4,5,6],
+                "1113": [14,5,6,7],
+                "1114": [15,6,7,8]
+            }
+        },
+        "2": {
+            "unique_id": 1218710,
+            "nummer": 4335,
+            "bezeichnung": "Studium",
+            "beschreibung": "Dauert 6 Semester, aber Geld bekommt man keins",
+            "bearbeitungszeitraum": 10,
+            "budget": 123.4,
+            "kunden_id": 12121212,
+            "mitarbeiter_ids": [1111, 1114],
+            "zuordnung_arbeit": {
+                "1111": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                "1114": [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+            }
+        }
+    }
+}

@@ -39,8 +39,7 @@ class View(object):
     def render_dynamic_page(self, pagename, data):
         page_template_path = self.template_path + pagename + ".tpl"
 
-        # Annahme, dass Template-Datei existiert
-        assert (os.path.exists(page_template_path)) and not os.path.isdir(page_template_path)
+        assert (os.path.exists(page_template_path) and not os.path.isdir(page_template_path))
 
         template = TemplateLookup(directories = self.template_path).get_template(pagename + ".tpl")
         return template.render(data_o = data)

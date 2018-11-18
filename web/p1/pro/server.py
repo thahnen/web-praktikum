@@ -64,9 +64,7 @@ class WebServer(object):
         #   /projektdaten
         #   /projektdaten/<projekt_id>
         #   /projektdaten/neu
-        if not projekt_id_ODER_neu:
-            return self.application.get_dynamic_page("projektdaten")
-        return self.application.get_dynamic_page_with_params("projektdaten", projekt_id_ODER_neu)
+        return self.application.get_dynamic_page("projektdaten", projekt_id_ODER_neu)
 
 
     # Seite mit allen Kundendaten
@@ -76,9 +74,7 @@ class WebServer(object):
         #   /kundendaten
         #   /kundendaten/<kunden_id>
         #   /kundendaten/neu
-        if not kunden_id_ODER_neu:
-            return self.application.get_dynamic_page("kundendaten")
-        return self.application.get_dynamic_page_with_params("kundendaten", kunden_id_ODER_neu)
+        return self.application.get_dynamic_page("kundendaten", kunden_id_ODER_neu)
 
 
     # Seite mit allen Mitarbeiterdaten
@@ -88,9 +84,40 @@ class WebServer(object):
         #   /mitarbeiterdaten
         #   /mitarbeiterdaten/<mitarbeiter_id>
         #   /mitarbeiterdaten/neu
-        if not mitarbeiter_id_ODER_neu:
-            return self.application.get_dynamic_page("mitarbeiterdaten")
-        return self.application.get_dynamic_page_with_params("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
+        return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
+
+
+    # Seite mit allen nötigen Informationen (?)
+    @cherrypy.expose
+    def auswertung(self):
+        # hier kommt noch die Auswertung hin, bis auf weiteres nur 500.html zum testen!
+        return self.application.get_static_page("500")
+
+
+    # Seite um JSON-Informationen abzufragen
+    # wird zu einer API zusammengefasst
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    def api(self, function=None):
+        # Erhaltene Daten (input_json) nach der Form:
+        # {
+        #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
+        #   "token" : "Access Token"
+        # }
+        #
+        # Mögliche Seiten:
+        #   /api/update     (zum Updaten von Daten, ausserdem hinzufügen und löschen)
+        #   /api/get        (zum bekommen von Daten, zum anzeigen auf Webseiten)
+
+        try:
+            # War ein POST :)
+            input_json = cherrypy.request.json
+            # Gibt auch Infos zurück, wenn Input fehlerhaft!
+            #return self.application.get_json_data(input_json)
+            return '{"code":500}'
+        except Exception as e:
+            # War ein GET :(
+            return self.application.get_static_page("404")
 
 
     # Seite um Werte zu updaten bzw. neu hinzuzufügen
@@ -104,9 +131,7 @@ class WebServer(object):
         #   1. wenn "delete":
         #   "data" : unique_id
         #   2. sonst:
-        #   "data" : {
-        #       [...] Eingegebene Daten nach dem jeweiligen Template [...]
-        #   }
+        #   "data" : { [...] Eingegebene Daten nach dem jeweiligen Template [...] }
         # }
 
         try:
@@ -117,13 +142,6 @@ class WebServer(object):
         except Exception as e:
             # War ein GET :(
             return self.application.get_static_page("404")
-
-
-    # Seite mit allen nötigen Informationen (?)
-    @cherrypy.expose
-    def auswertung(self):
-        # hier kommt noch die Auswertung hin, bis auf weiteres nur 500.html zum testen!
-        return self.application.get_static_page("500")
 
 
 config = {

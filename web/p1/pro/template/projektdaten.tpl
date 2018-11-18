@@ -1,8 +1,26 @@
 ## coding: utf-8
 <!DOCTYPE html>
 <html lang="de" x-ms-format-detection="none">
-<%include file="/elements/header-view.tpl"/>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta http-equiv="expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" content="Tobias Hahnen" />
+    <title>: Übersicht</title>
+
+    <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
+    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/css/view.css" />
+</head>
 <body>
+    <!--
+        TODO:
+        1. Eigene CSS-Datei um es einfacher zu gestalten
+        2. CSS des ul-Tags mit allen li-Elementen!
+        3. Links auch als solche erkennbar machen!
+    -->
     <div class="div--header">
         <h1 id="headline">: Überblick</h1>
     </div>
@@ -10,62 +28,64 @@
     <%include file="/elements/navbar.tpl"/>
 
     <div class="div--failure">
-        <!-- Vom XMLHttpRequest Fehler auswerten? -->
         <h2 class="h2--failure">Fehler</h2>
     </div>
 
     <div class="div--tbl">
-        <table>
+        <table class="tbl--projects">
             <!-- Table Header Row -->
             <tr class="tbl--header">
                 % for key in data_o["Template"]:
+                % if key == "zuordnung_arbeit":
+                <th class="tbl--header--elem">
+                    Tabelle mit, den jeweiligen Mitarbeitern,<br/>
+                    zugeordneten Wochenstunden<br/>
+                    (List[mitarbeiter_id] -> List[int])
+                </th>
+                % else:
                 <th class="tbl--header--elem">${data_o["Template"][key]}</th>
+                % endif
                 % endfor
             </tr>
 
-            <!-- Table Elements Row -->
-            % for object in data_o["Elements"]:
+            <!-- Table Data Row -->
+            % for object_key in data_o["Elements"]:
             <tr class="tbl--data">
-                % for object_key in data_o["Elements"][object]:
-                % if object_key == "bearbeitungszeitraum":
-                <!-- Irgendwie schön eine Zeitspanne anzeigen -->
+                % for elem in data_o["Elements"][object_key]:
+                % if elem == "kunden_id":
                 <td class="tbl--data--elem">
-                    <ul>
-                        <li>Beginn: ${data_o["Elements"][object][object_key]["anfang"]}</li>
-                        <li>Ende: ${data_o["Elements"][object][object_key]["ende"]}</li>
-                    </ul>
+                    <!-- Link zu dem jeweiligen Kunden -->
+                    <a href="/kundendaten/${data_o["Elements"][object_key][elem]}">${data_o["Elements"][object_key][elem]}</a>
                 </td>
-                % elif object_key == "kunden_id":
+                % elif elem == "mitarbeiter_ids":
                 <td class="tbl--data--elem">
-                    <a class="a--elem" href="/kundendaten/${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
-                </td>
-                % elif object_key == "mitarbeiter_ids":
-                <!-- Irgendwie schön die Mitarbeiterliste anzeigen -->
-                <td class="tbl--data--elem">
-                    <ul>
-                        % for id in data_o["Elements"][object][object_key]:
-                        <li><a class="a--elem" href="/mitarbeiterdaten/${id}">${id}</a></li>
-                        % endfor
-                    </ul>
-                </td>
-                % elif object_key == "zuordnung_arbeit":
-                <!-- Irgendwie schön die Zuordnung anzeigen -->
-                <td class="tbl--data--elem">
-                    <ul>
-                        % for zu_o in data_o["Elements"][object][object_key]:
-                        <li>
-                            ${data_o["Elements"][object][object_key][zu_o]["stunden"]}
-                            <ul>
-                                % for zu_o_mid in data_o["Elements"][object][object_key][zu_o]["mitarbeiter_ids"]:
-                                <li>${zu_o_mid}</li>
-                                % endfor
-                            </ul>
+                    <!-- Liste (oder ggf Tabelle) mit allen Mitarbeitern -->
+                    <ul class="ul--mitarbeiter">
+                        % for id in data_o["Elements"][object_key][elem]:
+                        <li class="li--mitarbeiter">
+                            <a href="/mitarbeiterdaten/${id}">${id}</a>
                         </li>
                         % endfor
                     </ul>
                 </td>
+                % elif elem == "zuordnung_arbeit":
+                <td class="tbl--data--elem">
+                    <!-- Tabelle mit allen Mitarbeitern => Arbeitsstunden -->
+                    <table class="tbl--zuordnung">
+                        % for id in data_o["Elements"][object_key][elem]:
+                        <tr class="tbl--zuordnung--row">
+                            <th class="tbl--zuordnung--row--header">
+                                <a href="/mitarbeiterdaten/${id}">${id}</a>
+                            </th>
+                            % for stunden in data_o["Elements"][object_key][elem][id]:
+                            <td class="tbl--zuordnung--row--data">${stunden}</td>
+                            % endfor
+                        </tr>
+                        % endfor
+                    </table>
+                </td>
                 % else:
-                <td class="tbl--data--elem">${data_o["Elements"][object][object_key]}</td>
+                <td class="tbl--data--elem">${data_o["Elements"][object_key][elem]}</td>
                 % endif
                 % endfor
             </tr>
