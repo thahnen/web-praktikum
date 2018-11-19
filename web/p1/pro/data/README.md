@@ -45,7 +45,7 @@ Verweise:
         "beizeichnung" : "Bezeichnung fuer das Projekt (string)",
         "beschreibung" : "Kurze Beschreibung des Projekts (string)",
         "bearbeitungszeitraum" : "Anzahl Wochen (int)",
-        "budget" : "Dem Projekt zugewiesenes Budget (float)",
+        "budget" : "Dem Projekt zugewiesenes Budget (int)",
         "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen (int)",
         "mitarbeiter_ids" : "Liste aller Mitarbeiter (List[int])",
         "zuordnung_arbeit" : {

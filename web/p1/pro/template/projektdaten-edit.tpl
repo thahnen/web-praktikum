@@ -33,38 +33,108 @@
 
     <div class="div--tbl">
         <table class="tbl--projects">
-            <!-- Table Header Row -->
-            <tr class="tbl--header">
-                % for key in data_o["Template"]:
+            % for key in data_o["Template"]:
+            <tr>
+                % if key == "kunden_id":
+                <!-- Kunden-ID -->
+                <th class="tbl--header--elem">
+                    Kunden-ID:<br/>
+                    (Keine Mehrfachauswahl möglich!)<br/>
+                    (List[kunden_id])
+                </th>
+
+                % elif key == "mitarbeiter_ids":
+                <!-- Liste mit allen Mitarbeiter-IDs -->
+                <th class="tbl--header--elem">
+                    Mitarbeiterliste:<br/>
+                    (Mehrfachauswahl möglich!)<br/>
+                    (List[mitarbeiter_id])
+                </th>
+
+                % elif key == "zuordnung_arbeit":
+                <!-- Zuordnung Arbeit -->
+                <th class="tbl--header--elem">
+                    Tabelle mit, den jeweiligen Mitarbeitern,<br/>
+                    zugeordneten Wochenstunden<br/>
+                    (List[mitarbeiter_id] -> List[int])
+                </th>
+
+                % else:
                 <th class="tbl--header--elem">${data_o["Template"][key]}</th>
-                % endfor
-            </tr>
+                % endif
 
-            <!-- Erste Zeile nur mit den Erläuterungen, kann weg -->
-            <tr class="tbl--header">
-                % for key in data_o["Template"]:
-                <th class="tbl--header--elem">${key}</th>
-                % endfor
-            </tr>
 
-            <!-- Table Data Row -->
-            <tr class="tbl--data">
-                % for key in data_o["Data"]:
+                % if key == "bearbeitungszeitraum" or key == "nummer" or key == "budget":
                 <td class="tbl--data--elem">
-                    % if key != "unique_id":
-                    <input class="input--data" type="text" value="${data_o["Data"][key]}" disabled required />
-                    % else:
-                    ${data_o["Data"][key]}
-                    % endif
+                    <input type="number" min="1" value="${data_o["Data"][key]}" />
                 </td>
-                % endfor
+                % elif key == "kunden_id":
+                <!-- Kunden-ID -->
+                <td class="tbl--data--elem">
+                    <select name="kunden_id" size="5">
+                        <!--
+                            Alle möglichen Kunden anzeigen, schon den highlighten der angegeben ist.
+                            GGF irgendwie mitgegeben? Oder per XMLHttpRequest abrufen?
+                            Nach dem Schema:
+                            <option value="kunden_id">Name, Vorname (kunden_id)</option>
+                        -->
+                        <option value="${data_o["Data"][key]}" selected>${data_o["Data"][key]}</option>
+                    </select>
+                </td>
+
+                % elif key == "mitarbeiter_ids":
+                <!-- Liste mit allen Mitarbeiter-IDs -->
+                <td class="tbl--data--elem">
+                    <select name="mitarbeiter_ids" size="5" multiple>
+                        <!--
+                            Alle möglichen Mitarbeiter anzeigen, schon die highlighten die angegeben sind.
+                            GFF irgendwie mitgeben? Oder per XMLHttpRequest abrufen
+                            Nach dem Schema:
+                            <option value="mitarbeiter_id">Name, Vorname (mitarbeiter_id)</option>
+                        -->
+                        % for id in data_o["Data"][key]:
+                        <option value="${id}" selected>${id}</option>
+                        % endfor
+                    </select>
+                </td>
+                % elif key == "zuordnung_arbeit":
+                <td class="tbl--data--elem">
+                    <table>
+                        <!--
+                            Zuordnung der Mitarbeiter und Wochenstunden.
+                            Autogeneriert je nachdem wie viele Wochenstunden.
+                            Nach dem Schema:
+                            <tr>
+                                <th>mitarbeiter_id</th>
+                                <td>Stunden Woche 1</td>
+                                <td>Stunden Woche 2</td>
+                                <td>...</td>
+                            </tr>
+                        -->
+                        % for zuordnung in data_o["Data"][key]:
+                        <tr>
+                            <th>${zuordnung}</th>
+                            % for stunden in data_o["Data"][key][zuordnung]:
+                            <td>
+                                <input class="input--data" type="text" value="${stunden}" required />
+                            </td>
+                            % endfor
+                        </tr>
+                        % endfor
+                    </table>
+                </td>
+                % else:
+                <td class="tbl--data--elem">
+                    <input class="input--data" type="text" value="${data_o["Data"][key]}" required />
+                </td>
+                % endif
             </tr>
+            % endfor:
         </table>
     </div>
 
     <%include file="/elements/buttons-edit.tpl"/>
 
     <!--<script src="/js/edit-projekt.js" charset="utf-8"></script>-->
-    <script src="/js/edit.js" charset="UTF-8"></script>
 </body>
 </html>

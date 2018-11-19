@@ -193,7 +193,7 @@ P_ADD() {
 		"bezeichnung" : "Test-Bezeichnung",
 		"beschreibung" : "Test-Beschreibung",
 		"bearbeitungszeitraum" : 6,
-		"budget" : 123.45,
+		"budget" : 123,
 		"kunden_id" : 12321,
 		"mitarbeiter_ids" : [11111, 11112, 11113, 11114],
 		"zuordnung_arbeit" : {
@@ -218,7 +218,7 @@ P_UPDATE() {
 		"bezeichnung" : "Bezeichnung-Test",
 		"beschreibung" : "Beschreibung-Test",
 		"bearbeitungszeitraum" : 3,
-		"budget" : 543.21,
+		"budget" : 543,
 		"kunden_id" : 32123,
 		"mitarbeiter_ids" : [11111, 21111, 31111],
 		"zuordnung_arbeit" : {

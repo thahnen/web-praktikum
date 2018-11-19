@@ -5,7 +5,7 @@
         "bezeichnung": "Bezeichnung fuer das Projekt (string)",
         "beschreibung": "Kurze Beschreibung des Projekts (string)",
         "bearbeitungszeitraum": "Anzahl Wochen (int)",
-        "budget": "Dem Projekt zugewiesenes Budget (float)",
+        "budget": "Dem Projekt zugewiesenes Budget (int)",
         "kunden_id": "Die eindeutige ID des Kunden zum zuordnen (int)",
         "mitarbeiter_ids": "Liste aller Mitarbeiter (List[int])",
         "zuordnung_arbeit": {
@@ -21,28 +21,39 @@
             "bezeichnung": "Ein Tolles Projekt",
             "beschreibung": "Ja ist es wirklich",
             "bearbeitungszeitraum": 4,
-            "budget": 12.2,
+            "budget": 12,
             "kunden_id": 112332566,
-            "mitarbeiter_ids": [1111,1112,1113,1114],
+            "mitarbeiter_ids": [
+                1111,
+                1112,
+                1113,
+                1114
+            ],
             "zuordnung_arbeit": {
-                "1111": [12,2,3,4],
-                "1112": [13,4,5,6],
-                "1113": [14,5,6,7],
-                "1114": [15,6,7,8]
-            }
-        },
-        "2": {
-            "unique_id": 1218710,
-            "nummer": 4335,
-            "bezeichnung": "Studium",
-            "beschreibung": "Dauert 6 Semester, aber Geld bekommt man keins",
-            "bearbeitungszeitraum": 10,
-            "budget": 123.4,
-            "kunden_id": 12121212,
-            "mitarbeiter_ids": [1111, 1114],
-            "zuordnung_arbeit": {
-                "1111": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                "1114": [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+                "1111": [
+                    12,
+                    2,
+                    3,
+                    4
+                ],
+                "1112": [
+                    13,
+                    4,
+                    5,
+                    6
+                ],
+                "1113": [
+                    14,
+                    5,
+                    6,
+                    7
+                ],
+                "1114": [
+                    15,
+                    6,
+                    7,
+                    8
+                ]
             }
         }
     }

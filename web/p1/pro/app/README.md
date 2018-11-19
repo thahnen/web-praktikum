@@ -7,7 +7,7 @@ Stand: 29.10.2018 | Version: **1.0.0**
 Element | Abschnitt
 --------|----------
 *Übersicht* | [--> Klick mich <--](#overview)
-*__init__.py* | [--> Klick mich <--](#init)
+*\_\_init\_\_.py* | [--> Klick mich <--](#init)
 *application.py* | [--> Klick mich <--](#application)
 *database.py* | [--> Klick mich <--](#database)
 *view.py* | [--> Klick mich <--](#view)

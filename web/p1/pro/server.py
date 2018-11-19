@@ -38,6 +38,9 @@
 #
 #   - "/auswertung":
 #       => Eine Projektübersicht mit allen Informationen
+#
+#   - "/api/":
+#       => Ein Interface um Daten anzufordern und zu verändern
 
 
 import os
@@ -103,15 +106,33 @@ class WebServer(object):
         # {
         #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
         #   "token" : "Access Token"
+        #   -> je nachdem welche Funktion anders:
+        #   "data" : ...
         # }
         #
         # Mögliche Seiten:
-        #   /api/update     (zum Updaten von Daten, ausserdem hinzufügen und löschen)
         #   /api/get        (zum bekommen von Daten, zum anzeigen auf Webseiten)
+        #   /api/new        (zum Hinzufügen von neuen Daten)
+        #   /api/update     (zum Updaten von bereits bestehenden Daten)
+        #   /api/delete     (zum Löschen von bereits bestehenden Daten)
 
         try:
             # War ein POST :)
             input_json = cherrypy.request.json
+
+            assert (function != None)
+
+            if function == "get":
+                pass
+            elif function == "new":
+                pass
+            elif function == "update":
+                return self.application.update_values(input_json)
+            elif function == "delete":
+                pass
+            else:
+                raise
+
             # Gibt auch Infos zurück, wenn Input fehlerhaft!
             #return self.application.get_json_data(input_json)
             return '{"code":500}'
@@ -121,6 +142,7 @@ class WebServer(object):
 
 
     # Seite um Werte zu updaten bzw. neu hinzuzufügen
+    # Wird nachher in die api-Funktion gepackt!
     @cherrypy.expose
     @cherrypy.tools.json_in()
     def update(self):
