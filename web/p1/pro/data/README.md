@@ -118,3 +118,5 @@ Um bei der Validierung die Datei wiederherstellen zu können!
 ## Test-Umgebung
 Mithilfe dem Bash-Skript [test-post.sh](test-post.sh) können Funktionen auf alle JSON-Dateien getestet werden.
 Dabei werden gleichzeitig auch die Python-Funktionen auf ihre Richtigkeit getestet!
+
+Weitere Tests um Validierung und Integrität bei Veränderungen zu testen!

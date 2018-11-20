@@ -28,7 +28,7 @@
  *
  *  5. "Eintrag löschen" gedrückt:
  *  => Irgendein Eintrag ausgewählt?
- *  => XMLHttpRequest an /update mit Löschen-Auftrag!
+ *  => XMLHttpRequest an /api/delete mit Löschen-Auftrag!
  *
 */
 
@@ -115,7 +115,7 @@ var highlighted_entry = null;
 
                 var request = {
                     "link" : link,
-                    "method" : "delete",
+                    "token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
                     "data" : unique_id
                 };
 
@@ -124,7 +124,7 @@ var highlighted_entry = null;
 
                 // POST absetzen mit den geänderten Daten
                 var http = new XMLHttpRequest();
-                http.open("POST", "/update");
+                http.open("POST", "/api/delete");
                 http.setRequestHeader("Content-Type", "application/json");
                 http.onload = function() {
                     // Wenn es Daten zurückgibt, damit weiterarbeiten

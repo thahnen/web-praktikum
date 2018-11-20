@@ -79,7 +79,7 @@
 
                 var request = {
                     "link" : link,
-                    "method" : "edit",
+                    "token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
                     "data" : {}
                 };
 
@@ -92,7 +92,7 @@
 
                 // POST absetzen mit den geänderten Daten
                 var http = new XMLHttpRequest();
-                http.open("POST", "/update");
+                http.open("POST", "/api/update");
                 http.setRequestHeader("Content-Type", "application/json");
                 http.onload = function() {
                     // Wenn es Daten zurückgibt, damit weiterarbeiten

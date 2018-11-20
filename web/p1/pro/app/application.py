@@ -55,8 +55,22 @@ class Application(object):
             return self.get_static_page("500")
 
 
+    # Handhabt Rückgabe der Daten
+    def get_values(self, values):
+        # filename = values["link"]
+        # filename = filename[0].lower() + filename[1::]
+        # return self.database.read_json_into_dict(filename)
+        pass
+
+
+    # Handhabt Hinzufügen der Daten
+    def add_values(self, values):
+        pass
+
+
     # Handhabt Updates der Daten
     def update_values(self, values):
+        # noch anpassen!
         try:
             assert ("link" in values and "method" in values and "data" in values)
 
@@ -77,9 +91,7 @@ class Application(object):
 
         return '{"code":200}'
 
-    # Gibt bestimmte
-    def get_json_data(self, values):
-        # filename = values["link"]
-        # filename = filename[0].lower() + filename[1::]
-        # return self.database.read_json_into_dict(filename)
+
+    # Handhabt Löschen der Daten
+    def delete_values(self, values):
         pass

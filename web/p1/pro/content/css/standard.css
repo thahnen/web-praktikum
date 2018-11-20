@@ -7,6 +7,11 @@
     2. Headline mit 3D-Effekt
     3. Navigations-Bar
     4. Tabellenformatierung
+
+    Sowie:
+    - View.css-Inhalt
+    - Edit.css-Inhalt
+    - New.css-Inhalt
 */
 
 
@@ -29,13 +34,9 @@ h1, h2 {
     color: gray;
 }
 
-h1 {
-    text-shadow: 0 2px lightgray;
-}
+h1 { text-shadow: 0 2px lightgray; }
 
-h2 {
-    text-shadow: 0 1px lightgray;
-}
+h2 { text-shadow: 0 1px lightgray; }
 
 
 /* Div: Navbar */
@@ -86,3 +87,69 @@ th, td {
 }
 
 .tbl--header { background-color: #f5f5f5; }
+
+
+/* View.css */
+.tbl--infos {
+    transition: max-height 0.5s;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.a--elem {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 16ch;
+}
+
+.a--elem:visited {
+    color: green;
+}
+
+
+/* New.css */
+button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: lightgray;
+    border: none;
+    color: black;
+    text-align: center;
+    font-size: 15px;
+    padding: 20px;
+    width: 120px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+button span::after {
+    content: '\00bb'; /* Weiter-Unicode-Symbol */
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+button[id=btn--edit] span::after {
+    content: '\270D'; /* Edit-Unicode-Symbol */
+}
+
+button:hover span { padding-right: 15px; }
+
+button:hover span::after {
+    opacity: 1;
+    right: 0;
+}
+
+
+/* Edit.css */

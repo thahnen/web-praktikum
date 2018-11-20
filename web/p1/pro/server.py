@@ -97,8 +97,7 @@ class WebServer(object):
         return self.application.get_static_page("500")
 
 
-    # Seite um JSON-Informationen abzufragen
-    # wird zu einer API zusammengefasst
+    # API für alle Funktionen
     @cherrypy.expose
     @cherrypy.tools.json_in()
     def api(self, function=None):
@@ -123,44 +122,17 @@ class WebServer(object):
             assert (function != None)
 
             if function == "get":
-                pass
+                return self.application.get_values(input_json)
             elif function == "new":
-                pass
+                return self.application.add_values(input_json)
             elif function == "update":
                 return self.application.update_values(input_json)
             elif function == "delete":
-                pass
+                return self.application.delete_values(input_json)
             else:
                 raise
 
-            # Gibt auch Infos zurück, wenn Input fehlerhaft!
-            #return self.application.get_json_data(input_json)
             return '{"code":500}'
-        except Exception as e:
-            # War ein GET :(
-            return self.application.get_static_page("404")
-
-
-    # Seite um Werte zu updaten bzw. neu hinzuzufügen
-    # Wird nachher in die api-Funktion gepackt!
-    @cherrypy.expose
-    @cherrypy.tools.json_in()
-    def update(self):
-        # Erhaltene Daten (input_json) nach der Form:
-        # {
-        #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
-        #   "method" : "<edit/new/delete>",
-        #   1. wenn "delete":
-        #   "data" : unique_id
-        #   2. sonst:
-        #   "data" : { [...] Eingegebene Daten nach dem jeweiligen Template [...] }
-        # }
-
-        try:
-            # War ein POST :)
-            input_json = cherrypy.request.json
-            # Gibt auch Infos zurück, wenn Input fehlerhaft!
-            return self.application.update_values(input_json)
         except Exception as e:
             # War ein GET :(
             return self.application.get_static_page("404")
