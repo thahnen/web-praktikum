@@ -5,14 +5,17 @@
 curl 127.0.0.1:8080 &> /dev/null
 if test $? -ne 0; then
 	echo "Server not up and running on 127.0.0.1:8080!"
+	echo "Run> cd $HOME/GitHub/web-praktikum/web/p1/"
+	echo "Run> python3 server.py"
 	exit
 fi
 
 
 echo "Test aller 3 anwendbaren Funktionen auf eine JSON-Datei:"
-echo "1. Hinzufuegen"
-echo "2. Update"
-echo "3. Loeschen"
+echo "1. Anfordern"
+echo "2. Hinzufuegen"
+echo "3. Update"
+echo "4. Loeschen"
 
 
 ################################################################################
@@ -24,11 +27,21 @@ echo "3. Loeschen"
 echo ""
 echo "Kundendaten.json"
 
-K_ADD() {
+K_GET() {
 	cat <<EOF
 {
 	"link" : "Kundendaten",
-	"method" : "new",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
+	"data" : ""
+}
+EOF
+}
+
+K_NEW() {
+	cat <<EOF
+{
+	"link" : "Kundendaten",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : {
 		"unique_id" : 99999,
 		"nummer" : 99999,
@@ -44,7 +57,7 @@ K_UPDATE() {
 	cat <<EOF
 {
 	"link" : "Kundendaten",
-	"method" : "edit",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : {
 		"unique_id" : 99999,
 		"nummer" : 66666,
@@ -60,31 +73,39 @@ K_DELETE() {
 	cat <<EOF
 {
 	"link" : "Kundendaten",
-	"method" : "delete",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : 99999
 }
 EOF
 }
 
-echo "1. Hinzufuegen:"
-echo $(K_ADD)
+echo ""
+echo "1. Anfordern:"
+echo $(K_GET)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json" --request POST --data "$(K_ADD)" 127.0.0.1:8080/update
-echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
 
-echo "2. Update:"
+echo ""
+echo "2. Hinzufuegen:"
+echo $(K_NEW)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(K_NEW)" 127.0.0.1:8080/api/new
+
+echo ""
+echo "3. Update:"
 echo $(K_UPDATE)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json" --request POST --data "$(K_UPDATE)" 127.0.0.1:8080/update
-echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(K_UPDATE)" 127.0.0.1:8080/api/update
 
-echo "3. Loeschen:"
+echo ""
+echo "4. Loeschen:"
 echo $(K_DELETE)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json"  --request POST --data "$(K_DELETE)" 127.0.0.1:8080/update
+curl --header "Content-Type: application/json"  --request POST --data "$(K_DELETE)" 127.0.0.1:8080/api/delete
 echo ""
 
 read -n 1 -p "Weiter (y|n): " ANSWER
@@ -104,11 +125,21 @@ echo ""
 echo ""
 echo "Mitarbeiterdaten.json"
 
-M_ADD() {
+M_GET() {
 	cat <<EOF
 {
 	"link" : "Mitarbeiterdaten",
-	"method" : "new",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
+	"data" : ""
+}
+EOF
+}
+
+M_NEW() {
+	cat <<EOF
+{
+	"link" : "Mitarbeiterdaten",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : {
 		"unique_id" : 77777,
 		"name" : "Test-Name",
@@ -123,7 +154,7 @@ M_UPDATE() {
 	cat <<EOF
 {
 	"link" : "Mitarbeiterdaten",
-	"method" : "edit",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : {
 		"unique_id" : 77777,
 		"name" : "Name-Test",
@@ -138,31 +169,39 @@ M_DELETE() {
 	cat <<EOF
 {
 	"link" : "Mitarbeiterdaten",
-	"method" : "delete",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : 77777
 }
 EOF
 }
 
-echo "1. Hinzufuegen:"
-echo $(M_ADD)
+echo ""
+echo "1. Anfordern:"
+echo $(M_GET)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json" --request POST --data "$(M_ADD)" 127.0.0.1:8080/update
-echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 127.0.0.1:8080/api/get
 
-echo "2. Update:"
+echo ""
+echo "2. Hinzufuegen:"
+echo $(M_NEW)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(M_NEW)" 127.0.0.1:8080/api/new
+
+echo ""
+echo "3. Update:"
 echo $(M_UPDATE)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json" --request POST --data "$(M_UPDATE)" 127.0.0.1:8080/update
-echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(M_UPDATE)" 127.0.0.1:8080/api/update
 
-echo "3. Loeschen:"
+echo ""
+echo "4. Loeschen:"
 echo $(M_DELETE)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json"  --request POST --data "$(M_DELETE)" 127.0.0.1:8080/update
+curl --header "Content-Type: application/json"  --request POST --data "$(M_DELETE)" 127.0.0.1:8080/api/delete
 echo ""
 
 read -n 1 -p "Weiter (y|n): " ANSWER
@@ -182,11 +221,21 @@ echo ""
 echo ""
 echo "Projektdaten.json"
 
-P_ADD() {
+P_GET() {
 	cat <<EOF
 {
 	"link" : "Projektdaten",
-	"method" : "new",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
+	"data" : ""
+}
+EOF
+}
+
+P_NEW() {
+	cat <<EOF
+{
+	"link" : "Projektdaten",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : {
 		"unique_id" : 88888,
 		"nummer" : 44444,
@@ -211,7 +260,7 @@ P_UPDATE() {
 	cat <<EOF
 {
 	"link" : "Projektdaten",
-	"method" : "edit",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : {
 		"unique_id" : 88888,
 		"nummer" : 45454,
@@ -235,29 +284,37 @@ P_DELETE() {
 	cat <<EOF
 {
 	"link" : "Projektdaten",
-	"method" : "delete",
+	"token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
 	"data" : 88888
 }
 EOF
 }
 
-echo "1. Hinzufuegen:"
-echo $(P_ADD)
+echo ""
+echo "1. Anfordern:"
+echo $(P_GET)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json" --request POST --data "$(P_ADD)" 127.0.0.1:8080/update
-echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(P_GET)" 127.0.0.1:8080/api/get
 
-echo "2. Update:"
+echo ""
+echo "2. Hinzufuegen:"
+echo $(P_NEW)
+echo ""
+# Erst einkommentieren, wenn alles klappt!
+curl --header "Content-Type: application/json" --request POST --data "$(P_NEW)" 127.0.0.1:8080/api/new
+
+echo ""
+echo "3. Update:"
 echo $(P_UPDATE)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json" --request POST --data "$(P_UPDATE)" 127.0.0.1:8080/update
-echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(P_UPDATE)" 127.0.0.1:8080/api/update
 
-echo "3. Loeschen:"
+echo ""
+echo "4. Loeschen:"
 echo $(P_DELETE)
 echo ""
 # Erst einkommentieren, wenn alles klappt!
-curl --header "Content-Type: application/json"  --request POST --data "$(P_DELETE)" 127.0.0.1:8080/update
+curl --header "Content-Type: application/json"  --request POST --data "$(P_DELETE)" 127.0.0.1:8080/api/delete
 echo ""

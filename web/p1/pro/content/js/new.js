@@ -28,7 +28,6 @@
         var offen = false;
 
         // 1.2) Titel und Header richtig setzen
-        // var link = window.location.href.split("/").slice(-2)[0].split("?")[0]
         var link = window.location.href.split("/")[3].split("?")[0];
         link = link.charAt(0).toUpperCase() + link.slice(1);
         document.title = link + document.title;
@@ -65,16 +64,11 @@
                     request["data"][header[i].innerHTML] = inputs[i].value;
                 }
 
-                // DEBUG
-                console.log(JSON.stringify(request));
-
-                // POST absetzen mit den geänderten Daten
+                // POST absetzen mit den neuen Daten
                 var http = new XMLHttpRequest();
                 http.open("POST", "/api/new");
                 http.setRequestHeader("Content-Type", "application/json");
                 http.onload = function() {
-                    // Wenn es Daten zurückgibt, damit weiterarbeiten
-                    // Klappt aber auf jeden Fall!
                     var rueckgabe = JSON.parse(this.responseText);
                     var h2_failure = document.querySelector(".h2--failure");
                     if (rueckgabe["code"] != 200) {

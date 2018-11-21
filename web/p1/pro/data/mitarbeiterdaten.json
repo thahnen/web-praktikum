@@ -19,10 +19,16 @@
             "funktion": "Nachrichtensprecher"
         },
         "3": {
-            "unique_id": "1113",
-            "name": "Zuckerberg",
-            "vorname": "Mark",
-            "funktion": "Spieleentwickler"
+            "unique_id": "41332",
+            "name": "Rochen",
+            "vorname": "Jochen",
+            "funktion": "Hausmeister"
+        },
+        "4": {
+            "unique_id": 1027,
+            "name": "Kapardor",
+            "vorname": "Kasper",
+            "funktion": "Schwimmt"
         }
     }
 }

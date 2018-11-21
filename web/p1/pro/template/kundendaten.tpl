@@ -1,6 +1,6 @@
 ## coding: utf-8
 <!DOCTYPE html>
-<html lang="de" x-ms-format-detection="none">
+<html lang="de">
 <%include file="/elements/header-view.tpl"/>
 <body>
     <div class="div--header">

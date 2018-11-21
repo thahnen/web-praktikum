@@ -1,29 +1,35 @@
 /*
- *  edit.js
+ *  edit-project.js
  *  =======
  *
- *  Logik für alle Seiten, auf denen man ausgewählte
- *  - Kundendaten,
- *  - Mitarbeiterdaten
- *  bearbeiten und speichern kann.
+ *  Logik für die Projektdaten-Bearbeiten-Seite
  *
  *  1) Eigenschaften setzen:
  *  => Verbergen der Fehlermeldung
  *  => Titel und Header richtig setzen
+ *  => Laden der Kunden und ins bestimme Feld einfügen (alten auswählen!)
+ *  => Laden der Mitarbeiter und ins bestimmte Feld einfügen (alte auswählen!)
  *
  *  2) "Editieren" gedrückt:
- *  => alle Input-Felder mit gleicher Klasse "un-disablen"
+ *  => alle Input-Felder mit gleicher Bearbeiten-Klasse "un-disablen"
  *
- *  3) Input-Event-Listener hinzufügen
+ *  3) Input-Event-Listener hinzufügen (alle)
  *  => onClick: Verbergen der Fehlermeldung
  *  => alle Inputs deaktivieren (sonst wären sie bei Seitenaufruf editierbar!)
  *
- *  4) "Speichern" gedrückt:
+ *  4) Input-Event-Listener hinzufügen - Zahl (Bearbeitungszeitraum)
+ *  => onChange: Änderung verändert Arbeitszuordnungs-Tabelle
+ *
+ *  5) Select-Event-Listener hinzufügen (Mitarbeiter)
+ *  => onClick: Auswahl/ Abwahl verändert die Arbeitszuordnungs-Tabelle!
+ *
+ *  6) "Speichern" gedrückt:
  *  => überprüfen ob Input-Felder leer?
  *  => XMLHttpRequest absetzen und auf Antwort warten und reagieren
+
+ // TODO: den Rest hier drunter abändern!
 */
 
-// TODO: Unique_id soll nicht änderbar sein! Auch in HTML ändern!
 
 (function () {
     window.onload = function () {

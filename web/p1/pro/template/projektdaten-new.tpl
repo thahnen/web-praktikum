@@ -1,10 +1,10 @@
 ## coding: utf-8
 <!DOCTYPE html>
-<html lang="de" x-ms-format-detection="none">
+<html lang="de">
 <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex,nofollow" />
-    <meta http-equiv="expires" content="0" />
+    <meta name="expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="Tobias Hahnen" />
@@ -13,6 +13,7 @@
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/css/standard.css" />
+    <!--<link rel="stylesheet" type="text/css" href="/css/p-edit-new.css">-->
 </head>
 <body>
     <!--
@@ -56,7 +57,7 @@
                 <th class="tbl--header--elem">
                     Tabelle mit, den jeweiligen Mitarbeitern,<br/>
                     zugeordneten Wochenstunden<br/>
-                    (List[mitarbeiter_id] -> List[int])
+                    (List[mitarbeiter_id -> List[int]])
                 </th>
 
                 % else:

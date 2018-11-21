@@ -23,37 +23,27 @@
             "bearbeitungszeitraum": 4,
             "budget": 12,
             "kunden_id": 112332566,
-            "mitarbeiter_ids": [
-                1111,
-                1112,
-                1113,
-                1114
-            ],
+            "mitarbeiter_ids": [ 1111, 1112, 1113, 1114 ],
             "zuordnung_arbeit": {
-                "1111": [
-                    12,
-                    2,
-                    3,
-                    4
-                ],
-                "1112": [
-                    13,
-                    4,
-                    5,
-                    6
-                ],
-                "1113": [
-                    14,
-                    5,
-                    6,
-                    7
-                ],
-                "1114": [
-                    15,
-                    6,
-                    7,
-                    8
-                ]
+                "1111": [ 12, 2, 3, 4 ],
+                "1112": [ 13, 4, 5, 6 ],
+                "1113": [ 14, 5, 6, 7 ],
+                "1114": [ 15, 6, 7, 8 ]
+            }
+        },
+        "2": {
+            "unique_id": 1001,
+            "nummer": 512,
+            "bezeichnung": "Test-Projekt",
+            "beschreibung": "Test-Beschreibung",
+            "bearbeitungszeitraum": 7,
+            "budget": 43334,
+            "kunden_id": 1028,
+            "mitarbeiter_ids": [ 1111, 1112, 1027 ],
+            "zuordnung_arbeit": {
+                "1111": [4, 3, 5, 2, 2, 7, 1],
+                "1112": [1, 2, 2, 7, 2, 4, 1],
+                "1027": [5, 5, 2, 3, 2, 2, 3]
             }
         }
     }

@@ -14,10 +14,6 @@
 #   2. Dynamische Seite zurückgeben
 #   => anhand des Seitennamens und des dazugehörigen Templates
 #   => Füllung des Templates aus mitgegebenen Daten
-#
-#   TODO:
-#   2. Generierung von nötigem CSS/ JS Code je Seite
-#   => Vermeidung von zu vielen Dateien bzw. unnötigem Laden von Daten!
 
 
 import os

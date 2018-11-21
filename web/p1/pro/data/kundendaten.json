@@ -16,10 +16,17 @@
         },
         "3": {
             "unique_id": "112332566",
-            "nummer": "12",
+            "nummer": "44",
             "beizeichnung": "Fakebook Inc.",
-            "ansprechpartner": "Mark Fuckerberg",
+            "ansprechpartner": "Mark Zuckerberg",
             "ort": "Hackerway 1, Palo Alto"
+        },
+        "4": {
+            "unique_id": 1028,
+            "nummer": "404",
+            "beizeichnung": "Komischer Dude",
+            "ansprechpartner": "1 Ansprechpartner",
+            "ort": "Hier"
         }
     }
 }

@@ -115,24 +115,32 @@ class WebServer(object):
         #   /api/update     (zum Updaten von bereits bestehenden Daten)
         #   /api/delete     (zum Löschen von bereits bestehenden Daten)
 
+        # EINZIGER Try-Except Block im Server, sollte eigentlich NUR in der Application sein
         try:
             # War ein POST :)
             input_json = cherrypy.request.json
 
-            assert (function != None)
+            # Alle Annahmen, dass übergebenes JSON richtig formattiert ist
+            assert (
+                (function != None) and
+                ("link" in input_json and "token" in input_json and "data" in input_json) and
+                input_json["link"] in ["Projektdaten", "Kundendaten", "Mitarbeiterdaten"] and
+                input_json["token"] == "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad"
+            )
+
+            page = input_json["link"]
 
             if function == "get":
-                return self.application.get_values(input_json)
+                return self.application.get_values(page)
             elif function == "new":
-                return self.application.add_values(input_json)
+                return self.application.add_values(page, input_json["data"])
             elif function == "update":
-                return self.application.update_values(input_json)
+                return self.application.update_values(page, input_json["data"])
             elif function == "delete":
-                return self.application.delete_values(input_json)
+                return self.application.delete_values(page, input_json["data"])
             else:
-                raise
-
-            return '{"code":500}'
+                print("Wrong API-Call")
+                return '{"code" : 500}'
         except Exception as e:
             # War ein GET :(
             return self.application.get_static_page("404")

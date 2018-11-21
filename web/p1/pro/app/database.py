@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
+# TODO: Auf andere JSON-Dateien achten fehlt noch!
+
+
 # REVIEW: Fast alles über Annahmen (assert's), um Fehlerbehandlung kümmert sich die App!
 
 
@@ -30,6 +33,10 @@
 #   5. Löschen von JSON-Daten
 #       => Bestehende JSON-Datei auf übergebenes Element vergleichen
 #       => Element suchen und entfernen
+#
+#   6. Neue "unique_id" anfragen
+#       => Wird eingelesen aus der JSON-Datei "unique_id.json"
+#       => Dann Zähler inkrementiert und abgespeichert!
 
 
 import os
@@ -48,7 +55,7 @@ class Database(object):
         data = json.load(open(file_path))
 
         # Kurze Validierung, genauere folgt irgendwann ^^
-        assert ("Template" in data and "Elements" in data)
+        #assert ("Template" in data and "Elements" in data)
 
         return data
 
@@ -58,6 +65,34 @@ class Database(object):
         file_path = self.data_path + filename
 
         return self.validate_integrity(file_path)
+
+
+    # add_json_into_file(...) throws Exception
+    def add_json_into_file(self, filename, add_dict):
+        # Dictionary add_dict sieht wie folgt aus:
+        #
+        # {
+        #   "unique_id" : XYZ,
+        #   "..." : ...;
+        # }
+
+        file_path = filename[0].lower() + filename[1::]
+        file_path = self.data_path + file_path + ".json"
+        json_data = self.validate_integrity(file_path)
+
+        # "Generierte" neue unique_id bekommen
+        add_dict["unique_id"] = self.get_new_unique_id()
+
+        index = 0
+        for elem in json_data["Elements"]:
+            if int(elem) > int(index):
+                index = int(elem)
+        index += 1
+
+        json_data["Elements"][str(index)] = add_dict
+
+        with open(file_path, "w") as json_out:
+            json.dump(json_data, json_out, indent=4)
 
 
     # update_json_into_file(...) throws Exception
@@ -72,58 +107,19 @@ class Database(object):
 
         file_path = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
-
         json_data = self.validate_integrity(file_path)
-        print(json_data) #DEBUG
-        print("") #DEBUG
 
-        # Iteriere durch alle Elemente
+        found = False
         for elem in json_data["Elements"]:
-            # Überprüfe, ob das übergebene Element mit einem bisherigen übereinstimmt
-            if json_data["Elements"][elem]["unique_id"] == update_dict["unique_id"]:
+            if int(json_data["Elements"][elem]["unique_id"]) == int(update_dict["unique_id"]):
                 # Wenn ja, dann ersetz das alte einfach durch das neue!
                 # Es wird noch nicht auf die Integrität der anderen JSON-Dateien geachtet!
+                found = True
                 json_data["Elements"][elem] = update_dict
                 break
 
-        print(json_data) #DEBUG
-        print("") #DEBUG
-        with open(file_path, "w") as json_out:
-            json.dump(json_data, json_out, indent=4)
+        if not found: raise
 
-
-    # add_json_into_file(...) throws Exception
-    def add_json_into_file(self, filename, add_dict):
-        # Dictionary add_dict sieht wie folgt aus:
-        #
-        # {
-        #   "unique_id" : XYZ,
-        #   "..." : ...;
-        # }
-
-        file_path = filename[0].lower() + filename[1::]
-        file_path = self.data_path + file_path + ".json"
-
-        json_data = self.validate_integrity(file_path)
-        print(json_data) #DEBUG
-        print("") #DEBUG
-
-        index = 0
-
-        for elem in json_data["Elements"]:
-            if int(json_data["Elements"][elem]["unique_id"]) == int(add_dict["unique_id"]):
-                # diese Unique-ID gibt es bereits!
-                raise Exception
-            # letzten Index suchen
-            if int(elem) > int(index):
-                index = int(elem)
-        # Noch einen höher setzen, da auf letzten gesetzt!
-        index += 1
-
-        json_data["Elements"][str(index)] = add_dict
-
-        print(json_data) #DEBUG
-        print("") #DEBUG
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
 
@@ -134,19 +130,32 @@ class Database(object):
 
         file_path = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
-
         json_data = self.validate_integrity(file_path)
-        print(json_data) #DEBUG
-        print("") #DEBUG
 
+        found = False
         for elem in json_data["Elements"]:
-            if int(json_data["Elements"][elem]["unique_id"]) == unique_id:
+            if int(json_data["Elements"][elem]["unique_id"]) == int(unique_id):
                 # Wenn ja, dann bestehendes löschen!
                 # Es wird noch nicht auf die Integrität der anderen JSON-Dateien geachtet!
+                found = True
                 del json_data["Elements"][elem]
                 break
 
-        print(json_data) #DEBUG
-        print("") #DEBUG
+        if not found: raise
+
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
+
+
+    # get_new_unique_id(...) returns int
+    def get_new_unique_id(self):
+        file_path = self.data_path + "unique_id.json"
+        json_data = self.validate_integrity(file_path)
+
+        json_data["unique_id"] += 1
+        new = int(json_data["unique_id"])
+
+        with open(file_path, "w") as json_out:
+            json.dump(json_data, json_out, indent=4)
+
+        return new

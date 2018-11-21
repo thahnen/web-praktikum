@@ -56,42 +56,43 @@ class Application(object):
 
 
     # Handhabt Rückgabe der Daten
-    def get_values(self, values):
-        # filename = values["link"]
-        # filename = filename[0].lower() + filename[1::]
-        # return self.database.read_json_into_dict(filename)
-        pass
+    def get_values(self, page):
+        try:
+            filename = page
+            filename = filename[0].lower() + filename[1::] + ".json"
+            data = self.database.read_json_into_dict(filename)
+            del data["Template"]
+            return '{"code" : 200, data : ' + str(data) + '}'
+        except Exception as e:
+            print("Error on API get!")
+            return '{"code" : 500}'
 
 
     # Handhabt Hinzufügen der Daten
-    def add_values(self, values):
-        pass
+    def add_values(self, page, values):
+        try:
+            self.database.add_json_into_file(page, values)
+            return '{"code" : 200}'
+        except Exception as e:
+            print("Error on API add!")
+            return '{"code" : 500}'
 
 
     # Handhabt Updates der Daten
-    def update_values(self, values):
-        # noch anpassen!
+    def update_values(self, page, values):
         try:
-            assert ("link" in values and "method" in values and "data" in values)
-
-            page = values["link"]
-
-            assert (page in ["Kundendaten", "Mitarbeiterdaten", "Projektdaten"])
-
-            if values["method"] == "edit":
-                self.database.update_json_into_file(page, values["data"])
-            elif values["method"] == "new":
-                self.database.add_json_into_file(page, values["data"])
-            elif values["method"] == "delete":
-                self.database.remove_json_from_file(page, values["data"])
-            else:
-                raise
+            self.database.update_json_into_file(page, values)
+            return '{"code" : 200}'
         except Exception as e:
-            return '{ "code" : 500 }'
-
-        return '{"code":200}'
+            print("Error on API update!")
+            return '{"code" : 500}'
 
 
     # Handhabt Löschen der Daten
-    def delete_values(self, values):
-        pass
+    def delete_values(self, page, values):
+        try:
+            self.database.remove_json_from_file(page, values)
+            return '{"code" : 200}'
+        except Exception as e:
+            print("Error on API delete!")
+            return '{"code" : 500}'
