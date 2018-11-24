@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# TODO: Auf andere JSON-Dateien achten fehlt noch!
+# TODO: Auf andere JSON-Dateien achten fehlt noch beim Löschen!
 
 
 # REVIEW: Fast alles über Annahmen (assert's), um Fehlerbehandlung kümmert sich die App!
@@ -96,6 +96,7 @@ class Database(object):
 
 
     # update_json_into_file(...) throws Exception
+    # muss nicht auf Integrität achten, da unique_id nicht geändert werden kann!
     def update_json_into_file(self, filename, update_dict):
         # Dictionary json_dict sieht wie folgt aus:
         #
@@ -112,8 +113,7 @@ class Database(object):
         found = False
         for elem in json_data["Elements"]:
             if int(json_data["Elements"][elem]["unique_id"]) == int(update_dict["unique_id"]):
-                # Wenn ja, dann ersetz das alte einfach durch das neue!
-                # Es wird noch nicht auf die Integrität der anderen JSON-Dateien geachtet!
+                # Wenn ja, dann durch das neue ersetzen!
                 found = True
                 json_data["Elements"][elem] = update_dict
                 break
@@ -133,15 +133,21 @@ class Database(object):
         json_data = self.validate_integrity(file_path)
 
         found = False
+        old = None
         for elem in json_data["Elements"]:
             if int(json_data["Elements"][elem]["unique_id"]) == int(unique_id):
                 # Wenn ja, dann bestehendes löschen!
-                # Es wird noch nicht auf die Integrität der anderen JSON-Dateien geachtet!
                 found = True
+                # hat direkten Zugriff auf die unique_id über old["unique_id"]
+                old = json_data["Elements"][elem]
                 del json_data["Elements"][elem]
                 break
 
         if not found: raise
+
+        if filename in ["Kundendaten", "Mitarbeiterdaten"]:
+            # hier auf Integrität achten ggf
+            pass
 
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# REVIEW: Diese Datei ist für Aufgabe 1.2 um es etwas einfacher zu gestalten & zu trennen!
+# REVIEW: Diese Datei ist für Aufgabe 1.2 um es einfacher zu gestalten & zu trennen!
 
 
 #   Webserver mit Config und Routing:
@@ -63,30 +63,21 @@ class WebServer(object):
     # Seite mit allen Projektdaten
     @cherrypy.expose
     def projektdaten(self, projekt_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /projektdaten
-        #   /projektdaten/<projekt_id>
-        #   /projektdaten/neu
+        # /projektdaten | /projektdaten/<projekt_id> | /projektdaten/neu
         return self.application.get_dynamic_page("projektdaten", projekt_id_ODER_neu)
 
 
     # Seite mit allen Kundendaten
     @cherrypy.expose
     def kundendaten(self, kunden_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /kundendaten
-        #   /kundendaten/<kunden_id>
-        #   /kundendaten/neu
+        # /kundendaten | /kundendaten/<kunden_id> | /kundendaten/neu
         return self.application.get_dynamic_page("kundendaten", kunden_id_ODER_neu)
 
 
     # Seite mit allen Mitarbeiterdaten
     @cherrypy.expose
     def mitarbeiterdaten(self, mitarbeiter_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /mitarbeiterdaten
-        #   /mitarbeiterdaten/<mitarbeiter_id>
-        #   /mitarbeiterdaten/neu
+        # /mitarbeiterdaten | /mitarbeiterdaten/<mitarbeiter_id> | /mitarbeiterdaten/neu
         return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 

@@ -11,7 +11,7 @@ if test $? -ne 0; then
 fi
 
 
-echo "Test aller 3 anwendbaren Funktionen auf eine JSON-Datei:"
+echo "Test aller 4 anwendbaren Funktionen auf eine JSON-Datei:"
 echo "1. Anfordern"
 echo "2. Hinzufuegen"
 echo "3. Update"

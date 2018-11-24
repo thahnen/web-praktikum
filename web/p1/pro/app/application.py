@@ -9,6 +9,7 @@
 #   NICHT: Validität der JSON-Dateien
 
 
+import json
 import app.database
 import app.view
 
@@ -58,11 +59,10 @@ class Application(object):
     # Handhabt Rückgabe der Daten
     def get_values(self, page):
         try:
-            filename = page
-            filename = filename[0].lower() + filename[1::] + ".json"
+            filename = page[0].lower() + page[1::] + ".json"
             data = self.database.read_json_into_dict(filename)
             del data["Template"]
-            return '{"code" : 200, data : ' + str(data) + '}'
+            return '{"code" : 200, "data" : ' + json.dumps(data) + '}'
         except Exception as e:
             print("Error on API get!")
             return '{"code" : 500}'
