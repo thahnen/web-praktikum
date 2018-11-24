@@ -9,6 +9,7 @@ Element | Abschnitt
 *Dateien* | [--> Klick mich <--](#dateien)
 *JSON-Template* | [--> Klick mich <--](#json-template)
 *Template-Dateien* | [--> Klick mich <--](#template-files)
+*UID-JSON (unique_id)* | [--> Klick mich <--](#uid-json)
 *Test-Umgebung* | [--> Klick mich <--](#test-case)
 
 ---
@@ -32,10 +33,6 @@ Es gibt lt. Aufgabenstellung drei JSON-Dateien:
 Verweise:
 - kunden_id : [Auftraggeber](kundendaten.json) des Projekts
 - mitarbeiter_id : Beteiligte  [Mitarbeiter](mitarbeiterdaten.sjon) des Projekts
-
-**INFO**:
-- Bearbeitungszeitraum geändert in: Wochen (int)
-- Zuordnung der Arbeit geändert in: (1-n) Mitarbeiter -> (1-n) Anzahl Stunden pro Woche
 
 ```json
 {
@@ -114,9 +111,17 @@ Um bei der Validierung die Datei wiederherstellen zu können!
 - [Kundendaten](/template/kundendaten-tpl.json)
 - [Mitarbeiterdaten](/template/mitarbeiterdaten-tpl.json)
 
+---
+
+<a name="uid-json"></a>
+## UID-JSON (unique_id)
+Die Datei [unique_id.json](unique_id.json) beinhaltet den Unified Identifier (UID), die alle Arten von Daten haben, sie wird vom Server vergeben und hier abgespeichert.
+
+---
+
 <a name="test-case"></a>
 ## Test-Umgebung
-Mithilfe dem Bash-Skript [test-post.sh](test-post.sh) können Funktionen auf alle JSON-Dateien getestet werden.
+Mithilfe dem Bash-Skript [test-post.sh](test-post.sh) können Funktionen auf alle (Daten-)JSON-Dateien getestet werden.
 Dabei werden gleichzeitig auch die Python-Funktionen auf ihre Richtigkeit getestet!
 
 Weitere Tests um Validierung und Integrität bei Veränderungen zu testen!

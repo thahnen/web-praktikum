@@ -32,6 +32,9 @@
 
 
 (function () {
+    'use strict';
+
+    
     window.onload = function () {
         // 1) Eigenschaften setzen
         // 1.1) Verbergen der Fehlermeldung
