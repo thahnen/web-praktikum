@@ -26,16 +26,16 @@
     window.onload = function() {
         // 1) Eigenschaften setzen
         // 1.1) Verbergen der Fehlermeldung
-        var div_failure = document.querySelector(".div--failure")
-        div_failure.style.setProperty("--max-height", div_failure.scrollHeight + "px")
-        var offen = false
+        var div_failure = document.querySelector(".div--failure");
+        div_failure.style.setProperty("--max-height", div_failure.scrollHeight + "px");
+        var offen = false;
 
         // 1.2) Titel und Header richtig setzen
-        var link = window.location.href.split("/")[3].split("?")[0]
-        link = link.charAt(0).toUpperCase() + link.slice(1)
-        document.title = link + document.title
-        var headline = document.getElementById("headline")
-        headline.innerHTML = link + headline.innerHTML
+        var link = window.location.href.split("/")[3].split("?")[0];
+        link = link.charAt(0).toUpperCase() + link.slice(1);
+        document.title = link + document.title;
+        var headline = document.getElementById("headline");
+        headline.innerHTML = link + headline.innerHTML;
 
 
         // 2) Input-Event-Listener hinzufügen
@@ -43,8 +43,8 @@
             // 2.1) onClick-Event-Listener
             x.addEventListener("click", function() {
                 if (offen) {
-                    div_failure.style.removeProperty("max-height", "var(--max-height)")
-                    offen = !offen
+                    div_failure.style.removeProperty("max-height", "var(--max-height)");
+                    offen = !offen;
                 }
             });
         });
@@ -54,8 +54,8 @@
         document.getElementById("btn--new").addEventListener("click", function() {
             if (confirm("Wollen sie das Element wirklich hinzufuegen?")) {
                 // Input-Felder auf Richtigkeit überprüfen macht das Backend
-                var header = [...document.getElementsByClassName("tbl--header--info")]
-                var inputs = [...document.getElementsByClassName("input--data")]
+                var header = [...document.getElementsByClassName("tbl--header--info")];
+                var inputs = [...document.getElementsByClassName("input--data")];
 
                 var request = {
                     "link" : link,
@@ -64,7 +64,7 @@
                 };
 
                 for (var i = 0; i < inputs.length; i++) {
-                    request["data"][header[i].innerHTML] = inputs[i].value
+                    request["data"][header[i].innerHTML] = inputs[i].value;
                 }
 
                 // POST absetzen mit den neuen Daten

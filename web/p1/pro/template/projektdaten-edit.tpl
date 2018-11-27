@@ -52,30 +52,29 @@
                 % endif
 
 
-                <!-- Hier wird irgendwie immer ein 500er geworfen? -->
                 % if key == "unique_id":
                 <td class="tbl--data--elem">
                     <input id="${key}" class="input--data" type="text" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "nummer":
                 <td class="tbl--data--elem">
-                    <input id="${key}" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
+                    <input id="${key}" class="input--data input--edit" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "bezeichnung":
                 <td class="tbl--data--elem">
-                    <input id="${key}" class="input--data" type="text" value="${data_o["Data"][key]}" required disabled />
+                    <input id="${key}" class="input--data input--edit" type="text" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "beschreibung":
                 <td class="tbl--data--elem">
-                    <input id="${key}" class="input--data" type="text" value="${data_o["Data"][key]}" required disabled />
+                    <input id="${key}" class="input--data input--edit" type="text" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "bearbeitungszeitraum":
                 <td class="tbl--data--elem">
-                    <input id="${key}" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
+                    <input id="${key}" class="input--data input--edit" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "budget":
                 <td class="tbl--data--elem">
-                    <input id="${key}" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
+                    <input id="${key}" class="input--data input--edit" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "kunden_id":
                 <td class="tbl--data--elem">
@@ -85,9 +84,6 @@
                             Nur eine Option auswählbar, Abruf alle paar Sekunden? -> ggf späteres Feature
                             Nach dem Schema:
                             <option value="kunden_id">(kunden_id) Name</option>
-
-                            Die vorhandene sollte bereits vorhanden und ausgewählt sein!
-                            Platzhalter mit JavaScript durch passende Informationen ersetzt!
                         -->
                         <option value="${data_o["Data"][key]}" selected>Ich bin ein Platzhalter</option>
                     </select>
@@ -100,12 +96,9 @@
                             Nur eine Option auswählbar, Abruf alle paar Sekunden? -> ggf späteres Feature
                             Nach dem Schema:
                             <option value="mitarbeiter_id">(mitarbeiter_id) Name</option>
-
-                            Die vorhandenen sollten bereits vorhanden und ausgewählt sein!
-                            Platzhalter mit JavaScript durch passende Informationen ersetzt!
                         -->
                         % for elem in data_o["Data"][key]:
-                        <option value="${elem}">Ich bin ein Platzhalter</option>
+                        <option value="${elem}" selected>Ich bin ein Platzhalter</option>
                         % endfor
                     </select>
                 </td>
@@ -115,33 +108,28 @@
                         <!--
                             Zuordnung der Mitarbeiter und Wochenstunden.
                             Autogeneriert je nachdem wie viele Wochenstunden.
-
-                            Die vorhandenen sollten bereits vorhanden und ausgewählt sein!
-                            Platzhalter mit JavaScript durch passende Informationen ersetzt!
                         -->
-                        <!-- ich funktioniere noch nicht -.-
                         <tr>
                             <th>Id / Woche</th>
-                            % for week in range(0, len(data_o["Data"]["bearbeitungszeitraum"]), 1):
+                            % for week in range(data_o["Data"]["bearbeitungszeitraum"]):
                             <th>Woche ${week}</th>
                             % endfor
                         </tr>
                         % for elem in data_o["Data"][key]:
                         <tr>
-                            <th>${key}</th>
-                            % for week in range(0, len(data_o["Data"]["bearbeitungszeitraum"]), 1):
+                            <th>${elem}</th>
+                            % for week in range(int(data_o["Data"]["bearbeitungszeitraum"])):
                             <td>
-                                <input type="number" class="mitarbeiter_wochenstunden" value="${data_o["Data"][key][elem][week]}">
+                                <input type="number" class="input--data input--edit mitarbeiter_wochenstunden" value="${data_o["Data"][key][elem][week]}" required disabled>
                             </td>
                             % endfor
                         </tr>
                         % endfor
-                        -->
                     </table>
                 </td>
                 % else:
                 <td class="tbl--data--elem">
-                    <input class="input--data" type="text" value="${key}" required />
+                    <input class="input--data input--edit" type="text" value="${key}" required />
                 </td>
                 % endif
             </tr>
@@ -150,6 +138,6 @@
     </div>
 
     <%include file="/elements/buttons-edit.tpl"/>
-    <!--<script src="/js/edit-project.js" charset="utf-8"></script>-->
+    <script src="/js/edit-project.js" charset="utf-8"></script>
 </body>
 </html>
