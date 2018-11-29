@@ -56,6 +56,20 @@ class Application(object):
             return self.get_static_page("500")
 
 
+    # Handhabt sortierte Auswertung
+    def get_sorted_evaluation(self):
+        data = {}
+        # Alle Projekte laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
+        projects = self.database.read_json_into_dict("Projektdaten.json")["Elements"]
+        projects = {int(k):v for k,v in projects.items()}
+        # Projekte nach Bezeichnung sortieren (kv[1] um Value aus Key-Value-Paar zu erhalten)
+        sorted_projects = dict(sorted(projects.items(), key=lambda kv: kv[1]["bezeichnung"]))
+
+        if False:
+            return self.view.render_dynamic_page("auswertung", data)
+        return self.get_static_page("500")
+
+
     # Handhabt Rückgabe der Daten
     def get_values(self, page):
         try:

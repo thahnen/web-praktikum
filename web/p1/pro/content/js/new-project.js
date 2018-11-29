@@ -275,14 +275,13 @@
                     if (rueckgabe["code"] != 200) {
                         h2_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
                     } else {
-                        h2_failure.innerHTML = "Hinzufuegen erfolgreich!";
+                        h2_failure.innerHTML = "Hinzufuegen erfolgreich! :)";
                     }
                     if (!offen) {
                         div_failure.style.setProperty("max-height", "var(--max-height)");
                         offen = !offen;
                     }
                 };
-
                 http.send(JSON.stringify(request));
             }
         })

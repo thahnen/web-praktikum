@@ -88,7 +88,6 @@
     </div>
 
     <%include file="/elements/buttons-view.tpl"/>
-
     <script src="/js/view.js" charset="UTF-8"></script>
 </body>
 </html>

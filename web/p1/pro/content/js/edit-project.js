@@ -241,22 +241,71 @@
 
 
         // 6) "Speichern" gedrückt
-        /*
         document.getElementById("btn--save").addEventListener("click", function() {
             if (confirm("Wollen sie das Element wirklich editieren?")) {
                 // Input-Felder auf Richtigkeit überprüfen macht das Backend
                 var header = [...document.getElementsByClassName("tbl--header--info")];
                 var inputs = [...document.getElementsByClassName("input--data")];
 
+                // Alle Eingabemöglichkeiten mit ID belegen
+                var unique_id = parseInt(document.getElementById("unique_id").value);
+                var nummer = parseInt(document.getElementById("nummer").value);
+                var bezeichnung = document.getElementById("bezeichnung").value;
+                var beschreibung = document.getElementById("beschreibung").value;
+                var bearbeitungszeitraum = parseInt(document.getElementById("bearbeitungszeitraum").value);
+                var budget = parseInt(document.getElementById("budget").value);
+                if (nummer == null || isNaN(nummer) || bezeichnung == null || beschreibung == null
+                    || bearbeitungszeitraum == null || isNaN(bearbeitungszeitraum)
+                    || budget == null || isNaN(budget)) {
+                    console.log("Irgendwelche Eingaben fehlerhaft");
+                    return;
+                }
+                try {
+                    var kunden_id = parseInt([...document.getElementById("select_kunden_id").selectedOptions][0].value);
+                } catch (e) {
+                    console.log("kunden_id nicht ausgewählt");
+                    return;
+                }
+                var mitarbeiter_ids = [...document.getElementById("select_mitarbeiter_ids").selectedOptions].map(x => parseInt(x.value));
+                if (mitarbeiter_ids.length == 0) {
+                    console.log("mitarbeiter_ids nicht ausgewählt");
+                    return;
+                }
+                var zuordnung_arbeit = {};
+                var stunden = [...document.getElementsByClassName("mitarbeiter_wochenstunden")].map(x => parseInt(x.value));
+                for (var x = 0; x < stunden.length; x++) {
+                    if (stunden[x] == null || isNaN(stunden[x])) {
+                        console.log("Zuordnung der Arbeit nicht richtig ausgefüllt!");
+                        return;
+                    }
+                }
+
+                // Wenn man keine Änderung an Wochen und ausgewählten Mitarbeitern macht, werden alte Werte abgerufen :(
+                var anz_mit = mitarbeiter_ids.length;
+                for (var i = 0; i < anz_mit; i++) {
+                    var stunden_liste = [];
+                    for (var j = i*bearbeitungszeitraum; j < (i+1)*bearbeitungszeitraum; j++) {
+                        stunden_liste.push(stunden[j]);
+                    }
+                    zuordnung_arbeit[mitarbeiter_ids[i].toString()] = stunden_liste;
+                }
+
+                // Der Request, der mit Daten vollgepackt wird
                 var request = {
                     "link" : link,
                     "token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
-                    "data" : {}
+                    "data" : {
+                        "unique_id" : unique_id,
+                        "nummer" : nummer,
+                        "bezeichnung" : bezeichnung,
+                        "beschreibung" : beschreibung,
+                        "bearbeitungszeitraum" : bearbeitungszeitraum,
+                        "budget" : budget,
+                        "kunden_id" : kunden_id,
+                        "mitarbeiter_ids" : mitarbeiter_ids,
+                        "zuordnung_arbeit" : zuordnung_arbeit
+                    }
                 };
-
-                for (var i = 0; i < inputs.length; i++) {
-                    request["data"][header[i].innerHTML] = inputs[i].value;
-                }
 
                 // POST absetzen mit den geänderten Daten
                 var http = new XMLHttpRequest();
@@ -276,9 +325,9 @@
                         offen = !offen;
                     }
                 };
-
+                console.log(request);
                 http.send(JSON.stringify(request));
             }
-        });*/
+        });
     };
 })();

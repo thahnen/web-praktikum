@@ -61,50 +61,32 @@
             "nummer": 512,
             "bezeichnung": "Test-Projekt",
             "beschreibung": "Test-Beschreibung",
-            "bearbeitungszeitraum": 7,
-            "budget": 43334,
-            "kunden_id": 1028,
+            "bearbeitungszeitraum": 3,
+            "budget": 2345,
+            "kunden_id": 1234567890,
             "mitarbeiter_ids": [
-                1111,
-                1112,
-                1027
+                1027,
+                41332
             ],
             "zuordnung_arbeit": {
-                "1111": [
-                    4,
-                    3,
-                    5,
-                    2,
-                    2,
-                    7,
-                    1
-                ],
-                "1112": [
-                    1,
-                    2,
-                    2,
-                    7,
-                    2,
-                    4,
-                    1
-                ],
                 "1027": [
-                    5,
-                    5,
-                    2,
-                    3,
-                    2,
-                    2,
-                    3
+                    1,
+                    11,
+                    111
+                ],
+                "41332": [
+                    1111,
+                    11111,
+                    111111
                 ]
             }
         },
         "3": {
             "unique_id": 1029,
-            "nummer": 2,
+            "nummer": 21,
             "bezeichnung": "Test-Bezeichnung",
             "beschreibung": "Test-Beschreibung",
-            "bearbeitungszeitraum": 3,
+            "bearbeitungszeitraum": 4,
             "budget": 404,
             "kunden_id": 112332566,
             "mitarbeiter_ids": [
@@ -114,19 +96,22 @@
             ],
             "zuordnung_arbeit": {
                 "1027": [
-                    7,
-                    8,
-                    9
+                    9,
+                    10,
+                    11,
+                    12
                 ],
                 "1112": [
                     1,
                     2,
-                    3
+                    3,
+                    4
                 ],
                 "41332": [
-                    4,
                     5,
-                    6
+                    6,
+                    7,
+                    8
                 ]
             }
         }

@@ -81,7 +81,7 @@
                     <select id="select_kunden_id" name="kunden_id" size="5">
                         <!--
                             Elemente werden aus Kunden-IDs autogeneriert!
-                            Nur eine Option auswählbar, Abruf alle paar Sekunden? -> ggf späteres Feature
+                            Nur eine Option auswählbar!
                             Nach dem Schema:
                             <option value="kunden_id">(kunden_id) Name</option>
                         -->
@@ -93,7 +93,6 @@
                     <select id="select_mitarbeiter_ids" name="mitarbeiter_ids" size="5" multiple>
                         <!--
                             Elemente werden aus Mitarbeiter-IDs autogeneriert!
-                            Nur eine Option auswählbar, Abruf alle paar Sekunden? -> ggf späteres Feature
                             Nach dem Schema:
                             <option value="mitarbeiter_id">(mitarbeiter_id) Name</option>
                         -->

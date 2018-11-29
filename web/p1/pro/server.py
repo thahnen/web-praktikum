@@ -81,11 +81,11 @@ class WebServer(object):
         return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 
-    # Seite mit allen nötigen Informationen (?)
+    # Seite mit sortierter Übersicht über alle Projekte und deren Mitarbeiter
     @cherrypy.expose
     def auswertung(self):
-        # hier kommt noch die Auswertung hin, bis auf weiteres nur 500.html zum testen!
-        return self.application.get_static_page("500")
+        # /auswertung
+        return self.application.get_sorted_evaluation()
 
 
     # API für alle Funktionen

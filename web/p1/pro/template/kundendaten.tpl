@@ -10,7 +10,6 @@
     <%include file="/elements/navbar.tpl"/>
 
     <div class="div--failure">
-        <!-- Vom XMLHttpRequest Fehler auswerten? -->
         <h2 class="h2--failure">Fehler</h2>
     </div>
 
@@ -35,7 +34,6 @@
     </div>
 
     <%include file="/elements/buttons-view.tpl"/>
-
     <script src="/js/view.js" charset="UTF-8"></script>
 </body>
 </html>
