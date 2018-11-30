@@ -29,8 +29,3 @@ Der Inhalt ist ein "Bug-Tracker" mit REST-API.
   * Realisierung über JavaScript only
 2. Bug-Tracker:
   * Informationen folgen ...
-
----
-
-##TODO:
-Einheitliche Organisation der "unique_id"!
