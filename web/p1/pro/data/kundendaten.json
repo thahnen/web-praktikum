@@ -2,31 +2,24 @@
     "Template": {
         "unique_id": "Eindeutige ID des Kunden",
         "nummer": "Interne Nummer des Kunden",
-        "beizeichnung": "Bezeichnung f\u00fcr den Kunden",
+        "bezeichnung": "Bezeichnung f\u00fcr den Kunden",
         "ansprechpartner": "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!",
         "ort": "Adresse des Kunden"
     },
     "Elements": {
+        "1": {
+            "unique_id": "1030",
+            "nummer": "123",
+            "bezeichnung": "Google Inc.",
+            "ansprechpartner": "Larry Page",
+            "ort": "Kalifornien"
+        },
         "2": {
-            "unique_id": 1234567890,
-            "nummer": 12,
-            "bezeichnung": "Micro-Soft",
-            "ansprechpartner": "Bill Gates",
-            "ort": "Irgendwo im Nirgendwo"
-        },
-        "3": {
-            "unique_id": "112332566",
-            "nummer": "44",
-            "beizeichnung": "Fakebook Inc.",
-            "ansprechpartner": "Mark Zuckerberg",
-            "ort": "Hackerway 1, Palo Alto"
-        },
-        "4": {
-            "unique_id": 1028,
-            "nummer": "404",
-            "beizeichnung": "Komischer Dude",
-            "ansprechpartner": "1 Ansprechpartner",
-            "ort": "Hier"
+            "unique_id": 1034,
+            "nummer": "456",
+            "bezeichnung": "Apple Inc.",
+            "ansprechpartner": "Steve Jobs",
+            "ort": "Menlo Park"
         }
     }
 }

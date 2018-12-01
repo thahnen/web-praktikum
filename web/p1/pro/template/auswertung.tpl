@@ -15,37 +15,6 @@
     <link rel="stylesheet" type="text/css" href="/css/standard.css" />
 </head>
 <body>
-<%doc>
-    Genereller Aufbau der Website:
-    =============================
-    1) Überschrift
-    2) Div mit je einer Tabelle pro Projekt, die untereinander angeordnet sind.
-        => je eine Tabellen-Reihe pro Information (je nachdem ausklappbar)
-        => 1. "unique_id":
-            - nicht ausklappbar(?) nur "Projekt-Id: unique_id"
-        => 2. "nummer":
-            - nicht ausklappbar(?) nur "Interne Projekt-Nummer: nummer"
-        => 3. "bezeichnung":
-            - Vor dem ausklappen steht da "Projektbezeichnung:" mit Icon zum ausklappen
-            - Nach dem ausklappen steht da die jeweilige Bezeichnung und Icon zum einklappen
-        => 4. "beschreibung":
-            - Vor dem ausklappen steht da "Projektbeschreibung:" mit Icon zum ausklappen
-            - Nach dem ausklappen steht da die jeweilige Beschreibung und Icon zum einklappen
-        => 5. "bearbeitungszeitraum":
-            - nicht ausklappbar(?) nur "Bearbeitungszeitraum: x Wochen"
-        => 6. "budget":
-            - nicht ausklappbar(?) nur "Budget: x Euro"
-        => 7. "kunden_id":
-            - Vor dem ausklappen steht da "Kunde:" mit Icon zum ausklappen
-            - Nach dem ausklappen steht da die Kundeninformation mit Icon zum einklappen
-        => 8. "mitarbeiter_ids":
-            - Vor dem ausklappen steht da "Beteiligte Mitarbeiter:" mit Icon zum ausklappen
-            - Nach dem ausklappen steht da eine Liste mit Mitarbeiter-Informationen mit Icon zum einklappen
-        => 9. "zuordnung_arbeit":
-            - Vor dem ausklappen steht da "Wocheneinteilung der Arbeit:" mit Icon zum ausklappen
-            - Nach dem ausklappen steht da der gesamte wöchentliche Aufwand und Zuordnung der Mitarbeiter mit Icon zum einklappen
-</%doc>
-
     <div class="div--header">
         <h1 id="headline">Auswertung</h1>
     </div>
@@ -53,46 +22,81 @@
     <%include file="/elements/navbar.tpl"/>
 
     <div class="div--tbl">
-        % for object_key in data_o["Elements"]:
+        % for object_key in data_o:
+        <h2 id="${object_key}_header">Projekt: ${data_o[object_key]["unique_id"]} [ausklappen]</h2>
         <table class="tbl--projects">
-            % for elem in data_o["Elements"][object_key]:
+            % for elem in data_o[object_key]:
+            % if elem != "unique_id":
             <tr class="tbl--data">
-                % if elem == "unique_id":
-                <p id="${elem}">Projekt-Id: ${data_o["Elements"][object_key][elem]}</p>
-                % elif elem == "nummer":
-                <p id="${elem}">Interne Projekt-Nummer: ${data_o["Elements"][object_key][elem]}</p>
-                % elif elem == "bezeichnung":
-                <p id="${elem}">Projektbezeichnung: [Das Icon]</p>
-                <p id="${elem}_info"><!-- Ich komme noch --></p>
-                % elif elem == "beschreibung":
-                <p id="${elem}">Projektbeschreibung: [Das Icon]</p>
-                <p id="${elem}_info"><!-- Ich komme noch --></p>
-                % elif elem == "bearbeitungszeitraum":
-                <p id="${elem}">Bearbeitungszeitraum: ${data_o["Elements"][object_key][elem]} Wochen</p>
-                % elif elem == "budget":
-                <p id="${elem}">Budget: ${data_o["Elements"][object_key][elem]} Euro</p>
-                % elif elem == "kunden_id":
-                <p id="${elem}">Kunde: [Das Icon]</p>
-                <div id="${elem}_info">
-                    <li id="${elem}_info_li">
-                        <!-- Hier alle möglichen Attribute -->
-                    </li>
-                </div>
-                % elif elem == "mitarbeiter_ids":
-                <p id="${elem}">Beteiligte Mitarbeiter: [Das Icon]</p>
-                <div id="${elem}_info">
-                    <li id="${elem}_info_li">
-                        <!-- Hier je ein <li> für jeden Mitarbeiter? -->
-                    </li>
-                </div>
-                % elif elem == "zuordnung_arbeit":
-                <p id="${elem}">Wocheneinteilung der Arbeit: [Das Icon]</p>
-                <p id="${elem}_gesamt">Stundenaufwand über gesamte Zeit: <!-- Alle zusammenaddiert --></p>
-                <!-- Hier eine Tabelle mit den Zuordnungen sowie für jede Woche insgesamte Anzahl -->
-                % endif
+                <td class="tbl--data--elem">
+                    % if elem == "nummer":
+                    <h4>Interne Projekt-Nummer: ${data_o[object_key][elem]}</h4>
+                    % elif elem == "bezeichnung":
+                    <h4>Projektbezeichnung: ${data_o[object_key][elem]}</h4>
+                    % elif elem == "beschreibung":
+                    <h4>Projektbeschreibung: ${data_o[object_key][elem]}</h4>
+                    % elif elem == "bearbeitungszeitraum":
+                    <h4>Bearbeitungszeitraum: ${data_o[object_key][elem]} Wochen</h4>
+                    % elif elem == "budget":
+                    <h4>Budget: ${data_o[object_key][elem]} US$</h4>
+                    % elif elem == "kunden_id":
+                    <h4 class="${elem}">Kunde: ${data_o[object_key][elem]["unique_id"]} [ausklappen]</h4>
+                    <div class="${elem}_info">
+                        <ul>
+                            <li>${data_o[object_key][elem]["bezeichnung"]} (Ansprechpartner: ${data_o[object_key][elem]["ansprechpartner"]})</li>
+                            <li>
+                                <a href="/kundendaten/${data_o[object_key][elem]["unique_id"]}">Direkter Link zum Kunden</a>
+                            </li>
+                        </ul>
+                    </div>
+                    % elif elem == "mitarbeiter_ids":
+                    <h4 class="${elem}">Beteiligte Mitarbeiter: [ausklappen]</h4>
+                    <div class="${elem}_info">
+                        <ul>
+                            % for m_id in data_o[object_key][elem]:
+                            <li>
+                                <a href="/mitarbeiterdaten/${m_id["unique_id"]}">(${m_id["unique_id"]}) ${m_id["name"]}, ${m_id["vorname"]}</a>
+                            </li>
+                            % endfor
+                        </ul>
+                    </div>
+                    % elif elem == "zuordnung_arbeit":
+                    <h4 class="${elem}">Wocheneinteilung der Arbeit: [ausklappen]</h4>
+                    <div class="${elem}_info">
+                        <p>Stundenaufwand über alle Wochen: ${data_o[object_key][elem]["gesamt_anzahl"]} (Stunden)</p>
+                        <table>
+                            <tr>
+                                <th>Id / Woche</th>
+                                % for week in range(data_o[object_key]["bearbeitungszeitraum"]):
+                                <th>Woche ${week}</th>
+                                % endfor
+                            </tr>
+                            % for elem_i in data_o[object_key][elem]:
+                            % if elem_i != "gesamt_anzahl" and elem_i == "gesamt_woche_n":
+                            <tr>
+                                <th>Gesamt pro Woche</th>
+                                % for week in range(int(data_o[object_key]["bearbeitungszeitraum"])):
+                                <td>${data_o[object_key][elem][elem_i][week]}</td>
+                                % endfor
+                            </tr>
+                            % elif elem_i != "gesamt_anzahl":
+                            <tr>
+                                <th>${elem_i}</th>
+                                % for week in range(int(data_o[object_key]["bearbeitungszeitraum"])):
+                                <td>${data_o[object_key][elem][elem_i][week]}</td>
+                                % endfor
+                            </tr>
+                            % endif
+                            % endfor
+                        </table>
+                    </div>
+                    % endif
+                </td>
             </tr>
+            % endif
             % endfor
         </table>
+        <br />
         % endfor
     </div>
 

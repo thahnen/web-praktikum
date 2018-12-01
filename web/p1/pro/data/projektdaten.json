@@ -16,102 +16,27 @@
     },
     "Elements": {
         "1": {
-            "unique_id": 1191123,
-            "nummer": 42,
-            "bezeichnung": "Ein Tolles Projekt",
-            "beschreibung": "Ja ist es wirklich",
-            "bearbeitungszeitraum": 4,
-            "budget": 12,
-            "kunden_id": 112332566,
-            "mitarbeiter_ids": [
-                1111,
-                1112,
-                1113,
-                1114
-            ],
-            "zuordnung_arbeit": {
-                "1111": [
-                    12,
-                    2,
-                    3,
-                    4
-                ],
-                "1112": [
-                    13,
-                    4,
-                    5,
-                    6
-                ],
-                "1113": [
-                    14,
-                    5,
-                    6,
-                    7
-                ],
-                "1114": [
-                    15,
-                    6,
-                    7,
-                    8
-                ]
-            }
-        },
-        "2": {
-            "unique_id": 1001,
-            "nummer": 512,
-            "bezeichnung": "Test-Projekt",
-            "beschreibung": "Test-Beschreibung",
+            "unique_id": 1032,
+            "nummer": 12,
+            "bezeichnung": "Web-Praktikum",
+            "beschreibung": "Genau dieses Web-Projekt",
             "bearbeitungszeitraum": 3,
-            "budget": 2345,
-            "kunden_id": 1234567890,
+            "budget": 450,
+            "kunden_id": 1034,
             "mitarbeiter_ids": [
-                1027,
-                41332
+                1031,
+                1033
             ],
             "zuordnung_arbeit": {
-                "1027": [
-                    1,
-                    11,
-                    111
-                ],
-                "41332": [
-                    1111,
-                    11111,
-                    111111
-                ]
-            }
-        },
-        "3": {
-            "unique_id": 1029,
-            "nummer": 21,
-            "bezeichnung": "Test-Bezeichnung",
-            "beschreibung": "Test-Beschreibung",
-            "bearbeitungszeitraum": 4,
-            "budget": 404,
-            "kunden_id": 112332566,
-            "mitarbeiter_ids": [
-                1112,
-                41332,
-                1027
-            ],
-            "zuordnung_arbeit": {
-                "1027": [
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "1112": [
-                    1,
+                "1031": [
                     2,
                     3,
                     4
                 ],
-                "41332": [
-                    5,
-                    6,
-                    7,
-                    8
+                "1033": [
+                    1,
+                    1,
+                    1
                 ]
             }
         }
