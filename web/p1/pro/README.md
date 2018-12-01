@@ -24,7 +24,7 @@ Element | Abschnitt
 <a name="routing"></a>
 ## Routing
 Das Routing wird in der [Python-Server-Klasse](server.py) realisiert.
-Die Datei beinhaltet ausserdem die Server-Konfiguration.
+Die Datei beinhaltet ausserdem die Server-Konfiguration für die jeweilige Aufgabe.
 
 ### Webseiten
 1. __.../__
@@ -58,13 +58,13 @@ Die Datei beinhaltet ausserdem die Server-Konfiguration.
         - Gibt bestimmte angeforderte JSON-Informationen zurück
     * __.../api/add__ (*fehlt noch*)
         - TYP: POST
-        - Fügt zu bestimmter JSON-Datei neues ebenfalls angegebenes Element hinzu
+        - Fügt zu bestimmter JSON-Datei neues ebenfalls angegebenes Element hinzu, Id wird vom Programm vergeben
     * __.../api/update__ (*fehlt noch*)
         - TYP: POST
         - Updatet bestimmte JSON-Datei mit verändertem ebenfalls angegebenem Element
     * __.../api/delete__ (*fehlt noch*)
         - TYP: POST
-        - Löscht in bestimmter JSON-Datei ebenfalls angegebenes Element
+        - Löscht in bestimmter JSON-Datei ebenfalls angegebenes Element, wenn es nicht in Benutzung ist
 
 ---
 

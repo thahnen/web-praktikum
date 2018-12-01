@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="Tobias Hahnen" />
-    <title>Auswertung</title>
+    <title>Projektinformationssystem: Auswertung</title>
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="div--header">
-        <h1 id="headline">Auswertung</h1>
+        <h1 id="headline">Projektinformationssystem: Auswertung</h1>
     </div>
 
     <%include file="/elements/navbar.tpl"/>

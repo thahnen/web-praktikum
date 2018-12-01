@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="author" content="Tobias Hahnen" />
-    <title>: Neu hinzufügen</title>
+    <title>${data_o["Data"]["unique_id"]}</title>
 
     <!-- Das Favicon für den Tab, einfach von der HS geklaut :p -->
     <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="div--header">
-        <h1 id="headline">: Neu hinzufügen</h1>
+        <h1 id="headline">${data_o["Data"]["unique_id"]}</h1>
     </div>
 
     <%include file="/elements/navbar.tpl"/>
@@ -54,37 +54,38 @@
 
                 % if key == "unique_id":
                 <td class="tbl--data--elem">
-                    <input id="${key}" class="input--data" type="text" value="Ich werde autogeneriert" required disabled />
+                    <input id="${key}" class="input--data" type="text" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "nummer":
                 <td class="tbl--data--elem">
-                    <input id="${key}" type="number" min="1" value="1" required />
+                    <input id="${key}" class="input--data input--edit" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "bezeichnung":
                 <td class="tbl--data--elem">
-                    <input id="${key}" class="input--data" type="text" value="${key}" required />
+                    <input id="${key}" class="input--data input--edit" type="text" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "beschreibung":
                 <td class="tbl--data--elem">
-                    <input id="${key}" class="input--data" type="text" value="${key}" required />
+                    <input id="${key}" class="input--data input--edit" type="text" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "bearbeitungszeitraum":
                 <td class="tbl--data--elem">
-                    <input id="${key}" type="number" min="1" value="1" required />
+                    <input id="${key}" class="input--data input--edit" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "budget":
                 <td class="tbl--data--elem">
-                    <input id="${key}" type="number" min="1" value="1" required />
+                    <input id="${key}" class="input--data input--edit" type="number" min="1" value="${data_o["Data"][key]}" required disabled />
                 </td>
                 % elif key == "kunden_id":
                 <td class="tbl--data--elem">
                     <select id="select_kunden_id" name="kunden_id" size="5">
                         <!--
                             Elemente werden aus Kunden-IDs autogeneriert!
-                            Nur eine Option auswählbar
+                            Nur eine Option auswählbar!
                             Nach dem Schema:
                             <option value="kunden_id">(kunden_id) Name</option>
                         -->
+                        <option value="${data_o["Data"][key]}" selected>Ich bin ein Platzhalter</option>
                     </select>
                 </td>
                 % elif key == "mitarbeiter_ids":
@@ -95,6 +96,9 @@
                             Nach dem Schema:
                             <option value="mitarbeiter_id">(mitarbeiter_id) Name</option>
                         -->
+                        % for elem in data_o["Data"][key]:
+                        <option value="${elem}" selected>Ich bin ein Platzhalter</option>
+                        % endfor
                     </select>
                 </td>
                 % elif key == "zuordnung_arbeit":
@@ -104,11 +108,27 @@
                             Zuordnung der Mitarbeiter und Wochenstunden.
                             Autogeneriert je nachdem wie viele Wochenstunden.
                         -->
+                        <tr>
+                            <th>Id / Woche</th>
+                            % for week in range(data_o["Data"]["bearbeitungszeitraum"]):
+                            <th>Woche ${week}</th>
+                            % endfor
+                        </tr>
+                        % for elem in data_o["Data"][key]:
+                        <tr>
+                            <th>${elem}</th>
+                            % for week in range(int(data_o["Data"]["bearbeitungszeitraum"])):
+                            <td>
+                                <input type="number" class="input--data input--edit mitarbeiter_wochenstunden" value="${data_o["Data"][key][elem][week]}" required disabled>
+                            </td>
+                            % endfor
+                        </tr>
+                        % endfor
                     </table>
                 </td>
                 % else:
                 <td class="tbl--data--elem">
-                    <input class="input--data" type="text" value="${key}" required />
+                    <input class="input--data input--edit" type="text" value="${key}" required />
                 </td>
                 % endif
             </tr>
@@ -116,7 +136,7 @@
         </table>
     </div>
 
-    <%include file="/elements/buttons-new.tpl"/>
-    <script src="/js/new-project.js" charset="utf-8"></script>
+    <%include file="/elements/buttons-edit.tpl"/>
+    <script src="/js/edit-project.js" charset="utf-8"></script>
 </body>
 </html>

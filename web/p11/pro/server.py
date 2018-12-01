@@ -120,8 +120,8 @@ class WebServer(object):
     # POST-Aktion zum Löschen der Projektdaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Projektdaten_Delete(self):
-        if cherrypy.request.method == "POST":
+    def POST_Projektdaten_Delete(self, delete_unique_id=None):
+        if cherrypy.request.method == "POST" and delete_unique_id != None:
             return
         return self.application.get_static_page("404")
 
@@ -147,8 +147,8 @@ class WebServer(object):
     # POST-Aktion zum Löschen der Kundendaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Kundendaten_Delete(self):
-        if cherrypy.request.method == "POST":
+    def POST_Kundendaten_Delete(self, delete_unique_id=None):
+        if cherrypy.request.method == "POST" and delete_unique_id != None:
             return
         return self.application.get_static_page("404")
 
@@ -174,8 +174,8 @@ class WebServer(object):
     # POST-Aktion zum Löschen der Mitarbeiterdaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Mitarbeiterdaten_Delete(self):
-        if cherrypy.request.method == "POST":
+    def POST_Mitarbeiterdaten_Delete(self, delete_unique_id=None):
+        if cherrypy.request.method == "POST" and delete_unique_id != None:
             return
         return self.application.get_static_page("404")
 

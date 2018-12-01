@@ -1,21 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 
-# Test, ob Server ueberhaupt online !
+# Test, ob der Server ueberhaupt online ist !
 curl 127.0.0.1:8080 &> /dev/null
 if test $? -ne 0; then
-	echo "Server not up and running on 127.0.0.1:8080!"
+	echo "Server not up and running on 127.0.0.1:8080 !"
 	echo "Run> cd $HOME/GitHub/web-praktikum/web/p1/"
 	echo "Run> python3 server.py"
 	exit
 fi
 
+# Test, ob es auch der Server für Aufgabe 1.2 ist !
+if test $(curl -I 127.0.0.1:8080/api 2>/dev/null | head -n 1 | cut -d$' ' -f2) -eq "404"; then
+    echo "Wrong Server up and running, use the one for 1.2 !"
+    exit
+fi
 
-echo "Test aller 4 anwendbaren Funktionen auf eine JSON-Datei:"
+
+echo "Test aller 4 anwendbaren Funktionen auf eine JSON-Datei (aber halt nicht in der Reihenfolge):"
 echo "1. Anfordern"
 echo "2. Hinzufuegen"
 echo "3. Update"
 echo "4. Loeschen"
+
+
+# funktioniert noch alles nicht, weil beim hinzufuegen eine neue unique_id generiert wird!
+exit
 
 
 ################################################################################
@@ -80,33 +90,47 @@ EOF
 }
 
 echo ""
-echo "1. Anfordern:"
+echo "1. Anfordern (vor dem hinzufuegen):"
 echo $(K_GET)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
 
 echo ""
 echo "2. Hinzufuegen:"
 echo $(K_NEW)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(K_NEW)" 127.0.0.1:8080/api/new
 
 echo ""
-echo "3. Update:"
+echo "3. Anfordern (nach dem hinzufuegen & vor dem update):"
+echo $(K_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
+
+echo ""
+echo "4. Update:"
 echo $(K_UPDATE)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(K_UPDATE)" 127.0.0.1:8080/api/update
 
 echo ""
-echo "4. Loeschen:"
+echo "5. Anfordern (nach dem update & vor dem loeschen):"
+echo $(K_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
+
+echo ""
+echo "6. Loeschen:"
 echo $(K_DELETE)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json"  --request POST --data "$(K_DELETE)" 127.0.0.1:8080/api/delete
 echo ""
+
+echo ""
+echo "7. Anfordern (nach dem loeschen):"
+echo $(K_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
 
 read -n 1 -p "Weiter (y|n): " ANSWER
 if test "$ANSWER" != "y"; then
@@ -176,33 +200,47 @@ EOF
 }
 
 echo ""
-echo "1. Anfordern:"
+echo "1. Anfordern (vor dem hinzufuegen):"
 echo $(M_GET)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 127.0.0.1:8080/api/get
 
 echo ""
 echo "2. Hinzufuegen:"
 echo $(M_NEW)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(M_NEW)" 127.0.0.1:8080/api/new
 
 echo ""
-echo "3. Update:"
+echo "3. Anfordern (nach dem hinzufuegen & vor dem update):"
+echo $(M_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 127.0.0.1:8080/api/get
+
+echo ""
+echo "4. Update:"
 echo $(M_UPDATE)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(M_UPDATE)" 127.0.0.1:8080/api/update
 
 echo ""
-echo "4. Loeschen:"
+echo "5. Anfordern (nach dem update & vor dem loeschen):"
+echo $(M_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 127.0.0.1:8080/api/get
+
+echo ""
+echo "6. Loeschen:"
 echo $(M_DELETE)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json"  --request POST --data "$(M_DELETE)" 127.0.0.1:8080/api/delete
 echo ""
+
+echo ""
+echo "7. Anfordern (nach dem loeschen):"
+echo $(M_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 127.0.0.1:8080/api/get
 
 read -n 1 -p "Weiter (y|n): " ANSWER
 if test "$ANSWER" != "y"; then
@@ -291,30 +329,44 @@ EOF
 }
 
 echo ""
-echo "1. Anfordern:"
+echo "1. Anfordern (vor dem hinzufuegen):"
 echo $(P_GET)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(P_GET)" 127.0.0.1:8080/api/get
 
 echo ""
 echo "2. Hinzufuegen:"
 echo $(P_NEW)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(P_NEW)" 127.0.0.1:8080/api/new
 
 echo ""
-echo "3. Update:"
+echo "3. Anfordern (nach dem hinzufuegen & vor dem update):"
+echo $(P_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(P_GET)" 127.0.0.1:8080/api/get
+
+echo ""
+echo "4. Update:"
 echo $(P_UPDATE)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json" --request POST --data "$(P_UPDATE)" 127.0.0.1:8080/api/update
 
 echo ""
-echo "4. Loeschen:"
+echo "5. Anfordern (nach dem update & vor dem loeschen):"
+echo $(P_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(P_GET)" 127.0.0.1:8080/api/get
+
+echo ""
+echo "6. Loeschen:"
 echo $(P_DELETE)
 echo ""
-# Erst einkommentieren, wenn alles klappt!
 curl --header "Content-Type: application/json"  --request POST --data "$(P_DELETE)" 127.0.0.1:8080/api/delete
 echo ""
+
+echo ""
+echo "7. Anfordern (nach dem loeschen):"
+echo $(P_GET)
+echo ""
+curl --header "Content-Type: application/json" --request POST --data "$(P_GET)" 127.0.0.1:8080/api/get
