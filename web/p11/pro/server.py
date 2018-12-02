@@ -72,31 +72,22 @@ class WebServer(object):
     # Seite mit allen Projektdaten
     @cherrypy.expose
     def projektdaten(self, projekt_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /projektdaten
-        #   /projektdaten/<projekt_id>
-        #   /projektdaten/neu
-        return self.application.get_static_page("404")
+        # /projektdaten | /projektdaten/<projekt_id> | /projektdaten/neu
+        return self.application.get_dynamic_page("projektdaten", projekt_id_ODER_neu)
 
 
     # Seite mit allen Kundendaten
     @cherrypy.expose
     def kundendaten(self, kunden_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /kundendaten
-        #   /kundendaten/<kunden_id>
-        #   /kundendaten/neu
-        return self.application.get_static_page("404")
+        # /kundendaten | /kundendaten/<kunden_id> | /kundendaten/neu
+        return self.application.get_dynamic_page("kundendaten", kunden_id_ODER_neu)
 
 
     # Seite mit allen Mitarbeiterdaten
     @cherrypy.expose
     def mitarbeiterdaten(self, mitarbeiter_id_ODER_neu = None):
-        # Erreichbar unter:
-        #   /mitarbeiterdaten
-        #   /mitarbeiterdaten/<mitarbeiter_id>
-        #   /mitarbeiterdaten/neu
-        return self.application.get_static_page("404")
+        # /mitarbeiterdaten | /mitarbeiterdaten/<mitarbeiter_id> | /mitarbeiterdaten/neu
+        return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 
     # POST-Aktion zum Hinzufügen der Projektdaten
@@ -104,7 +95,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Projektdaten_Add(self):
         if cherrypy.request.method == "POST":
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Projekt hinzugefügt"
         return self.application.get_static_page("404")
 
 
@@ -113,7 +105,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Projektdaten_Update(self):
         if cherrypy.request.method == "POST":
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Projekt geupdatet"
         return self.application.get_static_page("404")
 
 
@@ -122,7 +115,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Projektdaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Projekt %s gelöscht" % delete_unique_id
         return self.application.get_static_page("404")
 
 
@@ -131,7 +125,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Kundendaten_Add(self):
         if cherrypy.request.method == "POST":
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Kunde hinzugefügt"
         return self.application.get_static_page("404")
 
 
@@ -140,7 +135,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Kundendaten_Update(self):
         if cherrypy.request.method == "POST":
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Kunde geupdatet"
         return self.application.get_static_page("404")
 
 
@@ -149,7 +145,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Kundendaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Kunde %s gelöscht" % delete_unique_id
         return self.application.get_static_page("404")
 
 
@@ -158,7 +155,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Mitarbeiterdaten_Add(self):
         if cherrypy.request.method == "POST":
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Mitarbeiter hinzugefügt"
         return self.application.get_static_page("404")
 
 
@@ -167,7 +165,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Mitarbeiterdaten_Update(self):
         if cherrypy.request.method == "POST":
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Mitarbeiter geupdatet"
         return self.application.get_static_page("404")
 
 
@@ -176,7 +175,8 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Mitarbeiterdaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
-            return
+            # Hier wie in 1.2 mit der API auswerten
+            return "Mitarbeiter %s gelöscht" % delete_unique_id
         return self.application.get_static_page("404")
 
 

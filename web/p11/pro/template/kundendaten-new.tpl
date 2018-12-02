@@ -1,51 +1,52 @@
 ## coding: utf-8
 <!DOCTYPE html>
 <html lang="de">
-<%include file="/elements/header-new.tpl"/>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" content="Tobias Hahnen" />
+    <title>Kundendaten: Neu hinzufügen</title>
+    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/css/standard.css" />
+</head>
 <body>
     <div class="div--header">
-        <!-- Später Headline generieren damit man nur ein Template braucht! -->
-        <h1 id="headline">: Neu hinzufügen</h1>
+        <h1 id="headline">Kundendaten: Neu hinzufügen</h1>
     </div>
 
     <%include file="/elements/navbar.tpl"/>
 
-    <div class="div--failure">
-        <h2 class="h2--failure">Fehler</h2>
-    </div>
+    <form action="/POST_Kundendaten_Add" method="post">
+        <div class="div--tbl">
+            <table>
+                <!-- Table Header Row -->
+                <tr class="tbl--header">
+                    % for key in data_o["Template"]:
+                    <th class="tbl--header--elem">${data_o["Template"][key]}</th>
+                    % endfor
+                </tr>
 
-    <div class="div--tbl">
-        <table>
-            <!-- Table Header Row -->
-            <tr class="tbl--header">
-                % for key in data_o["Template"]:
-                <th class="tbl--header--elem">${data_o["Template"][key]}</th>
-                % endfor
-            </tr>
+                <!-- Table Data Row -->
+                <tr class="tbl--data">
+                    % for key in data_o["Template"]:
+                    <td class="tbl--data--elem">
+                        % if key == "unique_id":
+                        <input class="input--data" type="text" value="Wird Autogeneriert ;)" required disabled />
+                        % else:
+                        <input class="input--data input--edit" type="text" value="${key}" required />
+                        % endif
+                    </td>
+                    % endfor
+                </tr>
+            </table>
+        </div>
 
-            <!-- Erste Zeile nur mit den Erläuterungen, kann weg -->
-            <tr class="tbl--header">
-                % for key in data_o["Template"]:
-                <th class="tbl--header--elem tbl--header--info">${key}</th>
-                % endfor
-            </tr>
-
-            <!-- Table Data Row -->
-            <tr class="tbl--data">
-                % for key in data_o["Template"]:
-                <td class="tbl--data--elem">
-                    % if key == "unique_id":
-                    <input class="input--data" type="text" value="Wird Autogeneriert ;)" required disabled />
-                    % else:
-                    <input class="input--data input--edit" type="text" value="${key}" required />
-                    % endif
-                </td>
-                % endfor
-            </tr>
-        </table>
-    </div>
-
-    <%include file="/elements/buttons-new.tpl"/>
-    <script src="/js/new.js" charset="UTF-8"></script>
+        <div class="div--btn">
+            <input type="submit" id="btn--add" value="Hinzufügen">
+        </div>
+    </form>
 </body>
 </html>
