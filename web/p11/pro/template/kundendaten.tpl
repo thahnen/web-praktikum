@@ -16,7 +16,6 @@
     <div class="div--header">
         <h1 id="headline">Kundendaten: Übersicht</h1>
     </div>
-
     <%include file="/elements/navbar.tpl"/>
 
     <form action="/POST_Kundendaten_Delete" method="post">
@@ -35,6 +34,7 @@
                     % for object_key in data_o["Elements"][object]:
                     % if object_key == "unique_id":
                     <td class="tbl--data--elem">
+                        <!-- Das kann noch irgendwie verbessert werden! -->
                         <input type="checkbox" name="delete_unique_id" value="${data_o["Elements"][object][object_key]}">
                         <a href="/kundendaten/${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
                     </td>
@@ -50,6 +50,7 @@
         <div class="div--btn">
             <input type="submit" id="btn--delete" value="Löschen">
             <p>
+                <!-- Das kann noch irgendwie verbessert werden! -->
                 <a href="/kundendaten/neu">Neu Hinzufügen</a>
             </p>
         </div>

@@ -47,25 +47,6 @@
                     7
                 ]
             }
-        },
-        "2": {
-            "unique_id": 1044,
-            "nummer": 12,
-            "bezeichnung": "Facebook",
-            "beschreibung": "Homepage f\u00fcr so Nerds",
-            "bearbeitungszeitraum": 3,
-            "budget": 50,
-            "kunden_id": 1040,
-            "mitarbeiter_ids": [
-                1042
-            ],
-            "zuordnung_arbeit": {
-                "1042": [
-                    1,
-                    2,
-                    2
-                ]
-            }
         }
     }
 }

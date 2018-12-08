@@ -111,19 +111,26 @@ class WebServer(object):
 
 
     # POST-Aktion zum Löschen der Projektdaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
     def POST_Projektdaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Projekt %s gelöscht" % delete_unique_id
-        return self.application.get_static_page("404")
+            deletion = ""#self.application.delete_values("Projektdaten", int(delete_unique_id))
+            if deletion == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
+                return "Projektdaten-Löschung hat funktioniert"
+        elif cherrypy.request.method == "GET":
+            return self.application.get_static_page("404")
+        return "Projektdaten-Löschung hat nicht funktioniert"
 
 
     # POST-Aktion zum Hinzufügen der Kundendaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Kundendaten_Add(self):
+    def POST_Kundendaten_Add(self, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
+
+        # hier wie bei den Mitarbeitern!
+
         if cherrypy.request.method == "POST":
             # Hier wie in 1.2 mit der API auswerten
             return "Kunde hinzugefügt"
@@ -133,51 +140,86 @@ class WebServer(object):
     # POST-Aktion zum Bearbeiten der Kundendaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Kundendaten_Update(self):
+    def POST_Kundendaten_Update(self, unique_id=None, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
+
+        # hier wie bei den Mitarbeitern!
+        
         if cherrypy.request.method == "POST":
             # Hier wie in 1.2 mit der API auswerten
             return "Kunde geupdatet"
         return self.application.get_static_page("404")
 
 
+    # REVIEW: FERTIG
     # POST-Aktion zum Löschen der Kundendaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
     def POST_Kundendaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Kunde %s gelöscht" % delete_unique_id
-        return self.application.get_static_page("404")
+            deletion = self.application.delete_values("Kundendaten", int(delete_unique_id))
+            if deletion == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
+                return "Kundendaten-Löschung hat funktioniert"
+        elif cherrypy.request.method == "GET":
+            return self.application.get_static_page("404")
+        return "Kundendaten-Löschung hat nicht funktioniert"
 
 
+    # REVIEW: FERTIG
     # POST-Aktion zum Hinzufügen der Mitarbeiterdaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Mitarbeiterdaten_Add(self):
-        if cherrypy.request.method == "POST":
+    def POST_Mitarbeiterdaten_Add(self, name=None, vorname=None, funktion=None):
+        if cherrypy.request.method == "POST" and name != None and vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Mitarbeiter hinzugefügt"
-        return self.application.get_static_page("404")
+            data = {
+                "unique_id" : 404,
+                "name" : name,
+                "vorname" : vorname,
+                "funktion" : funktion
+            }
+            addition = self.application.add_values("Mitarbeiterdaten", data)
+            if addition == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
+                return "Mitarbeiterdaten-Hinzufügen hat funktioniert"
+        elif cherrypy.request.method == "GET":
+            return self.application.get_static_page("404")
+        return "Mitarbeiterdaten-Hinzufügen hat nicht funktioniert"
 
 
+    # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Mitarbeiterdaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Mitarbeiterdaten_Update(self):
-        if cherrypy.request.method == "POST":
+    def POST_Mitarbeiterdaten_Update(self, unique_id=None, name=None, vorname=None, funktion=None):
+        if cherrypy.request.method == "POST" and unique_id != None and name != None and vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Mitarbeiter geupdatet"
-        return self.application.get_static_page("404")
+            data = {
+                "unique_id" : unique_id,
+                "name" : name,
+                "vorname" : vorname,
+                "funktion" : funktion
+            }
+            addition = self.application.update_values("Mitarbeiterdaten", data)
+            if addition == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
+                return "Mitarbeiterdaten-Updaten hat funktioniert"
+        elif cherrypy.request.method == "GET":
+            return self.application.get_static_page("404")
+        return "Mitarbeiterdaten-Updaten hat nicht funktioniert"
 
 
+    # REVIEW: FERTIG
     # POST-Aktion zum Löschen der Mitarbeiterdaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
     def POST_Mitarbeiterdaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Mitarbeiter %s gelöscht" % delete_unique_id
-        return self.application.get_static_page("404")
+            deletion = self.application.delete_values("Mitarbeiterdaten", int(delete_unique_id))
+            if deletion == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
+                return "Projektdaten-Löschung hat funktioniert"
+        elif cherrypy.request.method == "GET":
+            return self.application.get_static_page("404")
+        return "Mitarbeiterdaten-Löschung hat nicht funktioniert"
 
 
 config = {

@@ -16,7 +16,6 @@
     <div class="div--header">
         <h1 id="headline">Bearbeiten: ${data_o["Data"]["unique_id"]}</h1>
     </div>
-
     <%include file="/elements/navbar.tpl"/>
 
     <form action="/POST_Kundendaten_Update" method="post">
@@ -42,8 +41,9 @@
                     <td class="tbl--data--elem">
                         % if key == "unique_id":
                         <input class="input--data" type="text" value="${data_o["Data"][key]}" required disabled />
+                        <input type="hidden" name="${key}" value="${data_o["Data"][key]}">
                         % else:
-                        <input class="input--data input--edit" type="text" value="${data_o["Data"][key]}" required />
+                        <input class="input--data input--edit" type="text" name="${key}" value="${data_o["Data"][key]}" required />
                         % endif
                     </td>
                     % endfor

@@ -36,7 +36,7 @@
                         % if key == "unique_id":
                         <input class="input--data" type="text" value="Wird Autogeneriert ;)" required disabled />
                         % else:
-                        <input class="input--data input--edit" type="text" value="${key}" required />
+                        <input class="input--data input--edit" type="text" name="${key}" value="${key}" required />
                         % endif
                     </td>
                     % endfor
