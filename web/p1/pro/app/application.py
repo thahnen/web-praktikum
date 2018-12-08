@@ -18,8 +18,8 @@ class Application(object):
     def __init__(self, server_path):
         self.server_path = server_path
         self.content_path = self.server_path + "/content/"
-        self.database = app.Database(server_path+"/data/")
-        self.view = app.View(server_path+"/template/")
+        self.database = app.Database(server_path + "/data/")
+        self.view = app.View(server_path + "/template/")
 
 
     # Handhabt statische Seiten
@@ -58,52 +58,87 @@ class Application(object):
 
     # Handhabt sortierte Auswertung
     def get_sorted_evaluation(self):
-        try:
-            # Alle Projekte laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
-            projects = self.database.read_json_into_dict("Projektdaten.json")["Elements"]
-            projects = {int(k):v for k,v in projects.items()}
-            # Projekte nach (Bezeichnung) sortieren (kv[1] um Value aus Key-Value-Paar zu erhalten)
-            projects = dict(sorted(projects.items(), key=lambda kv: kv[1]["bezeichnung"]))
+        # Alle Projekte laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
+        projects = self.database.read_json_into_dict("Projektdaten.json")["Elements"]
+        projects = {int(k):v for k,v in projects.items()}
+        # Projekte nach (Bezeichnung) sortieren (kv[1] um Value aus Key-Value-Paar zu erhalten)
+        projects = dict(sorted(projects.items(), key=lambda kv: kv[1]["bezeichnung"]))
 
-            # Alle Kunden laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
-            kunden = self.database.read_json_into_dict("Kundendaten.json")["Elements"]
-            kunden = {int(k):v for k,v in kunden.items()}
+        # Alle Kunden laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
+        kunden = self.database.read_json_into_dict("Kundendaten.json")["Elements"]
+        kunden = {int(k):v for k,v in kunden.items()}
 
-            # Alle Mitarbeiter laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
-            arbeiter = self.database.read_json_into_dict("Mitarbeiterdaten.json")["Elements"]
-            arbeiter = {int(k):v for k,v in arbeiter.items()}
+        # Alle Mitarbeiter laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
+        arbeiter = self.database.read_json_into_dict("Mitarbeiterdaten.json")["Elements"]
+        arbeiter = {int(k):v for k,v in arbeiter.items()}
 
-            for pro in projects:
-                # Kunde ersetzen
-                kunden_id = projects[pro]["kunden_id"]
-                for kun in kunden:
-                    if int(kunden[kun]["unique_id"]) == int(kunden_id):
-                        projects[pro]["kunden_id"] = kunden[kun]
+        # Bei allen Projekten:
+        # 1) kunden_id durch Dictionary mit Kunden-Information ersetzen
+        #   "kunden_id" : <kunden_id>
+        #
+        #   "kunden_id" : {
+        #       "unique_id" : <unique_id>,
+        #       "nummer" : <nummer>,                        -> nicht unbedingt benötigt
+        #       "bezeichnung" : <bezeichnung>,
+        #       "ansprechpartner" : <ansprechpartner>,
+        #       "ort" : <ort>                               -> nicht unbedingt benötigt
+        #   }
+        #
+        # 2) mitarbeiter_ids durch Liste mit Dictionaries mit Mitarbeiter-Informationen ersetzen
+        #   "mitarbeiter_ids" : [ 1..n <mitarbeiter_id> ]
+        #
+        #   "mitarbeiter_ids" : [
+        #       1..n {
+        #               "unique_id" : <unique_id>,
+        #               "name" : <name>,
+        #               "vorname" : <vorname>,
+        #               "funktion" : <funktion>             -> nicht unbedingt benötigt
+        #           }
+        #   ]
+        #
+        # 3) zuordnung_arbeit mit gesamter Wochenstundenanzahl erweitern
+        #   "zuordnung_arbeit" : { ... }
+        #
+        #   "zuordnung_arbeit" : {
+        #       "gesamt_anzahl" : <gesamt_anzahl>,
+        #       "gesamt_woche_n" : [...],
+        #       ...
+        #   }
+
+        for pro in projects:
+            # Kunde ersetzen
+            kunden_id = projects[pro]["kunden_id"]
+            for kun in kunden:
+                if int(kunden[kun]["unique_id"]) == int(kunden_id):
+                    projects[pro]["kunden_id"] = kunden[kun]
+                    break
+
+            # Mitarbeiter ersetzen + sortieren
+            mitarbeiter_ids = projects[pro]["mitarbeiter_ids"]
+            for m_id in mitarbeiter_ids:
+                for arb in arbeiter:
+                    if int(arbeiter[arb]["unique_id"]) == int(m_id):
+                        projects[pro]["mitarbeiter_ids"][projects[pro]["mitarbeiter_ids"].index(m_id)] = arbeiter[arb]
                         break
-                # Mitarbeiter ersetzen + sortieren
-                mitarbeiter_ids = projects[pro]["mitarbeiter_ids"]
-                for m_id in mitarbeiter_ids:
-                    for arb in arbeiter:
-                        if int(arbeiter[arb]["unique_id"]) == int(m_id):
-                            projects[pro]["mitarbeiter_ids"][projects[pro]["mitarbeiter_ids"].index(m_id)] = arbeiter[arb]
-                            break
-                projects[pro]["mitarbeiter_ids"] = sorted(
-                    projects[pro]["mitarbeiter_ids"],
-                    key=lambda elem: (elem["name"], elem["vorname"])
-                )
-                # Zuordnung erweitern
-                zuordnung_arbeit = projects[pro]["zuordnung_arbeit"]
-                gesamt_woche_n = [0] * projects[pro]["bearbeitungszeitraum"]
-                gesamt_anzahl = 0
-                for zuo in zuordnung_arbeit:
-                    for stunden in zuordnung_arbeit[zuo]:
-                        gesamt_anzahl += int(stunden)
-                for zuo in zuordnung_arbeit:
-                    for i in range(len(zuordnung_arbeit[zuo])):
-                        gesamt_woche_n[i] += zuordnung_arbeit[zuo][i]
-                projects[pro]["zuordnung_arbeit"]["gesamt_woche_n"] = gesamt_woche_n
-                projects[pro]["zuordnung_arbeit"]["gesamt_anzahl"] = gesamt_anzahl
+            projects[pro]["mitarbeiter_ids"] = sorted(
+                projects[pro]["mitarbeiter_ids"],
+                key=lambda elem: (elem["name"], elem["vorname"])
+            )
 
+            # Zuordnung erweitern
+            zuordnung_arbeit = projects[pro]["zuordnung_arbeit"]
+            gesamt_woche_n = [0] * projects[pro]["bearbeitungszeitraum"]
+            gesamt_anzahl = 0
+            for zuo in zuordnung_arbeit:
+                for stunden in zuordnung_arbeit[zuo]:
+                    gesamt_anzahl += int(stunden)
+            for zuo in zuordnung_arbeit:
+                for i in range(len(zuordnung_arbeit[zuo])):
+                    gesamt_woche_n[i] += zuordnung_arbeit[zuo][i]
+            projects[pro]["zuordnung_arbeit"]["gesamt_woche_n"] = gesamt_woche_n
+            projects[pro]["zuordnung_arbeit"]["gesamt_anzahl"] = gesamt_anzahl
+
+        try:
             return self.view.render_dynamic_page("auswertung", projects)
         except Exception as e:
             return self.get_static_page("500")

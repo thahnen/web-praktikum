@@ -8,7 +8,7 @@ from .view import *
 
 
 # Alle (wichtigen) Informationen
-__version__ = "1.1.1"
+__version__ = "1.2.3"
 __title__ = "app"
 __summary__ = "Hinterliegende Funktionalität des Projektinformationssystems"
 __doc__ = "Dokumentation siehe Ordner /doc/"

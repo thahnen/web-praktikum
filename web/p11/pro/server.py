@@ -93,7 +93,12 @@ class WebServer(object):
     # POST-Aktion zum Hinzufügen der Projektdaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Projektdaten_Add(self):
+    def POST_Projektdaten_Add(self, nummer=None, bezeichnung=None, beschreibung=None,
+                                    bearbeitungszeitraum=None, budget=None,
+                                    kunden_id=None, **kwargs):
+        # Es muss ausserdem überprüft werden, ob es die Kunden-ID und Mitarbeiter-IDs auch gibt!!!
+        # In **kwargs sind die Mitarbeiter-IDs und Zuordnung der Arbeit
+
         if cherrypy.request.method == "POST":
             # Hier wie in 1.2 mit der API auswerten
             return "Projekt hinzugefügt"
@@ -103,13 +108,19 @@ class WebServer(object):
     # POST-Aktion zum Bearbeiten der Projektdaten
     # fehlen noch die ganzen Parameter!
     @cherrypy.expose
-    def POST_Projektdaten_Update(self):
+    def POST_Projektdaten_Update(self, unique_id=None, nummer=None, bezeichnung=None,
+                                    beschreibung=None, bearbeitungszeitraum=None,
+                                    budget=None, kunden_id=None, **kwargs):
+        # Es muss ausserdem überprüft werden, ob es die Kunden-ID und Mitarbeiter-IDs auch gibt!!!
+        # In **kwargs sind die Mitarbeiter-IDs und Zuordnung der Arbeit
+
         if cherrypy.request.method == "POST":
             # Hier wie in 1.2 mit der API auswerten
             return "Projekt geupdatet"
         return self.application.get_static_page("404")
 
 
+    # REVIEW: FERTIG + löschbar
     # POST-Aktion zum Löschen der Projektdaten
     @cherrypy.expose
     def POST_Projektdaten_Delete(self, delete_unique_id=None):
@@ -119,34 +130,52 @@ class WebServer(object):
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
                 return "Projektdaten-Löschung hat funktioniert"
-        elif cherrypy.request.method == "GET":
-            return self.application.get_static_page("404")
-        return "Projektdaten-Löschung hat nicht funktioniert"
-
-
-    # POST-Aktion zum Hinzufügen der Kundendaten
-    # fehlen noch die ganzen Parameter!
-    @cherrypy.expose
-    def POST_Kundendaten_Add(self, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
-
-        # hier wie bei den Mitarbeitern!
-
-        if cherrypy.request.method == "POST":
-            # Hier wie in 1.2 mit der API auswerten
-            return "Kunde hinzugefügt"
+            # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
+            return "Projektdaten-Löschung hat nicht funktioniert"
         return self.application.get_static_page("404")
 
 
+    # REVIEW: FERTIG
+    # POST-Aktion zum Hinzufügen der Kundendaten
+    @cherrypy.expose
+    def POST_Kundendaten_Add(self, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
+        if cherrypy.request.method == "POST" and nummer != None and bezeichnung != None and ansprechpartner != None and ort != None:
+            # Hier wie in 1.2 mit der API auswerten
+            data = {
+                "unique_id" : 404,
+                "nummer" : int(nummer),
+                "bezeichnung" : bezeichnung,
+                "ansprechpartner" : ansprechpartner,
+                "ort" : ort
+            }
+            addition = self.application.add_values("Kundendaten", data)
+            if addition == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
+                return "Kundendaten-Hinzufügen hat funktioniert"
+            # Seite zurückgeben die eigentlich nur history.back() macht
+            return "Kundendaten-Hinzufügen hat nicht funktioniert"
+        return self.application.get_static_page("404")
+
+
+    # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Kundendaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
     def POST_Kundendaten_Update(self, unique_id=None, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
-
-        # hier wie bei den Mitarbeitern!
-        
-        if cherrypy.request.method == "POST":
+        if cherrypy.request.method == "POST" and unique_id != None and nummer != None and bezeichnung != None and ansprechpartner != None and ort != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Kunde geupdatet"
+            data = {
+                "unique_id" : int(unique_id),
+                "nummer" : int(nummer),
+                "bezeichnung" : bezeichnung,
+                "ansprechpartner" : ansprechpartner,
+                "ort" : ort
+            }
+            addition = self.application.update_values("Kundendaten", data)
+            if addition == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
+                return "Kundendaten-Updaten hat funktioniert"
+            # Seite zurückgeben die eigentlich nur history.back() macht
+            return "Kundendaten-Updaten hat nicht funktioniert"
         return self.application.get_static_page("404")
 
 
@@ -160,9 +189,9 @@ class WebServer(object):
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
                 return "Kundendaten-Löschung hat funktioniert"
-        elif cherrypy.request.method == "GET":
-            return self.application.get_static_page("404")
-        return "Kundendaten-Löschung hat nicht funktioniert"
+            # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
+            return "Kundendaten-Löschung hat nicht funktioniert"
+        return self.application.get_static_page("404")
 
 
     # REVIEW: FERTIG
@@ -181,9 +210,9 @@ class WebServer(object):
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return "Mitarbeiterdaten-Hinzufügen hat funktioniert"
-        elif cherrypy.request.method == "GET":
-            return self.application.get_static_page("404")
-        return "Mitarbeiterdaten-Hinzufügen hat nicht funktioniert"
+            # Seite zurückgeben die eigentlich nur history.back() macht
+            return "Mitarbeiterdaten-Hinzufügen hat nicht funktioniert"
+        return self.application.get_static_page("404")
 
 
     # REVIEW: FERTIG
@@ -193,7 +222,7 @@ class WebServer(object):
         if cherrypy.request.method == "POST" and unique_id != None and name != None and vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
             data = {
-                "unique_id" : unique_id,
+                "unique_id" : int(unique_id),
                 "name" : name,
                 "vorname" : vorname,
                 "funktion" : funktion
@@ -202,9 +231,9 @@ class WebServer(object):
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return "Mitarbeiterdaten-Updaten hat funktioniert"
-        elif cherrypy.request.method == "GET":
-            return self.application.get_static_page("404")
-        return "Mitarbeiterdaten-Updaten hat nicht funktioniert"
+            # Seite zurückgeben die eigentlich nur history.back() macht
+            return "Mitarbeiterdaten-Updaten hat nicht funktioniert"
+        return self.application.get_static_page("404")
 
 
     # REVIEW: FERTIG
@@ -217,9 +246,9 @@ class WebServer(object):
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return "Projektdaten-Löschung hat funktioniert"
-        elif cherrypy.request.method == "GET":
-            return self.application.get_static_page("404")
-        return "Mitarbeiterdaten-Löschung hat nicht funktioniert"
+            # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
+            return "Mitarbeiterdaten-Löschung hat nicht funktioniert"
+        return self.application.get_static_page("404")
 
 
 config = {

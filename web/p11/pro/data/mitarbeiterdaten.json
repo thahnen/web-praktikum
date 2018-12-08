@@ -25,10 +25,10 @@
             "funktion": "Physiker"
         },
         "4": {
-            "unique_id": "1045",
-            "name": "Anders",
-            "vorname": "Thomas",
-            "funktion": "Wie anders"
+            "unique_id": 1047,
+            "name": "Mosby",
+            "vorname": "Ted",
+            "funktion": "Professor"
         }
     }
 }

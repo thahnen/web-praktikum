@@ -18,8 +18,8 @@ class Application(object):
     def __init__(self, server_path):
         self.server_path = server_path
         self.content_path = self.server_path + "/content/"
-        self.database = app.Database(server_path+"/data/")
-        self.view = app.View(server_path+"/template/")
+        self.database = app.Database(server_path + "/data/")
+        self.view = app.View(server_path + "/template/")
 
 
     # Handhabt statische Seiten
@@ -112,6 +112,7 @@ class Application(object):
                 if int(kunden[kun]["unique_id"]) == int(kunden_id):
                     projects[pro]["kunden_id"] = kunden[kun]
                     break
+
             # Mitarbeiter ersetzen + sortieren
             mitarbeiter_ids = projects[pro]["mitarbeiter_ids"]
             for m_id in mitarbeiter_ids:
@@ -123,6 +124,7 @@ class Application(object):
                 projects[pro]["mitarbeiter_ids"],
                 key=lambda elem: (elem["name"], elem["vorname"])
             )
+
             # Zuordnung erweitern
             zuordnung_arbeit = projects[pro]["zuordnung_arbeit"]
             gesamt_woche_n = [0] * projects[pro]["bearbeitungszeitraum"]
@@ -135,8 +137,6 @@ class Application(object):
                     gesamt_woche_n[i] += zuordnung_arbeit[zuo][i]
             projects[pro]["zuordnung_arbeit"]["gesamt_woche_n"] = gesamt_woche_n
             projects[pro]["zuordnung_arbeit"]["gesamt_anzahl"] = gesamt_anzahl
-
-        return self.view.render_dynamic_page("auswertung", projects)
 
         try:
             return self.view.render_dynamic_page("auswertung", projects)

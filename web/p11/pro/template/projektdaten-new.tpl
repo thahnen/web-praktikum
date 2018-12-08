@@ -115,5 +115,7 @@
             <input type="submit" id="btn--add" value="Hinzufügen">
         </div>
     </form>
+
+    <!-- JavaScript, um Zuordnung dynamisch gestellt wird! -->
 </body>
 </html>
