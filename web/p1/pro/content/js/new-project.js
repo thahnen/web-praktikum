@@ -1,6 +1,6 @@
 /*
  *  new-project.js
- *  =======
+ *  ==============
  *
  *  Logik für die Projektdaten-Hinzufuegen-Seite
  *

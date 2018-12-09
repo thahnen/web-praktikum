@@ -95,13 +95,56 @@ class WebServer(object):
     @cherrypy.expose
     def POST_Projektdaten_Add(self, nummer=None, bezeichnung=None, beschreibung=None,
                                     bearbeitungszeitraum=None, budget=None,
-                                    kunden_id=None, **kwargs):
+                                    kunden_id=None, mitarbeiter_ids=None, **kwargs):
         # Es muss ausserdem überprüft werden, ob es die Kunden-ID und Mitarbeiter-IDs auch gibt!!!
-        # In **kwargs sind die Mitarbeiter-IDs und Zuordnung der Arbeit
+        # In **kwargs ist die Zuordnung der Arbeit
 
-        if cherrypy.request.method == "POST":
+        if cherrypy.request.method == "POST" and nummer != None and \
+                                            bezeichnung != None and beschreibung != None and \
+                                            bearbeitungszeitraum != None and budget != None and \
+                                            kunden_id != None and mitarbeiter_ids != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Projekt hinzugefügt"
+            try:
+                mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
+            except Exception as e:
+                # ja gute Frage wie ich das handhaben soll ausser Fehler :o
+                raise
+
+            data = {
+                "unique_id" : 404,
+                "nummer" : int(nummer),
+                "bezeichnung" : bezeichnung,
+                "beschreibung" : beschreibung,
+                "bearbeitungszeitraum" : int(bearbeitungszeitraum),
+                "budget" : int(budget),
+                "kunden_id" : int(kunden_id),
+                "mitarbeiter_ids" : mitarbeiter_ids
+            }
+
+            # Überprüfen, ob "zuordnung_arbeit" in kwargs (dann wurde letzte Seite aufgerufen)
+            if "zuordnung_arbeit" in kwargs:
+                zuordnung_arbeit = {}
+                # String in Liste umwandeln
+                try:
+                    stunden = list(map(lambda x: int(x), kwargs["zuordnung_arbeit"].split(",")))
+                except Exception as e:
+                    raise
+
+                for i in range(0, len(mitarbeiter_ids)):
+                    pro = len(mitarbeiter_ids)
+                    zeiten = []
+                    for j in range(0, int(bearbeitungszeitraum)):
+                        zeiten.append(stunden[i*pro+j])
+                    zuordnung_arbeit.update({f"{mitarbeiter_ids[i]}" : zeiten})
+
+                data.update({"zuordnung_arbeit" : zuordnung_arbeit})
+                return f"{data}"
+                # abspeichern und wenn korrekt dann zur Übersicht
+                return "Projekt-Hinzufuegen hat funktioniert"
+
+            #return f"{data}"
+            # Das Template muss noch hinzugefügt werden!
+            return self.application.get_dynamic_page("zuordnung_arbeit", data)
         return self.application.get_static_page("404")
 
 
@@ -139,7 +182,9 @@ class WebServer(object):
     # POST-Aktion zum Hinzufügen der Kundendaten
     @cherrypy.expose
     def POST_Kundendaten_Add(self, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
-        if cherrypy.request.method == "POST" and nummer != None and bezeichnung != None and ansprechpartner != None and ort != None:
+        if cherrypy.request.method == "POST" and nummer != None and \
+                                            bezeichnung != None and \
+                                            ansprechpartner != None and ort != None:
             # Hier wie in 1.2 mit der API auswerten
             data = {
                 "unique_id" : 404,
@@ -161,7 +206,9 @@ class WebServer(object):
     # POST-Aktion zum Bearbeiten der Kundendaten
     @cherrypy.expose
     def POST_Kundendaten_Update(self, unique_id=None, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
-        if cherrypy.request.method == "POST" and unique_id != None and nummer != None and bezeichnung != None and ansprechpartner != None and ort != None:
+        if cherrypy.request.method == "POST" and unique_id != None and nummer != None and \
+                                            bezeichnung != None and \
+                                            ansprechpartner != None and ort != None:
             # Hier wie in 1.2 mit der API auswerten
             data = {
                 "unique_id" : int(unique_id),
@@ -198,7 +245,8 @@ class WebServer(object):
     # POST-Aktion zum Hinzufügen der Mitarbeiterdaten
     @cherrypy.expose
     def POST_Mitarbeiterdaten_Add(self, name=None, vorname=None, funktion=None):
-        if cherrypy.request.method == "POST" and name != None and vorname != None and funktion != None:
+        if cherrypy.request.method == "POST" and name != None and \
+                                            vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
             data = {
                 "unique_id" : 404,
@@ -219,7 +267,8 @@ class WebServer(object):
     # POST-Aktion zum Bearbeiten der Mitarbeiterdaten
     @cherrypy.expose
     def POST_Mitarbeiterdaten_Update(self, unique_id=None, name=None, vorname=None, funktion=None):
-        if cherrypy.request.method == "POST" and unique_id != None and name != None and vorname != None and funktion != None:
+        if cherrypy.request.method == "POST" and unique_id != None and name != None and \
+                                            vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
             data = {
                 "unique_id" : int(unique_id),
