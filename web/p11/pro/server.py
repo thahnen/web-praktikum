@@ -53,6 +53,7 @@
 
 
 import os
+import ast # um Liste als String in Liste zurückzuverwandeln
 import cherrypy
 import app
 
@@ -90,14 +91,12 @@ class WebServer(object):
         return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 
+    # TODO: Noch alle Parameter auf Richtigkeit überprüfen?
     # POST-Aktion zum Hinzufügen der Projektdaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
     def POST_Projektdaten_Add(self, nummer=None, bezeichnung=None, beschreibung=None,
                                     bearbeitungszeitraum=None, budget=None,
                                     kunden_id=None, mitarbeiter_ids=None, **kwargs):
-        # Es muss ausserdem überprüft werden, ob es die Kunden-ID und Mitarbeiter-IDs auch gibt!!!
-        # In **kwargs ist die Zuordnung der Arbeit
 
         if cherrypy.request.method == "POST" and nummer != None and \
                                             bezeichnung != None and beschreibung != None and \
@@ -107,8 +106,15 @@ class WebServer(object):
             try:
                 mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
             except Exception as e:
-                # ja gute Frage wie ich das handhaben soll ausser Fehler :o
-                raise
+                # Entweder falsch mit "," am Ende oder als Liste!
+                # Annahme dass nur 0-9 + "," vorkommen, geht über Regex aber kb
+                while mitarbeiter_ids[-1::] == ",":
+                    mitarbeiter_ids = mitarbeiter_ids[:-1]
+                    mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
+                if mitarbeiter_ids[-1::] == "]":
+                    mitarbeiter_ids = ast.literal_eval(mitarbeiter_ids)
+
+            # Alles auf Richtigkeit überprüfen
 
             data = {
                 "unique_id" : 404,
@@ -122,29 +128,32 @@ class WebServer(object):
             }
 
             # Überprüfen, ob "zuordnung_arbeit" in kwargs (dann wurde letzte Seite aufgerufen)
-            if "zuordnung_arbeit" in kwargs:
+            if "unique_id" in kwargs and "zuordnung_arbeit" in kwargs:
+                data["unique_id"] = int(kwargs["unique_id"])
+                data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
+
                 zuordnung_arbeit = {}
-                # String in Liste umwandeln
-                try:
-                    stunden = list(map(lambda x: int(x), kwargs["zuordnung_arbeit"].split(",")))
-                except Exception as e:
-                    raise
+                be = int(bearbeitungszeitraum)
 
                 for i in range(0, len(mitarbeiter_ids)):
-                    pro = len(mitarbeiter_ids)
                     zeiten = []
-                    for j in range(0, int(bearbeitungszeitraum)):
-                        zeiten.append(stunden[i*pro+j])
+                    for j in range(0, be):
+                        zeiten.append(int(data["zuordnung_arbeit"][(i*be)+j]))
                     zuordnung_arbeit.update({f"{mitarbeiter_ids[i]}" : zeiten})
-
                 data.update({"zuordnung_arbeit" : zuordnung_arbeit})
-                return f"{data}"
-                # abspeichern und wenn korrekt dann zur Übersicht
-                return "Projekt-Hinzufuegen hat funktioniert"
 
-            #return f"{data}"
+                #return f"{data}"
+
+                addition = self.application.add_values("Projektdaten", data)
+
+                if addition == '{"code" : 200}':
+                    # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
+                    return f"Projekt-Hinzufuegen hat funktioniert\n{data}"
+                # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
+                return f"Projekt-Hinzufuegen hat nicht funktioniert\n{data}"
+
             # Das Template muss noch hinzugefügt werden!
-            return self.application.get_dynamic_page("zuordnung_arbeit", data)
+            return self.application.view.render_dynamic_page("zuordnung_arbeit", data)
         return self.application.get_static_page("404")
 
 
@@ -169,7 +178,7 @@ class WebServer(object):
     def POST_Projektdaten_Delete(self, delete_unique_id=None):
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            deletion = ""#self.application.delete_values("Projektdaten", int(delete_unique_id))
+            deletion = self.application.delete_values("Projektdaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
                 return "Projektdaten-Löschung hat funktioniert"
@@ -205,7 +214,8 @@ class WebServer(object):
     # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Kundendaten
     @cherrypy.expose
-    def POST_Kundendaten_Update(self, unique_id=None, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
+    def POST_Kundendaten_Update(self, unique_id=None, nummer=None, bezeichnung=None,
+                                    ansprechpartner=None, ort=None):
         if cherrypy.request.method == "POST" and unique_id != None and nummer != None and \
                                             bezeichnung != None and \
                                             ansprechpartner != None and ort != None:

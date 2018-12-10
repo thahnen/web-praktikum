@@ -20,6 +20,13 @@
             "bezeichnung": "Facebook Inc.",
             "ansprechpartner": "Mark Zuckerberg",
             "ort": "Menlo Park"
+        },
+        "3": {
+            "unique_id": 1052,
+            "nummer": 404,
+            "bezeichnung": "T.E.A.R.S.",
+            "ansprechpartner": "Geronimo R\u00f6der",
+            "ort": "Schweden"
         }
     }
 }

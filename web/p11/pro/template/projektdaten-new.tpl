@@ -72,7 +72,7 @@
         </div>
 
         <div class="div--btn">
-            <input type="submit" id="btn--add" value="Hinzufügen">
+            <input type="submit" id="btn--add" value="Zuordnung Arbeit erstellen">
         </div>
     </form>
 </body>
