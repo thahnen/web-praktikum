@@ -1,6 +1,6 @@
 # <span style="color:#667db6">Projektinformationssystem (Praktikum 1 & 2)</span>
 
-## Inhaltsverzeichnis
+## <span style="color:#667db6">Inhaltsverzeichnis</span>
 Element | Abschnitt
 --------|----------
 *Einleitung* | [--> Klick mich <--](#einleitung)
@@ -12,26 +12,50 @@ Element | Abschnitt
 ---
 
 <a name="einleitung"></a>
-## Einleitung
+## <span style="color:#667db6">Einleitung</span>
 Praktikumsgruppe: F
-Gruppenmitglieder:
-- Tobias Hahnen (1218710)
 
-Stand: 08.12.2018 | Version: **1.2.3**
+Gruppenmitglieder: **Tobias Hahnen (1218710)**
+
+Stand: *08.12.2018* | Version: *1.2.3*
 
 ---
 
 <a name="projektbeschreibung"></a>
-## Projektbeschreibung
+## <span style="color:#667db6">Projektbeschreibung</span>
 
 ### Aufgabe der Anwendung
+Projektinformationssystem: Ermöglicht das Management von Projekten, den jeweiligen Kunden und den beteiligten Mitarbeitern.
 
 ### Übersicht der fachlichen Funktionen
+Das Projektinformationssystem ist als Web-Anwendung realisiert.
+Es besteht die Möglichkeit, die jeweiligen
+
+1. Projektdaten
+2. Kundendaten
+3. Mitarbeiterdaten
+
+zu **bearbeiten**.
+Ausserdem kann man Daten **löschen**.
+Des weiteren kann man pro Datensatz je neue Daten **hinzufügen**.
+
+Dabei wird auf die Integrität der jeweiligen Daten, soweit möglich, geachtet.
+
+Für jede Möglichkeit der Bearbeitung gibt es entweder eine eigene Seite oder aber einige sind miteinander implementiert.
 
 ---
 
 <a name="beschreibung"></a>
-## Beschreibung der Komponenten des Servers
+## <span style="color:#667db6">Beschreibung der Komponenten des Servers</span>
+
+### DISCLAIMER:
+Um die Übersichtlichkeit zu verbessern wurde das Projekt unterteilt für die:
+- erste Teilaufgabe (siehe Ordner **web/p11/**)
+- zweite Teilaufgabe (siehe Ordner **web/p12/**)
+
+Damit gewährleistet ist, dass, bis auf wenige Ausnahmen, alle Dateien gleich sind, kann das Skript **assert-integrity.sh** ausgeführt werden. Es zeigt alle (relevanten) Dateien an, die für beide Teilaufgaben existieren!
+
+Dieses Skript liegt im Ordner **web/test** zusammen mit anderen Skripten, auf die an der jeweiligen Stelle eingegangen wird!
 
 ### server.py
 
@@ -48,13 +72,13 @@ Stand: 08.12.2018 | Version: **1.2.3**
 ---
 
 <a name="datenablage"></a>
-## Datenablage
+## <span style="color:#667db6">Datenablage</span>
 Abgespeichert werden die Projekte mit ihren Kunden und Mitarbeitern in unterschiedlichen JSON-Dateien.
 
 ---
 
 <a name="ergebnisse"></a>
-## Durchführung und Ergebnis der geforderten Prüfungen
+## <span style="color:#667db6">Durchführung und Ergebnis der geforderten Prüfungen</span>
 
 
 
@@ -63,14 +87,6 @@ Abgespeichert werden die Projekte mit ihren Kunden und Mitarbeitern in unterschi
 
 ---
 
-## <span style="color:#667db6">Einleitung</span>
-Gruppe: D
-Anzahl Teammitglieder: 1
-1. Teammitglied: Marvin Krause
-
-Gültigkeit des Douments: 28.11.2018
-
-----
 
 ## <span style="color:#667db6">Projektbeschreibung</span>
 

@@ -1,26 +1,7 @@
 ## coding: utf-8
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="expires" content="0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="author" content="Tobias Hahnen" />
-    <title>Projektdaten: Neu hinzufügen</title>
-    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="/css/standard.css" />
-</head>
-<body>
-    <div class="div--header">
-        <h1 id="headline">Projektdaten: Neu hinzufügen</h1>
-    </div>
-
-    <%include file="/elements/navbar.tpl"/>
-
-    <form action="/POST_Projektdaten_Add" method="post">
-        <!-- -->
+<%doc>
+    Das Form-Element für die Hinzufügen- / Bearbeiten-Seite (Zuordnung Arbeit) der Projekte der 1.1 Aufgabe!
+</%doc>
         % for key in data_o:
         % if key == "mitarbeiter_ids":
         <input type="hidden" name="${key}" value="${data_o[key]}">
@@ -47,10 +28,6 @@
         <input type="hidden" name="${key}" value="${data_o[key]}">
         % endif
         % endfor
-
         <div class="div--btn">
             <input type="submit" id="btn--add" value="Hinzufügen">
         </div>
-    </form>
-</body>
-</html>

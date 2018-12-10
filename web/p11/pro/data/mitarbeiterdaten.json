@@ -7,7 +7,7 @@
     },
     "Elements": {
         "1": {
-            "unique_id": "1037",
+            "unique_id": 1037,
             "name": "Hahnen",
             "vorname": "Tobias",
             "funktion": "Junior Software Engineer"
@@ -29,6 +29,12 @@
             "name": "Frakes",
             "vorname": "Jonathan",
             "funktion": "R\u00e4tsel-L\u00f6ser"
+        },
+        "5": {
+            "unique_id": 1054,
+            "name": "Zwegat",
+            "vorname": "Peter",
+            "funktion": "Arschloch"
         }
     }
 }

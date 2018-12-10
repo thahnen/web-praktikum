@@ -153,26 +153,80 @@ class WebServer(object):
                 return f"Projekt-Hinzufuegen hat nicht funktioniert\n{data}"
 
             # Das Template muss noch hinzugefügt werden!
-            return self.application.view.render_dynamic_page("zuordnung_arbeit", data)
+            return self.application.view.render_dynamic_page("zuordnung-arbeit-new", data)
         return self.application.get_static_page("404")
 
 
+    # TODO: Noch alle Parameter auf Richtigkeit überprüfen?
     # POST-Aktion zum Bearbeiten der Projektdaten
-    # fehlen noch die ganzen Parameter!
     @cherrypy.expose
     def POST_Projektdaten_Update(self, unique_id=None, nummer=None, bezeichnung=None,
                                     beschreibung=None, bearbeitungszeitraum=None,
-                                    budget=None, kunden_id=None, **kwargs):
-        # Es muss ausserdem überprüft werden, ob es die Kunden-ID und Mitarbeiter-IDs auch gibt!!!
-        # In **kwargs sind die Mitarbeiter-IDs und Zuordnung der Arbeit
+                                    budget=None, kunden_id=None, mitarbeiter_ids=None, **kwargs):
 
-        if cherrypy.request.method == "POST":
+        #return f"{unique_id}, {nummer}, {bezeichnung}, {beschreibung}, {bearbeitungszeitraum}, {budget}, {kunden_id}, {kwargs}"
+
+        if cherrypy.request.method == "POST" and unique_id != None and nummer != None and \
+                                            bezeichnung != None and beschreibung != None and \
+                                            bearbeitungszeitraum != None and budget != None and \
+                                            kunden_id != None and mitarbeiter_ids != None:
             # Hier wie in 1.2 mit der API auswerten
-            return "Projekt geupdatet"
+            try:
+                mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
+            except Exception as e:
+                # Entweder falsch mit "," am Ende oder als Liste!
+                # Annahme dass nur 0-9 + "," vorkommen, geht über Regex aber kb
+                while mitarbeiter_ids[-1::] == ",":
+                    mitarbeiter_ids = mitarbeiter_ids[:-1]
+                    mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
+                if mitarbeiter_ids[-1::] == "]":
+                    mitarbeiter_ids = ast.literal_eval(mitarbeiter_ids)
+
+            # Alles auf Richtigkeit überprüfen
+
+            data = {
+                "unique_id" : int(unique_id),
+                "nummer" : int(nummer),
+                "bezeichnung" : bezeichnung,
+                "beschreibung" : beschreibung,
+                "bearbeitungszeitraum" : int(bearbeitungszeitraum),
+                "budget" : int(budget),
+                "kunden_id" : int(kunden_id),
+                "mitarbeiter_ids" : mitarbeiter_ids
+            }
+
+            try:
+                zuordnung_arbeit = ast.literal_eval(kwargs["zuordnung_arbeit"])
+            except Exception as e:
+                data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
+
+            if "not_done" in kwargs:
+                # Es muss noch Tabelle geupdatet werden!
+                return self.application.view.render_dynamic_page("zuordnung-arbeit-edit", data)
+
+            zuordnung_arbeit = {}
+            be = int(bearbeitungszeitraum)
+
+            for i in range(0, len(mitarbeiter_ids)):
+                zeiten = []
+                for j in range(0, be):
+                    zeiten.append(int(data["zuordnung_arbeit"][(i*be)+j]))
+                zuordnung_arbeit.update({f"{mitarbeiter_ids[i]}" : zeiten})
+            data.update({"zuordnung_arbeit" : zuordnung_arbeit})
+
+            addition = self.application.update_values("Projektdaten", data)
+
+            if addition == '{"code" : 200}':
+                # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
+                return f"Projekt-Hinzufuegen hat funktioniert\n{data}"
+            # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
+            return f"Projekt-Hinzufuegen hat nicht funktioniert\n{data}"
+
+            return f"Zuordnung ist fertig: {data}"
         return self.application.get_static_page("404")
 
 
-    # REVIEW: FERTIG + löschbar
+    # REVIEW: FERTIG
     # POST-Aktion zum Löschen der Projektdaten
     @cherrypy.expose
     def POST_Projektdaten_Delete(self, delete_unique_id=None):

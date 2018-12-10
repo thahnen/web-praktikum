@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
 
+# TODO: alles noch mit Farbe ausfüllen!
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NOCOL='\033[0m'
+
+
 # Test, ob der Server ueberhaupt online ist !
 curl 127.0.0.1:8080 &> /dev/null
 if test $? -ne 0; then
