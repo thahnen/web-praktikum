@@ -54,7 +54,7 @@ class WebServer(object):
         self.application = app.Application(self.server_path)
 
 
-    # Index-Seite des Webservers (Liste aller Unterseiten oder so)
+    # Index-Seite des Webservers (führt zu allen wichtigen Seiten)
     @cherrypy.expose
     def index(self):
         return self.application.get_static_page("index")

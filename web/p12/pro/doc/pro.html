@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>pro</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="projektinformationssystem-praktikum-1-2"><span style="color:#667db6">Projektinformationssystem (Praktikum 1 &amp; 2)</span></h1>
+<hr />
+<h2 id="einleitung"><span style="color:#667db6">Einleitung</span></h2>
+<p>Praktikumsgruppe: F</p>
+<p>Gruppenmitglieder: <strong>Tobias Hahnen (Mat. Nummer: 1218710)</strong></p>
+<p>Stand: <em>08.12.2018</em> | Version: <em>1.2.3</em></p>
+<hr />
+<h2 id="projektbeschreibung"><span style="color:#667db6">Projektbeschreibung</span></h2>
+<h3 id="aufgabe-der-anwendung">Aufgabe der Anwendung</h3>
+<p>Projektinformationssystem: Ermöglicht das Management von Projekten, den jeweiligen Kunden und den beteiligten Mitarbeitern.</p>
+<p>Das Projektinformationssystem ist als Web-Anwendung realisiert. Es besteht die Möglichkeit, die jeweiligen</p>
+<ol type="1">
+<li>Projektdaten</li>
+<li>Kundendaten</li>
+<li>Mitarbeiterdaten</li>
+</ol>
+<p>zu <strong>bearbeiten</strong>. Ausserdem kann man die Daten <strong>löschen</strong>. Des weiteren kann man pro Datensatz je neue Daten <strong>hinzufügen</strong>.</p>
+<p>Dabei wird auf die Integrität der jeweiligen Daten, soweit möglich, geachtet.</p>
+<p>Für jede Möglichkeit der Bearbeitung gibt es entweder eine eigene Seite oder aber es sind einige miteinander implementiert.</p>
+<h3 id="übersicht-der-fachlichen-funktionen">Übersicht der fachlichen Funktionen</h3>
+<p>Da es sich bei dem Projektinformationssystem um eine Web-Anwendung handelt, sind die einzelnen Funktionen jeweils über eigene Webseiten einsehbar.</p>
+<h4 id="die-landing-page-adresse">Die Landing-Page (Adresse: /)</h4>
+<p>Hauptseite des Web-Servers, <strong>ist nicht von der Aufgabenstellung her gefordert</strong>, aber über sie gerät man direkt zu allen wichtigen (Übersichts-)Seiten.</p>
+<h4 id="die-projekt-übersicht-adresse-projektdaten">Die Projekt-Übersicht (Adresse: /projektdaten)</h4>
+<p>Eine Übersicht über alle vorhandenen Projekten mit den jeweils dazugehörigen Informationen in einer übersichtlichen Auflistung. Von hier aus ist es möglich, ein neues Projekt zu erstellen, ein ausgewähltes Projekt zu bearbeiten oder zu löschen. Wenn man ein Projekt neu erstellen oder bearbeiten möchte wird man auf die zugehörige Webseite weitergeleitet.</p>
+<h4 id="die-projekt-hinzufügen-seite-adresse-projektdatenneu">Die Projekt-Hinzufügen-Seite (Adresse: /projektdaten/neu)</h4>
+<p>Hier ist es möglich ein neues Projekt zu erstellen. Allerdings auf unterschiedliche Art und Weisen, je nachdem ob man das Programm für Aufgabenstellung <em>1.1</em> oder <em>1.2</em> verwendet. Ausserdem unterscheidet sich das UI zum Äquivalent für Kunden bzw. Mitarbeiter um etwas mehr Übersichtlichkeit zu gewährleisten.</p>
+<p>Bei 1.1 wird der Prozess über zwei aufeinanderfolgende Webseiten realisiert, indem man erst alle Informationen ausser die <em>Wöchentliche Zuordnung der Arbeit</em> angibt um dann im zweiten Schritt eben diese auszufüllen.</p>
+<p>Bei 1.2 wird der Prozess über eine einzige Webseite realisiert, dabei werden alle Kunden und Mitarbeiter dynamisch geladen um diese dann auszuwählen. Je nach Eingabe wird dann die <em>Wöchentliche Zuordnung der Arbeit</em> dynamisch verändert.</p>
+<h4 id="die-projekt-bearbeiten-seite-adresse-projektdaten">Die Projekt-Bearbeiten-Seite (Adresse: /projektdaten/<Projekt-Id>)</h4>
+<p>Hier ist es möglich ein vorher ausgewähltes Projekt zu bearbeiten. Allerdings auf unterschiedliche Art und Weisen, je nachdem ob man das Programm für Aufgabenstellung <em>1.1</em> oder <em>1.2</em> verwendet. Ausserdem unterscheidet sich das UI zum Äquivalent der Webseite für Kunden bzw. Mitarbeiter um etwas mehr Übersichtlichkeit zu gewährleisten.</p>
+<p>Bei 1.1 wird der Prozess über zwei aufeinanderfolgende Webseiten realisiert, indem man erst alle Informationen ausser die <em>Wöchentliche Zuordnung der Arbeit</em> bearbeitet um dann im zweiten Schritt eben diese abändert.</p>
+<p>Bei 1.2 wird der Prozess über eine einzige Webseite realisiert, dabei werden alle Kunden und Mitarbeiter dynamisch geladen um diese dann zu verändern. Je nach Eingabe wird dann die <em>Wöchentliche Zuordnung der Arbeit</em> dynamisch modifiziert.</p>
+<h4 id="die-kunden-übersicht-adresse-kundendaten">Die Kunden-Übersicht (Adresse: /kundendaten)</h4>
+<p>Eine Übersicht über alle vorhandenen Kunden mit den jeweils dazugehörigen Informationen in einer übersichtlichen Auflistung. Von hier aus ist es möglich, einen neuen Kunden zu erstellen, einen ausgewählten Kunden zu bearbeiten oder zu löschen. Wenn man einen Kunden neu erstellen oder bearbeiten möchte wird man auf die zugehörige Webseite weitergeleitet.</p>
+<h4 id="die-kunden-hinzufügen-seite-adresse-kundendatenneu">Die Kunden-Hinzufügen-Seite (Adresse: /kundendaten/neu)</h4>
+<p>Hier ist es möglich einen Kunden zu erstellen. Da weniger Eingaben gefordert werden unterscheidet sich das UI zum Äquivalent für Projekte allerdings nicht für Mitarbeiter.</p>
+<h4 id="die-kunden-bearbeiten-seite-adresse-kundendaten">Die Kunden-Bearbeiten-Seite (Adresse: /kundendaten/<Kunden-Id>)</h4>
+<p>Hier ist es möglich einen vorher ausgewählten Kunden zu bearbeiten. Da weniger Eingaben gefordert werden unterscheidet sich das UI zum Äquivalent für Projekte allerdings nicht für Mitarbeiter.</p>
+<h4 id="die-mitarbeiter-übersicht-adresse-mitarbeiterdaten">Die Mitarbeiter-Übersicht (Adresse: /mitarbeiterdaten)</h4>
+<p>Eine Übersicht über alle vorhandenen Mitarbeiter mit den jeweils dazugehörigen Informationen in einer übersichtlichen Auflistung. Von hier aus ist es möglich, einen neuen Mitarbeiter zu erstellen, einen ausgewählten Mitarbeiter zu bearbeiten oder zu löschen. Wenn man einen Mitarbeiter neu erstellen oder bearbeiten möchte wird man auf die zugehörige Webseite weitergeleitet.</p>
+<h4 id="die-mitarbeiter-hinzufügen-seite-adresse-mitarbeiterdatenneu">Die Mitarbeiter-Hinzufügen-Seite (Adresse: /mitarbeiterdaten/neu)</h4>
+<p>Hier ist es möglich einen Mitarbeiter zu erstellen. Da weniger Eingaben gefordert werden unterscheidet sich das UI zum Äquivalent für Projekte allerdings nicht für Kunden.</p>
+<h4 id="die-mitarbeiter-bearbeiten-seite-adresse-mitarbeiterdaten">Die Mitarbeiter-Bearbeiten-Seite (Adresse: /mitarbeiterdaten/<Mitarbeiter-Id>)</h4>
+<p>Hier ist es möglich einen vorher ausgewählten Mitarbeiter zu bearbeiten. Da weniger Eingaben gefordert werden unterscheidet sich das UI zum Äquivalent für Projekte allerdings nicht für Kunden.</p>
+<h4 id="die-auswertung-seite-adresse-auswertung">Die Auswertung-Seite (Adresse: /auswertung)</h4>
+<p>Diese Webseite ist nur bei dem Programm für Aufgabenstellung <em>1.2</em> zu finden. Hierbei handelt es sich um eine Übersicht über alle vorhandenen Projekte, erweitert deren Übersicht allerdings über eine differenziertere Übersicht des Kunden und der beteiligten Mitarbeiter. Die Übersicht ist nach <em>Projektbezeichnung</em> sortiert und innerhalb jedes Projekts sind die Mitarbeiter nach <em>Namen, Vornamen</em> sortiert. Ausserdem ist hier nicht nur die <em>Wöchentliche Zuordnung der Arbeit</em> aufgelistet sondern auch der gesamte Stundenaufwand und zusätzlich aufgeschlüsselt für jede einzelne Woche.</p>
+<hr />
+<h2 id="beschreibung-der-komponenten-des-servers"><span style="color:#667db6">Beschreibung der Komponenten des Servers</span></h2>
+<h3 id="disclaimer">DISCLAIMER:</h3>
+<p>Um die Übersichtlichkeit zu verbessern wurde das Projekt unterteilt für die: 1. erste Teilaufgabe (siehe Ordner <strong>web/p11/</strong>) 2. zweite Teilaufgabe (siehe Ordner <strong>web/p12/</strong>)</p>
+<p>Damit gewährleistet ist, dass, bis auf wenige Ausnahmen, alle Dateien gleich sind, kann das Skript <strong>assert-integrity.sh</strong> ausgeführt werden. Es zeigt alle (relevanten) Dateien an, die für beide Teilaufgaben existieren, sich gleichen oder unterscheiden!</p>
+<p>Dieses Skript liegt im Ordner <strong>web/test</strong> zusammen mit anderen Skripten.</p>
+<h3 id="server.py">server.py</h3>
+<h4 id="zweck">Zweck</h4>
+<p>Hierbei handelt es sich um den eigentlichen Web-Server, der das Routing zur Verfügung stellt sowie die Konfiguration vornimmt. Er unterscheidet für Aufgabenstellung <em>1.1</em> und <em>1.2</em> in seinem Routing, ist allerdings in seiner Konfiguration identisch.</p>
+<h4 id="aufbau-bestandteile-der-komponente">Aufbau (Bestandteile der Komponente)</h4>
+<p>Für jede im Routing vorgesehene Webseite wird eine Funktion zur Verfügung gestellt, die eine Interaktion mit ebendieser handhabt.</p>
+<p>Für Aufgabenstellung <em>1.1</em> gibt es alle vorgesehenen Webseiten sowie ihre Formular-Handler abzüglich der Auswertung.</p>
+<p>Für Aufgabenstellung <em>1.2</em> gibt es alle vorgesehenen Webseiten sowie eine API-Schnittstelle für AJAX-Aufrufe an ebendiese.</p>
+<h4 id="zusammenwirken-mit-anderen-komponenten">Zusammenwirken mit anderen Komponenten</h4>
+<p>In beiden Versionen werden unter anderem bereitgestellte Funktionen aus der <strong>application.py</strong> aufgerufen.</p>
+<h4 id="api-programmierschnittstellen-die-die-leistungen-der-komponente-anbieten">API (Programmierschnittstellen), die die Leistungen der Komponente anbieten</h4>
+<p>Diese gibt es nur für Aufgabenstellung <em>1.2</em> da in dieser Version einzelne Webseiten (bsp. die Hinzufügen- und Bearbeiten-Seite für Projekte) über AJAX-Aufrufe Daten anfordern bzw. ein Grossteil der Funktionen über eben solche API-Aufrufe realisiert sind.</p>
+<h3 id="application.py">application.py</h3>
+<h4 id="zweck-1">Zweck</h4>
+<p>Hierbei handelt es sich um eine Komponente, die Anfragen des Servers verarbeitet und eine höhere Abstraktionsebene darstellt. Für beide Aufgabenstellungen ist diese Komponente identisch.</p>
+<h4 id="aufbau-bestandteile-der-komponente-1">Aufbau (Bestandteile der Komponente)</h4>
+<p>Es gibt unterschiedliche Funktionen, die unter anderem den Aufruf von statischen oder dynamischen Webseiten handhaben, API-Aufrufe oder die Auswertung generieren.</p>
+<h4 id="zusammenwirken-mit-anderen-komponenten-1">Zusammenwirken mit anderen Komponenten</h4>
+<p>Es werden unter anderem bereitgestellte Funktionen aus der <strong>database.py</strong> aufgerufen und der <strong>view.py</strong> aufgerufen.</p>
+<h3 id="database.py">database.py</h3>
+<h4 id="zweck-2">Zweck</h4>
+<p>Hierbei handelt es sich um eine Komponente, die die Interaktion mit dem Datenbestand handhabt. Für beide Aufgabenstellungen ist diese Komponente identisch.</p>
+<h4 id="aufbau-bestandteile-der-komponente-2">Aufbau (Bestandteile der Komponente)</h4>
+<p>Es gibt unterschiedliche Funktionen, die unter anderem die Validierung und jegliche Operation auf die einzelnen JSON-Dateien handhaben.</p>
+<h4 id="zusammenwirken-mit-anderen-komponenten-2">Zusammenwirken mit anderen Komponenten</h4>
+<p>Es werden keine anderen bereitgestellten Funktionen aus anderen Komponenten aufgerufen, es werden lediglich welche bereitgestellt.</p>
+<h3 id="view.py">view.py</h3>
+<h4 id="zweck-3">Zweck</h4>
+<p>Hierbei handelt es sich um eine Komponente, die das Rendering mithilfe der Mako-Template-Engine handhabt. Für beide Aufgabenstellungen ist diese Komponente identisch.</p>
+<h4 id="aufbau-bestandteile-der-komponente-3">Aufbau (Bestandteile der Komponente)</h4>
+<p>Es gibt lediglich zwei Funktionen, einmal um statische Seiten zurückzugeben und zum anderen um dynamische Seiten zu rendern.</p>
+<h4 id="zusammenwirken-mit-anderen-komponenten-3">Zusammenwirken mit anderen Komponenten</h4>
+<p>Es werden keine anderen bereitgestellten Funktionen aus anderen Komponenten aufgerufen, es werden lediglich welche bereitgestellt.</p>
+<hr />
+<h2 id="datenablage"><span style="color:#667db6">Datenablage</span></h2>
+<p>Abgespeichert werden die Projekte mit ihren Kunden und Mitarbeitern in unterschiedlichen JSON-Dateien. Unterteilt wird für Projekte, Kunden und Mitarbeiter sowie der einzigartigen Id, die vom Web-Server verwaltet wird. Im folgenden wird jede JSON-Datei anhand ihres Templates kurz erklärt:</p>
+<h3 id="projektdaten.json">1. Projektdaten.json</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="dt">&quot;Template&quot;</span> <span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">        <span class="dt">&quot;unique_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;Eindeutige ID des Projekts (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="dt">&quot;nummer&quot;</span> <span class="fu">:</span> <span class="st">&quot;Interne Nummer des Projekts (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">        <span class="dt">&quot;beizeichnung&quot;</span> <span class="fu">:</span> <span class="st">&quot;Bezeichnung fuer das Projekt (string)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-6" title="6">        <span class="dt">&quot;beschreibung&quot;</span> <span class="fu">:</span> <span class="st">&quot;Kurze Beschreibung des Projekts (string)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        <span class="dt">&quot;bearbeitungszeitraum&quot;</span> <span class="fu">:</span> <span class="st">&quot;Anzahl Wochen (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-8" title="8">        <span class="dt">&quot;budget&quot;</span> <span class="fu">:</span> <span class="st">&quot;Dem Projekt zugewiesenes Budget (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-9" title="9">        <span class="dt">&quot;kunden_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;Die eindeutige ID des Kunden zum zuordnen (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-10" title="10">        <span class="dt">&quot;mitarbeiter_ids&quot;</span> <span class="fu">:</span> <span class="st">&quot;Liste aller Mitarbeiter (List[int])&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-11" title="11">        <span class="dt">&quot;zuordnung_arbeit&quot;</span> <span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-12" title="12">            <span class="dt">&quot;1. mitarbeiter_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;Liste mit Wochenstunden, |Liste|=Anzahl Wochen (List[int])&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-13" title="13">            <span class="dt">&quot;2. mitarbeiter_id&quot;</span> <span class="fu">:</span> <span class="st">&quot;...&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-14" title="14">            <span class="dt">&quot;...&quot;</span> <span class="fu">:</span> <span class="st">&quot;...&quot;</span></a>
+<a class="sourceLine" id="cb1-15" title="15">        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb1-16" title="16">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb1-17" title="17">    <span class="dt">&quot;Elements&quot;</span> <span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-18" title="18">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="fu">}</span></a></code></pre></div>
+<p>Dieses Template enthält alle unterschiedlichen Daten, die für ein Projekt angegeben werden können, wobei jeweils eine eigene kurze Erklärung präsentiert wird.</p>
+<h3 id="kundendaten.json">2. Kundendaten.json</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="dt">&quot;Template&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">        <span class="dt">&quot;unique_id&quot;</span><span class="fu">:</span> <span class="st">&quot;Eindeutige ID des Kunden (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">        <span class="dt">&quot;nummer&quot;</span><span class="fu">:</span> <span class="st">&quot;Interne Nummer des Kunden (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">        <span class="dt">&quot;bezeichnung&quot;</span><span class="fu">:</span> <span class="st">&quot;Bezeichnung für den Kunden (string)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">        <span class="dt">&quot;ansprechpartner&quot;</span><span class="fu">:</span> <span class="st">&quot;Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID! (string)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7">        <span class="dt">&quot;ort&quot;</span><span class="fu">:</span> <span class="st">&quot;Adresse des Kunden (string)&quot;</span></a>
+<a class="sourceLine" id="cb2-8" title="8">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="dt">&quot;Elements&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-10" title="10">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="fu">}</span></a></code></pre></div>
+<p>Dieses Template enthält alle unterschiedlichen Daten, die für einen Kunden angegeben werden können, wobei jeweils eine eigene kurze Erklärung präsentiert wird.</p>
+<h3 id="mitarbeiterdaten.json">3. Mitarbeiterdaten.json</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="dt">&quot;Template&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">        <span class="dt">&quot;unique_id&quot;</span><span class="fu">:</span> <span class="st">&quot;Eindeutige ID des Mitarbeiters (int)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4">        <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Nachname des Mitarbeiters (string)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-5" title="5">        <span class="dt">&quot;vorname&quot;</span><span class="fu">:</span> <span class="st">&quot;Vorname des Mitarbeiters (sting)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">        <span class="dt">&quot;funktion&quot;</span><span class="fu">:</span> <span class="st">&quot;Funktion des Mitarbeiters (string)&quot;</span></a>
+<a class="sourceLine" id="cb3-7" title="7">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb3-8" title="8">    <span class="dt">&quot;Elements&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="fu">}</span></a></code></pre></div>
+<p>Dieses Template enthält alle unterschiedlichen Daten, die für einen Mitarbeiter angegeben werden können, wobei jeweils eine eigene kurze Erklärung präsentiert wird.</p>
+<h3 id="unique_id.json">4. unique_id.json</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="dt">&quot;unique_id&quot;</span><span class="fu">:</span> <span class="dv">1234567890</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="fu">}</span></a></code></pre></div>
+<p>Diese Datei enthält nur die momentan letzte vergebene eindeutige Id, die durch den Web-Server verwaltet und vergeben wird, um die Integrität der Daten zu gewährleisten.</p>
+<hr />
+<h2 id="durchführung-und-ergebnis-der-geforderten-prüfungen"><span style="color:#667db6">Durchführung und Ergebnis der geforderten Prüfungen</span></h2>
+<p>Die Syntax und Stilkonventionen der Python-Dateien befolgen keinen Style Guide, sind aber am grobsten durch den <a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 - Style Guide for Python Code</a> identifizierbar.</p>
+<p>Die Syntax und Stilkonventionen der JavaScript-Dateien sind grob an den (sich mitunter verändernden) <a href="https://github.com/airbnb/javascript">AirBnB Style Guide</a> angelehnt. Es wurde versucht, auf viele (ver-)alte JavaScript-Techniken zu verzichten und sich an den neu(st)en zu orientieren.</p>
+<p>Die Namensgebung der CSS-Elemente ist gobt an die (sich mitunter verändernde) <a href="http://getbem.com/introduction/">“Block Element Modifier”-Methode</a> angelehnt.</p>
+<p>Es wurden alle (generierten) HTML(-Templates)-Dateien mithilfe des <a href="https://validator.w3.org/">w3c-Validator-Dienstes</a> auf richtige Formatierung überprüft und als fehlerfrei anerkannt.</p>
+<p>Es wurden alle CSS-Dateien mithilfe des <a href="http://jigsaw.w3.org/css-validator/">w3c-Validator-Dienstes</a> auf richtige Formatierung überprüft und als fehlerfrei anerkannt.</p>
+<p>Es ist nicht gewährleistet, dass es sich bei der finalen Projekt-Version um die übersichtlichste, am besten optimierteste sowie stilgerechte Lösung handelt.</p>
+<hr />
+<p>Das Copyright, das in einigen Dateien zu finden ist, schliesst das gesamte Projekt mit ein als geistiges Eigentum von:</p>
+<p><strong>Tobias Hahnen (tobias.hahnen@stud.hn.de)</strong></p>
+</body>
+</html>

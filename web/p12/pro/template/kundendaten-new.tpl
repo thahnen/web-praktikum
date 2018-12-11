@@ -4,7 +4,6 @@
 <%include file="/elements/header-new.tpl"/>
 <body>
     <div class="div--header">
-        <!-- Später Headline generieren damit man nur ein Template braucht! -->
         <h1 id="headline">: Neu hinzufügen</h1>
     </div>
 

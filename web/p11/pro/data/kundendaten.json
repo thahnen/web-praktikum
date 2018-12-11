@@ -2,7 +2,7 @@
     "Template": {
         "unique_id": "Eindeutige ID des Kunden",
         "nummer": "Interne Nummer des Kunden",
-        "bezeichnung": "Bezeichnung f\u00fcr den Kunden",
+        "bezeichnung": "Bezeichnung fuer den Kunden",
         "ansprechpartner": "Ein Ansprechpartner des Kunden ggf eine Mitarbeiter-ID!",
         "ort": "Adresse des Kunden"
     },

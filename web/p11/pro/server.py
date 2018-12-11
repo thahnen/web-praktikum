@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# REVIEW: Diese Datei ist für Aufgabe 1.1 um es etwas einfacher zu gestalten & zu trennen!
+# REVIEW: Diese Datei ist für Aufgabe 1.1 um es einfacher zu gestalten & zu trennen!
 
 
 #   Webserver mit Config und Routing:
@@ -64,7 +64,7 @@ class WebServer(object):
         self.application = app.Application(self.server_path)
 
 
-    # Index-Seite des Webservers (Liste aller Unterseiten oder so)
+    # Index-Seite des Webservers (führt zu allen wichtigen Seiten)
     @cherrypy.expose
     def index(self):
         return self.application.get_static_page("index")

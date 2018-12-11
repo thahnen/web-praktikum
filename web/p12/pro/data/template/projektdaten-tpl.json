@@ -9,7 +9,7 @@
         "kunden_id" : "Die eindeutige ID des Kunden zum zuordnen (int)",
         "mitarbeiter_ids" : "Liste aller Mitarbeiter (List[int])",
         "zuordnung_arbeit" : {
-            "1. mitarbeiter_id" : "Liste mit Wochenstunden, |Liste|=Anzahl Wochen (List(int))",
+            "1. mitarbeiter_id" : "Liste mit Wochenstunden, |Liste|=Anzahl Wochen (List[int])",
             "2. mitarbeiter_id" : "...",
             "..." : "..."
         }
