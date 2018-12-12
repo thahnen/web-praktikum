@@ -2,23 +2,14 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="expires" content="0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="author" content="Tobias Hahnen" />
-    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="/css/standard.css" />
+    <%include file="/elements/header.tpl"/>
     <title>Projektinformationssystem: Auswertung</title>
 </head>
 <body>
     <div class="div--header">
         <h1 id="headline">Projektinformationssystem: Auswertung</h1>
     </div>
-
     <%include file="/elements/navbar.tpl"/>
-
     <div class="div--tbl">
         % for object_key in data_o:
         <h2 id="${object_key}_header">Projekt: ${data_o[object_key]["unique_id"]} [ausklappen]</h2>
@@ -42,9 +33,7 @@
                     <div class="${elem}_info">
                         <ul>
                             <li>${data_o[object_key][elem]["bezeichnung"]} (Ansprechpartner: ${data_o[object_key][elem]["ansprechpartner"]})</li>
-                            <li>
-                                <a href="/kundendaten/${data_o[object_key][elem]["unique_id"]}">Direkter Link zum Kunden</a>
-                            </li>
+                            <li><a href="/kundendaten/${data_o[object_key][elem]["unique_id"]}">Direkter Link zum Kunden</a></li>
                         </ul>
                     </div>
                     % elif elem == "mitarbeiter_ids":
@@ -52,9 +41,7 @@
                     <div class="${elem}_info">
                         <ul>
                             % for m_id in data_o[object_key][elem]:
-                            <li>
-                                <a href="/mitarbeiterdaten/${m_id["unique_id"]}">(${m_id["unique_id"]}) ${m_id["name"]}, ${m_id["vorname"]}</a>
-                            </li>
+                            <li><a href="/mitarbeiterdaten/${m_id["unique_id"]}">(${m_id["unique_id"]}) ${m_id["name"]}, ${m_id["vorname"]}</a></li>
                             % endfor
                         </ul>
                     </div>
@@ -97,7 +84,6 @@
         <br />
         % endfor
     </div>
-
     <!--<script src="/js/auswertung.js" charset="UTF-8"></script>-->
 </body>
 </html>

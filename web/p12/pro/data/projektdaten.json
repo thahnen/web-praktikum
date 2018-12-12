@@ -53,17 +53,25 @@
             "nummer": 12,
             "bezeichnung": "Facebook",
             "beschreibung": "Homepage f\u00fcr so Nerds",
-            "bearbeitungszeitraum": 3,
+            "bearbeitungszeitraum": 4,
             "budget": 50,
             "kunden_id": 1040,
             "mitarbeiter_ids": [
-                1042
+                1042,
+                1037
             ],
             "zuordnung_arbeit": {
+                "1037": [
+                    5,
+                    6,
+                    7,
+                    8
+                ],
                 "1042": [
                     1,
                     2,
-                    2
+                    3,
+                    4
                 ]
             }
         }

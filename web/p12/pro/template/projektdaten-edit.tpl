@@ -2,27 +2,16 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="expires" content="0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="author" content="Tobias Hahnen" />
-    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="/css/standard.css" />
+    <%include file="/elements/header.tpl"/>
     <title>${data_o["Data"]["unique_id"]}</title>
+    <script type="module" src="/js/edit-project.js" charset="utf-8"></script>
 </head>
 <body>
     <div class="div--header">
         <h1 id="headline">${data_o["Data"]["unique_id"]}</h1>
     </div>
-
     <%include file="/elements/navbar.tpl"/>
-
-    <div class="div--failure">
-        <h2 class="h2--failure">Fehler</h2>
-    </div>
-
+    <%include file="/elements/failure.tpl"/>
     <div class="div--tbl">
         <table class="tbl--projects">
             % for key in data_o["Template"]:
@@ -48,7 +37,6 @@
                 % else:
                 <th class="tbl--header--elem">${data_o["Template"][key]}</th>
                 % endif
-
 
                 % if key == "unique_id":
                 <td class="tbl--data--elem">
@@ -133,8 +121,6 @@
             % endfor:
         </table>
     </div>
-
     <%include file="/elements/buttons-edit.tpl"/>
-    <script src="/js/edit-project.js" charset="utf-8"></script>
 </body>
 </html>

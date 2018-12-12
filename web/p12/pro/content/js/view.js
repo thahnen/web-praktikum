@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  *  view.js
  *  =======
@@ -32,27 +34,19 @@
  *
 */
 
+import { hide_failure, set_title_headline } from "./lib.js";
 
 (function () {
-    'use strict';
-
-
-    var offen = false;
-    var highlighted_entry = null;
-
+    let offen = false;
+    let highlighted_entry = null;
 
     window.onload = function () {
         // 1. Eigenschaften setzen
         // 1.1) Verbergen der möglichen Fehlermeldung!
-        var div_failure = document.querySelector(".div--failure");
-        div_failure.style.setProperty("--max-height", div_failure.scrollHeight + "px");
+        let div_failure = hide_failure();
 
         // 1.2) Titel und Header richtig setzen
-        var link = window.location.href.split("/")[3].split("?")[0];
-        link = link.charAt(0).toUpperCase() + link.slice(1);
-        document.title = link + document.title;
-        var headline = document.getElementById("headline");
-        headline.innerHTML = link + headline.innerHTML;
+        let link = set_title_headline();
 
         // 1.3) Eintrag editieren" und "Eintrag löschen" disablen
         document.getElementById("btn--edit").disabled = true;
@@ -61,7 +55,7 @@
 
         // 2. Input-Event-Listener hinzufügen
         [...document.getElementsByClassName("tbl--data")].forEach((x) => {
-            x.addEventListener("click", function() {
+            x.addEventListener("click", function () {
                 if (offen) {
                     div_failure.style.removeProperty("max-height", "var(--max-height)");
                     offen = !offen;
@@ -73,7 +67,6 @@
                     highlighted_entry = null;
                     document.getElementById("btn--edit").disabled = true;
                     document.getElementById("btn--delete").disabled = true;
-
                     return;
                 }
 
@@ -91,42 +84,39 @@
 
 
         // 3. "Neues Element hinzufügen" gedrückt
-        document.getElementById("btn--new").addEventListener("click", function() {
+        document.getElementById("btn--new").addEventListener("click", function () {
             window.location.href += "/neu";
         });
 
 
         // 4. "Eintrag editieren" gedrückt
-        document.getElementById("btn--edit").addEventListener("click", function() {
-            // ggf anstatt innerHTML -> innerText nutzen?
+        document.getElementById("btn--edit").addEventListener("click", function () {
             window.location.href += "/" + highlighted_entry.firstElementChild.innerHTML;
         });
 
 
         // 5. "Eintrag löschen" gedrückt
-        document.getElementById("btn--delete").addEventListener("click", function() {
+        document.getElementById("btn--delete").addEventListener("click", function () {
             if (confirm("Wollen sie das Element wirklich löschen?")) {
-                var unique_id = Number(highlighted_entry.firstElementChild.innerHTML);
+                let unique_id = parseInt(highlighted_entry.firstElementChild.innerHTML);
 
-                var request = {
+                let request = {
                     "link" : link,
                     "token" : "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad",
                     "data" : unique_id
                 };
 
                 // POST absetzen zum löschen!
-                var http = new XMLHttpRequest();
+                let http = new XMLHttpRequest();
                 http.open("POST", "/api/delete");
                 http.setRequestHeader("Content-Type", "application/json");
-                http.onload = function() {
-                    console.log(this.responseText);
-                    var rueckgabe = JSON.parse(this.responseText);
-                    var h2_failure = document.querySelector(".h2--failure");
+                http.onload = function () {
+                    let rueckgabe = JSON.parse(this.responseText);
+                    let h2_failure = document.querySelector(".h2--failure");
                     if (rueckgabe["code"] != 200) {
                         h2_failure.innerHTML = "Fehlermeldung Code: " + rueckgabe["code"];
                     } else {
                         h2_failure.innerHTML = "Loeschen erfolgreich!";
-
                         // Nachdem es erfolgreich war: Element auch aus Tabelle löschen!
                         highlighted_entry.remove();
                         highlighted_entry = null;
