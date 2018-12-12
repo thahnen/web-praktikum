@@ -15,6 +15,8 @@
                     <td class="tbl--data--elem">
                         % if key == "unique_id":
                         <input class="input--data" type="text" value="Wird Autogeneriert ;)" required disabled />
+                        % elif key == "nummer":
+                        <input class="input--data input--edit" type="number" name="${key}" value="${key}" required />
                         % else:
                         <input class="input--data input--edit" type="text" name="${key}" value="${key}" required />
                         % endif

@@ -16,6 +16,8 @@
                         % if key == "unique_id":
                         <input class="input--data" type="text" value="${data_o["Data"][key]}" required disabled />
                         <input type="hidden" name="${key}" value="${data_o["Data"][key]}">
+                        %elif key == "nummer":
+                        <input class="input--data input--edit" type="number" name="${key}" value="${data_o["Data"][key]}" required />
                         % else:
                         <input class="input--data input--edit" type="text" name="${key}" value="${data_o["Data"][key]}" required />
                         % endif

@@ -129,6 +129,9 @@ class WebServer(object):
 
             # Überprüfen, ob "zuordnung_arbeit" in kwargs (dann wurde letzte Seite aufgerufen)
             if "unique_id" in kwargs and "zuordnung_arbeit" in kwargs:
+                if '' in kwargs["zuordnung_arbeit"]:
+                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+
                 data["unique_id"] = int(kwargs["unique_id"])
                 data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
 
@@ -148,9 +151,9 @@ class WebServer(object):
 
                 if addition == '{"code" : 200}':
                     # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
-                    return f"Projekt-Hinzufuegen hat funktioniert\n{data}"
+                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
                 # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
-                return f"Projekt-Hinzufuegen hat nicht funktioniert\n{data}"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             # Das Template muss noch hinzugefügt werden!
             return self.application.view.render_dynamic_page("zuordnung-arbeit-new", data)
@@ -200,6 +203,9 @@ class WebServer(object):
             except Exception as e:
                 data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
 
+            if '' in kwargs["zuordnung_arbeit"]:
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+
             if "not_done" in kwargs:
                 # Es muss noch Tabelle geupdatet werden!
                 return self.application.view.render_dynamic_page("zuordnung-arbeit-edit", data)
@@ -218,11 +224,9 @@ class WebServer(object):
 
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
-                return f"Projekt-Hinzufuegen hat funktioniert\n{data}"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
-            return f"Projekt-Hinzufuegen hat nicht funktioniert\n{data}"
-
-            return f"Zuordnung ist fertig: {data}"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -235,9 +239,9 @@ class WebServer(object):
             deletion = self.application.delete_values("Projektdaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
-                return "Projektdaten-Löschung hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
-            return "Projektdaten-Löschung hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -259,9 +263,9 @@ class WebServer(object):
             addition = self.application.add_values("Kundendaten", data)
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
-                return "Kundendaten-Hinzufügen hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
-            return "Kundendaten-Hinzufügen hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -284,9 +288,9 @@ class WebServer(object):
             addition = self.application.update_values("Kundendaten", data)
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
-                return "Kundendaten-Updaten hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
-            return "Kundendaten-Updaten hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -299,9 +303,9 @@ class WebServer(object):
             deletion = self.application.delete_values("Kundendaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
-                return "Kundendaten-Löschung hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
-            return "Kundendaten-Löschung hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -321,9 +325,9 @@ class WebServer(object):
             addition = self.application.add_values("Mitarbeiterdaten", data)
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
-                return "Mitarbeiterdaten-Hinzufügen hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
-            return "Mitarbeiterdaten-Hinzufügen hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -343,9 +347,9 @@ class WebServer(object):
             addition = self.application.update_values("Mitarbeiterdaten", data)
             if addition == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
-                return "Mitarbeiterdaten-Updaten hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
-            return "Mitarbeiterdaten-Updaten hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 
@@ -358,9 +362,9 @@ class WebServer(object):
             deletion = self.application.delete_values("Mitarbeiterdaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
                 # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
-                return "Projektdaten-Löschung hat funktioniert"
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
-            return "Mitarbeiterdaten-Löschung hat nicht funktioniert"
+            return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_static_page("404")
 
 

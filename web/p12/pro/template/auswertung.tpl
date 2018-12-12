@@ -1,4 +1,8 @@
 ## coding: utf-8
+<%doc>
+    Bin ich tatsächlich noch nicht vollkommen mit zufrieden.
+    Hätte es lieber noch so gehabt, dass man einzelne Elemente auf- und zuklappen kann.
+</%doc>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -53,7 +57,7 @@
                             <tr>
                                 <th>Id / Woche</th>
                                 % for week in range(data_o[object_key]["bearbeitungszeitraum"]):
-                                <th>Woche ${week}</th>
+                                <th>Woche ${week+1}</th>
                                 % endfor
                             </tr>
                             % for elem_i in data_o[object_key][elem]:
