@@ -3,12 +3,12 @@
 <html lang="de">
 <head>
     <%include file="/elements/header.tpl"/>
-    <title>${data_o["Data"]["unique_id"]}</title>
+    <title>: ${data_o["Data"]["unique_id"]}</title>
     <script type="module" src="/js/edit-project.js" charset="utf-8"></script>
 </head>
 <body>
     <div class="div--header">
-        <h1 id="headline">${data_o["Data"]["unique_id"]}</h1>
+        <h1 id="headline">: ${data_o["Data"]["unique_id"]}</h1>
     </div>
     <%include file="/elements/navbar.tpl"/>
     <%include file="/elements/failure.tpl"/>

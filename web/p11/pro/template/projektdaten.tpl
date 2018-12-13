@@ -32,7 +32,7 @@
                     % for elem in data_o["Elements"][object_key]:
                     % if elem == "unique_id":
                     <td class="tbl--data--elem">
-                        <input type="checkbox" name="delete_unique_id" value="${data_o["Elements"][object_key][elem]}">
+                        <input type="radio" name="delete_unique_id" value="${data_o["Elements"][object_key][elem]}">
                         <a href="/projektdaten/${data_o["Elements"][object_key][elem]}">${data_o["Elements"][object_key][elem]}</a>
                     </td>
                     % elif elem == "kunden_id":

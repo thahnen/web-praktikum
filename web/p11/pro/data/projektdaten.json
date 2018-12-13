@@ -16,66 +16,86 @@
     },
     "Elements": {
         "1": {
-            "unique_id": 1043,
-            "nummer": 255,
-            "bezeichnung": "Geheimes Geheimprojekt",
-            "beschreibung": "Ein ganz geheimes Geheimprojekt",
-            "bearbeitungszeitraum": 7,
-            "budget": 750,
-            "kunden_id": 1038,
+            "unique_id": 1070,
+            "nummer": 42,
+            "bezeichnung": "Web-Praktikum",
+            "beschreibung": "1. Praktikumsaufgabe",
+            "bearbeitungszeitraum": 4,
+            "budget": 150,
+            "kunden_id": 1067,
             "mitarbeiter_ids": [
-                1037,
-                1039
+                1064,
+                1065
             ],
             "zuordnung_arbeit": {
-                "1037": [
-                    6,
-                    6,
-                    4,
+                "1064": [
+                    1,
+                    2,
                     3,
-                    2,
-                    2,
-                    5
+                    4
                 ],
-                "1039": [
-                    1,
-                    1,
-                    3,
-                    4,
-                    4,
-                    2,
-                    7
+                "1065": [
+                    5,
+                    6,
+                    7,
+                    8
                 ]
             }
         },
         "2": {
-            "unique_id": 1050,
-            "nummer": 404,
-            "bezeichnung": "Bezeichnung",
-            "beschreibung": "Beschreibung",
-            "bearbeitungszeitraum": 6,
-            "budget": 321,
-            "kunden_id": 1038,
+            "unique_id": 1071,
+            "nummer": 1,
+            "bezeichnung": "Folge",
+            "beschreibung": "Eine Folge der Sesamstrasse",
+            "bearbeitungszeitraum": 2,
+            "budget": 250000000,
+            "kunden_id": 1069,
             "mitarbeiter_ids": [
-                1037,
-                1039
+                1066
             ],
             "zuordnung_arbeit": {
-                "1037": [
-                    9,
-                    8,
-                    7,
-                    6,
+                "1066": [
+                    40,
+                    21
+                ]
+            }
+        },
+        "3": {
+            "unique_id": 1072,
+            "nummer": 3,
+            "bezeichnung": "Test A.b33",
+            "beschreibung": "Black Mesa Forschungs-Test",
+            "bearbeitungszeitraum": 5,
+            "budget": 12,
+            "kunden_id": 1068,
+            "mitarbeiter_ids": [
+                1065
+            ],
+            "zuordnung_arbeit": {
+                "1065": [
                     5,
-                    4
-                ],
-                "1039": [
-                    3,
-                    2,
-                    1,
-                    100,
-                    0,
-                    10
+                    5,
+                    5,
+                    5,
+                    5
+                ]
+            }
+        },
+        "4": {
+            "unique_id": 1075,
+            "nummer": 112211,
+            "bezeichnung": "S\u00e4uberung",
+            "beschreibung": "S\u00e4uberung der Cafeteria",
+            "bearbeitungszeitraum": 2,
+            "budget": 450,
+            "kunden_id": 1074,
+            "mitarbeiter_ids": [
+                1073
+            ],
+            "zuordnung_arbeit": {
+                "1073": [
+                    8,
+                    8
                 ]
             }
         }

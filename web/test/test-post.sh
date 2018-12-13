@@ -140,11 +140,16 @@ echo ""
 curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
 
 read -n 1 -p "Weiter (y|n): " ANSWER
-if test "$ANSWER" != "y"; then
-	echo ""
-	exit
-fi
-echo ""
+case $ANSWER in
+	N|n)	exit
+	*)		;;
+esac
+
+#if test "$ANSWER" != "y"; then
+#	echo ""
+#	exit
+#fi
+#echo ""
 
 
 ################################################################################
@@ -250,11 +255,16 @@ echo ""
 curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 127.0.0.1:8080/api/get
 
 read -n 1 -p "Weiter (y|n): " ANSWER
-if test "$ANSWER" != "y"; then
-	echo ""
-	exit
-fi
-echo ""
+case $ANSWER in
+	N|n)	exit
+	*)		;;
+esac
+
+#if test "$ANSWER" != "y"; then
+#	echo ""
+#	exit
+#fi
+#echo ""
 
 
 ################################################################################

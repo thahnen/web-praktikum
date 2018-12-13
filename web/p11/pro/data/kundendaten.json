@@ -8,18 +8,32 @@
     },
     "Elements": {
         "1": {
-            "unique_id": 1038,
-            "nummer": "420",
-            "bezeichnung": "Hochschule Niederrhein",
+            "unique_id": 1067,
+            "nummer": 21,
+            "bezeichnung": "Dozent",
             "ansprechpartner": "Prof. Beims",
             "ort": "Krefeld"
         },
         "2": {
-            "unique_id": 1040,
-            "nummer": "123",
-            "bezeichnung": "Facebook Inc.",
-            "ansprechpartner": "Mark Zuckerberg",
-            "ort": "Menlo Park"
+            "unique_id": 1068,
+            "nummer": 420,
+            "bezeichnung": "Bundesamt f\u00fcr Fabelwesen",
+            "ansprechpartner": "Harald T\u00f6pfer",
+            "ort": "Bielefeld"
+        },
+        "3": {
+            "unique_id": 1069,
+            "nummer": 123,
+            "bezeichnung": "Muppet-Show",
+            "ansprechpartner": "Graf Zahl",
+            "ort": "Sesamstrasse"
+        },
+        "4": {
+            "unique_id": 1074,
+            "nummer": 22,
+            "bezeichnung": "Microsoft",
+            "ansprechpartner": "Bill Gates",
+            "ort": "Portland"
         }
     }
 }

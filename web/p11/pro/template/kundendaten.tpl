@@ -24,7 +24,7 @@
                     % for object_key in data_o["Elements"][object]:
                     % if object_key == "unique_id":
                     <td class="tbl--data--elem">
-                        <input type="checkbox" name="delete_unique_id" value="${data_o["Elements"][object][object_key]}">
+                        <input type="radio" name="delete_unique_id" value="${data_o["Elements"][object][object_key]}">
                         <a href="/kundendaten/${data_o["Elements"][object][object_key]}">${data_o["Elements"][object][object_key]}</a>
                     </td>
                     % else:

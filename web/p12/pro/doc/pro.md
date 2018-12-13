@@ -244,7 +244,7 @@ Die Syntax und Stilkonventionen der Python-Dateien befolgen keinen Style Guide, 
 
 Die Syntax und Stilkonventionen der JavaScript-Dateien sind grob an den (sich mitunter verändernden) [AirBnB Style Guide](https://github.com/airbnb/javascript) angelehnt. Es wurde versucht, auf viele (ver-)alte JavaScript-Techniken zu verzichten und sich an den neu(st)en zu orientieren.
 
-Die Namensgebung der CSS-Elemente ist gobt an die (sich mitunter verändernde) ["Block Element Modifier"-Methode](http://getbem.com/introduction/) angelehnt.
+Die Namensgebung der CSS-Elemente ist grob an die (sich mitunter verändernde) ["Block Element Modifier"-Methode](http://getbem.com/introduction/) angelehnt.
 
 Es wurden alle (generierten) HTML(-Templates)-Dateien mithilfe des [w3c-Validator-Dienstes](https://validator.w3.org/) auf richtige Formatierung überprüft und als fehlerfrei anerkannt.
 

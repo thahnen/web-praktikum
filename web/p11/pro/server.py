@@ -91,7 +91,7 @@ class WebServer(object):
         return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 
-    # TODO: Noch alle Parameter auf Richtigkeit überprüfen?
+    # REVIEW: FERTIG
     # POST-Aktion zum Hinzufügen der Projektdaten
     @cherrypy.expose
     def POST_Projektdaten_Add(self, nummer=None, bezeichnung=None, beschreibung=None,
@@ -103,18 +103,24 @@ class WebServer(object):
                                             bearbeitungszeitraum != None and budget != None and \
                                             kunden_id != None and mitarbeiter_ids != None:
             # Hier wie in 1.2 mit der API auswerten
+
+            # GGf "," am Ende!
+            while mitarbeiter_ids[-1::] == ",":
+                mitarbeiter_ids = mitarbeiter_ids[:-1]
             try:
                 mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
             except Exception as e:
-                # Entweder falsch mit "," am Ende oder als Liste!
                 # Annahme dass nur 0-9 + "," vorkommen, geht über Regex aber kb
-                while mitarbeiter_ids[-1::] == ",":
-                    mitarbeiter_ids = mitarbeiter_ids[:-1]
-                    mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
                 if mitarbeiter_ids[-1::] == "]":
                     mitarbeiter_ids = ast.literal_eval(mitarbeiter_ids)
-
+                else:
+                    mitarbeiter_ids = list(mitarbeiter_ids)
             # Alles auf Richtigkeit überprüfen
+            for mid in mitarbeiter_ids:
+                try:
+                    x = int(mid)
+                except Exception as e:
+                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             data = {
                 "unique_id" : 404,
@@ -127,10 +133,37 @@ class WebServer(object):
                 "mitarbeiter_ids" : mitarbeiter_ids
             }
 
+
+            # Überprüfen, ob die kunden_id und alle mitarbeiter_ids überhaupt existieren!
+            alle_kunden = self.application.database.read_json_into_dict("kundendaten.json")
+            print(f"\n\n{alle_kunden}\n\n")
+            alle_mitarbeiter = self.application.database.read_json_into_dict("mitarbeiterdaten.json")
+            print(f"\n\n{alle_mitarbeiter}\n\n")
+            gefunden_k = False
+            for elem in alle_kunden["Elements"]:
+                if alle_kunden["Elements"][elem]["unique_id"] == data["kunden_id"]:
+                    gefunden_k = True
+                    break
+            if not gefunden_k:
+                print("Kunde nicht gefunden")
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+            for mid in data["mitarbeiter_ids"]:
+                gefunden_m = False
+                for elem in alle_mitarbeiter["Elements"]:
+                    if alle_mitarbeiter["Elements"][elem]["unique_id"] == mid:
+                        gefunden_m = True
+                        break
+                if not gefunden_m:
+                    print("Mitarbeiter nicht gefunden")
+                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+
             # Überprüfen, ob "zuordnung_arbeit" in kwargs (dann wurde letzte Seite aufgerufen)
             if "unique_id" in kwargs and "zuordnung_arbeit" in kwargs:
-                if '' in kwargs["zuordnung_arbeit"]:
-                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+                for zu in kwargs["zuordnung_arbeit"]:
+                    try:
+                        x = int(zu)
+                    except Exception as e:
+                        return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
                 data["unique_id"] = int(kwargs["unique_id"])
                 data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
@@ -145,8 +178,6 @@ class WebServer(object):
                     zuordnung_arbeit.update({f"{mitarbeiter_ids[i]}" : zeiten})
                 data.update({"zuordnung_arbeit" : zuordnung_arbeit})
 
-                #return f"{data}"
-
                 addition = self.application.add_values("Projektdaten", data)
 
                 if addition == '{"code" : 200}':
@@ -157,10 +188,11 @@ class WebServer(object):
 
             # Das Template muss noch hinzugefügt werden!
             return self.application.view.render_dynamic_page("zuordnung-arbeit-new", data)
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("projektdaten", None)
 
 
-    # TODO: Noch alle Parameter auf Richtigkeit überprüfen?
+    # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Projektdaten
     @cherrypy.expose
     def POST_Projektdaten_Update(self, unique_id=None, nummer=None, bezeichnung=None,
@@ -174,18 +206,24 @@ class WebServer(object):
                                             bearbeitungszeitraum != None and budget != None and \
                                             kunden_id != None and mitarbeiter_ids != None:
             # Hier wie in 1.2 mit der API auswerten
+
+            # GGf "," am Ende!
+            while mitarbeiter_ids[-1::] == ",":
+                mitarbeiter_ids = mitarbeiter_ids[:-1]
             try:
                 mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
             except Exception as e:
-                # Entweder falsch mit "," am Ende oder als Liste!
                 # Annahme dass nur 0-9 + "," vorkommen, geht über Regex aber kb
-                while mitarbeiter_ids[-1::] == ",":
-                    mitarbeiter_ids = mitarbeiter_ids[:-1]
-                    mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
                 if mitarbeiter_ids[-1::] == "]":
                     mitarbeiter_ids = ast.literal_eval(mitarbeiter_ids)
-
+                else:
+                    mitarbeiter_ids = list(mitarbeiter_ids)
             # Alles auf Richtigkeit überprüfen
+            for mid in mitarbeiter_ids:
+                try:
+                    x = int(mid)
+                except Exception as e:
+                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             data = {
                 "unique_id" : int(unique_id),
@@ -198,13 +236,46 @@ class WebServer(object):
                 "mitarbeiter_ids" : mitarbeiter_ids
             }
 
-            try:
-                zuordnung_arbeit = ast.literal_eval(kwargs["zuordnung_arbeit"])
-            except Exception as e:
-                data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
-
-            if '' in kwargs["zuordnung_arbeit"]:
+            # Überprüfen, ob die kunden_id und alle mitarbeiter_ids überhaupt existieren!
+            alle_kunden = self.application.database.read_json_into_dict("kundendaten.json")
+            print(f"\n\n{alle_kunden}\n\n")
+            alle_mitarbeiter = self.application.database.read_json_into_dict("mitarbeiterdaten.json")
+            print(f"\n\n{alle_mitarbeiter}\n\n")
+            gefunden_k = False
+            for elem in alle_kunden["Elements"]:
+                if alle_kunden["Elements"][elem]["unique_id"] == data["kunden_id"]:
+                    gefunden_k = True
+                    break
+            if not gefunden_k:
+                print("Kunde nicht gefunden")
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+            for mid in data["mitarbeiter_ids"]:
+                gefunden_m = False
+                for elem in alle_mitarbeiter["Elements"]:
+                    if alle_mitarbeiter["Elements"][elem]["unique_id"] == mid:
+                        gefunden_m = True
+                        break
+                if not gefunden_m:
+                    print("Mitarbeiter nicht gefunden")
+                    return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+
+            if type(kwargs["zuordnung_arbeit"]) == str:
+                zuordnung_arbeit = ast.literal_eval(kwargs["zuordnung_arbeit"])
+                data["zuordnung_arbeit"] = zuordnung_arbeit
+            elif type(kwargs["zuordnung_arbeit"]) == list:
+                zuordnung_arbeit = kwargs["zuordnung_arbeit"]
+                data["zuordnung_arbeit"] = zuordnung_arbeit
+            else:
+                print("Zuordnung überprüfen nicht erfolgreich")
+                return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+
+            for zu in zuordnung_arbeit:
+                try:
+                    x = int(zu)
+                except Exception as e:
+                    # Die alte Zuordnung ist als Element noch in der Liste
+                    del zuordnung_arbeit[zuordnung_arbeit.index(zu)]
+                    data["zuordnung_arbeit"] = zuordnung_arbeit
 
             if "not_done" in kwargs:
                 # Es muss noch Tabelle geupdatet werden!
@@ -227,7 +298,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("projektdaten", None)
 
 
     # REVIEW: FERTIG
@@ -242,7 +314,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("projektdaten", None)
 
 
     # REVIEW: FERTIG
@@ -266,7 +339,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("kundendaten", None)
 
 
     # REVIEW: FERTIG
@@ -291,7 +365,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("kundendaten", None)
 
 
     # REVIEW: FERTIG
@@ -306,7 +381,7 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        return self.application.get_dynamic_page("kundendaten", None)
 
 
     # REVIEW: FERTIG
@@ -328,7 +403,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("mitarbeiterdaten", None)
 
 
     # REVIEW: FERTIG
@@ -350,7 +426,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("mitarbeiterdaten", None)
 
 
     # REVIEW: FERTIG
@@ -365,7 +442,8 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
             # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        return self.application.get_static_page("404")
+        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
+        return self.application.get_dynamic_page("mitarbeiterdaten", None)
 
 
 config = {

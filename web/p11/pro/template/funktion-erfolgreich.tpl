@@ -23,6 +23,7 @@
         <h2>Die durchgeführte Funktion war erfolgreich :)</h2>
         % else:
         <h2>Die durchgeführte Funktion war nicht erfolgreich :(</h2>
+        <h3>Haben sie vielleicht falsche Werte angegeben oder wird das von ihnen ausgewählte Element verwendet?</h3>
         %endif
     </div>
 </body>
