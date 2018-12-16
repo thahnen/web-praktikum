@@ -80,24 +80,6 @@
                     5
                 ]
             }
-        },
-        "4": {
-            "unique_id": 1075,
-            "nummer": 112211,
-            "bezeichnung": "S\u00e4uberung",
-            "beschreibung": "S\u00e4uberung der Cafeteria",
-            "bearbeitungszeitraum": 2,
-            "budget": 450,
-            "kunden_id": 1074,
-            "mitarbeiter_ids": [
-                1073
-            ],
-            "zuordnung_arbeit": {
-                "1073": [
-                    8,
-                    8
-                ]
-            }
         }
     }
 }
