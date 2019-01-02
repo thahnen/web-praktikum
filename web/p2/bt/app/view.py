@@ -11,11 +11,9 @@
 #   1. Statische Seite zurückgeben
 #   => einfach aus Datei einlesen
 #
-#   2. Dynamische Seite zurückgeben
-#   => anhand des Seitennamens und des dazugehörigen Templates
-#   => Füllung des Templates aus mitgegebenen Daten
-
-# TODO: Muss noch für P2 angepasst werden
+#   2. Alle JS-Templates anfordern
+#   => einlesen aller(!) Dateien
+#   => Dictionary mit Dateiname und Dateiinhalt abspeichern
 
 
 import os
@@ -33,10 +31,11 @@ class View(object):
         return open(pagename)
 
 
-    # render_dynamic_page(...) throws Exception
-    def render_dynamic_page(self, pagename, data):
-        page_template_path = self.template_path + pagename + ".tpl"
-        assert (os.path.exists(page_template_path) and not os.path.isdir(page_template_path))
+    # return_templates(...) throws Exception
+    def return_templates(self):
+        files = [n for n in os.listdir(self.template_path) if os.path.isfile(os.path.join(self.template_path, n))]
+        for file in files:
+            if not file.endswith(".tpl"):
+                del files[files.index(file)]
 
-        template = TemplateLookup(directories = self.template_path).get_template(pagename + ".tpl")
-        return template.render(data_o = data)
+        return {name : open(name).read() for name in files}

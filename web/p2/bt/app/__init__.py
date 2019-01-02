@@ -3,13 +3,22 @@
 
 
 from .application import *
-from .templates import *
 from .database import *
 from .view import *
+from .projekt import *
+from .projektkomponenten import *
+from .qsmitarbeiter import *
+from .swentwickler import *
+from .katfehler import *
+from .katursache import *
+from .fehler import *
+from .prolist import *
+from .katlist import *
+from .templates import *
 
 
 # Alle (wichtigen) Informationen
-__version__ = "1.2.3"
+__version__ = "1.0.0"
 __title__ = "app"
 __summary__ = "Hinterliegende Funktionalität des Bug-Trackers"
 __doc__ = "Dokumentation siehe Ordner /doc/"
