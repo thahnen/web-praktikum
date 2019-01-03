@@ -1,0 +1,8 @@
+{
+    "Template" : {
+        "unique_id" : "Eindeutige Id der Fehlerkategorie (int)",
+        "beschreibung" : "Beschreibung der Fehlerkategorie (string)"
+    },
+    "Elements" : {
+    }
+}

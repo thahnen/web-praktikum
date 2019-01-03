@@ -34,7 +34,8 @@ class KatFehler(object):
 
     @cherrypy.tools.json_out()
     def GET(self, katfehler_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # bei Fehler wird nur der Code zurückgegeben!
         #
         # {
         #   "code" : 200 | 404 | 500,
@@ -46,7 +47,8 @@ class KatFehler(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # bei Fehler wird nur der Code zurückgegeben!
         #
         # {
         #   "code" : 200 | 404 | 500,

@@ -1,0 +1,9 @@
+{
+    "Template" : {
+        "unique_id" : "Eindeutige Id der Komponente (int)",
+        "projekt" : "Eindeutige Id des zugeordneten Projekts (unique_id)",
+        "fehler" : "Die von der Komponente verursachten Fehler (List[unique_id])"
+    },
+    "Elements" : {
+    }
+}

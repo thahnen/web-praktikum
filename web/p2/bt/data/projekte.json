@@ -1,0 +1,8 @@
+{
+    "Template" : {
+        "unique_id" : "Eindeutige Id des Projekts (int)",
+        "komponenten" : "Dem Projekt zugehörige Komponenten (List[unique_id])"
+    },
+    "Elements" : {
+    }
+}

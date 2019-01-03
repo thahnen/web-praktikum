@@ -29,4 +29,4 @@ __author__ = "Tobias Hahnen"
 __email__ = "tobias.hahnen@stud.hn.de"
 
 __license__ = "Private proprietary Software"
-__copyright__ = "Copyright 2018 %s" % __author__
+__copyright__ = "Copyright 2018, 2019 %s" % __author__

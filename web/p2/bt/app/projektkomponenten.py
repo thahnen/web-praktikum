@@ -37,6 +37,13 @@ class Projektkomponenten(object):
 
     @cherrypy.tools.json_out()
     def GET(self, projekt_id=None):
+        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # bei Fehler wird nur der Code zurückgegeben!
+        #
+        # {
+        #   "code" : 200 | 404 | 500,
+        #   "Komponenten" : "Komponente"-Objekt | List["Komponente"-Objekt]
+        # }
         pass
 
 
@@ -49,7 +56,8 @@ class Komponente(object):
 
     @cherrypy.tools.json_out()
     def GET(self, komponente_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # bei Fehler wird nur der Code zurückgegeben!
         #
         # {
         #   "code" : 200 | 404 | 500,
@@ -61,7 +69,8 @@ class Komponente(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self, projekt_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # bei Fehler wird nur der Code zurückgegeben!
         #
         # {
         #   "code" : 200 | 404 | 500,

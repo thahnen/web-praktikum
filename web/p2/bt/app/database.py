@@ -136,6 +136,7 @@ class Database(object):
 
         if not found: raise
 
+        # hier auf andere Dateien und ihre Integrität achten!
         if filename in ["Kundendaten", "Mitarbeiterdaten"]:
             project_path = self.data_path + "Projektdaten.json"
             project_data = self.validate_integrity(project_path)

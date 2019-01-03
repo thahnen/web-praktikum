@@ -1,0 +1,10 @@
+{
+    "Template" : {
+        "unique_id" : "Eindeutige Id des QS-Mitarbeiter (int)",
+        "username" : "Benutzername des QS-Mitarbeiter (string)",
+        "password" : "Password-Hash des QS-Mitarbeiter zur Authentifikation (string)",
+        "fehler" : "Dem QS-Mitarbeiter zugeordnete Fehler (List[unique_id])"
+    },
+    "Elements" : {
+    }
+}

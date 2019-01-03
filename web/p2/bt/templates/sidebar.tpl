@@ -1,11 +1,14 @@
-<!-- Navigationsbereich -->
+<!--
+	Navigationsleiste
+-->
+
 <ul>
-@var entry_a;@
-@var loop_i;@
-@for loop_i = 0; loop_i < context.length; loop_i++@
-	@entry_a = context[loop_i];@
+@var entry;@
+@var loop;@
+@for loop = 0; loop < context.length; loop++@
+	@entry = context[loop];@
 	<li>
-   		<a href="##" data-action="#entry_a[0]#">#entry_a[1]#</a>
+   		<a href="##" data-action="#entry[0]#">#entry[1]#</a>
    	</li>
 @endfor@
 </ul>

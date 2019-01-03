@@ -1,0 +1,10 @@
+{
+    "Template" : {
+        "unique_id" : "Eindeutige Id des SW-Entwickler (int)",
+        "username" : "Benutzername des SW-Entwickler (string)",
+        "password" : "Password-Hash des SW-Entwickler zur Authentifikation (string)",
+        "fehler" : "Dem SW-Entwickler zugeordnete Fehler (List[unique_id])"
+    },
+    "Elements" : {
+    }
+}

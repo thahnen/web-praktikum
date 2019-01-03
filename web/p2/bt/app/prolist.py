@@ -22,7 +22,8 @@ class ProList(object):
 
     @cherrypy.tools.json_out()
     def GET(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # bei Fehler wird nur der Code zurückgegeben!
         #
         # {
         #   "code" : 200 | 404 | 500,
