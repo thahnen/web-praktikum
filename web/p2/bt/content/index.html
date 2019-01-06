@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="robots" content="noindex,nofollow" />
-  <meta name="expires" content="0" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="author" content="Tobias Hahnen" />
-  <title>Landing-Page</title>
-  <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" content="Tobias Hahnen" />
+    <title>Bug-Tracker Login</title>
+    <link rel="icon" href="https://www.hs-niederrhein.de/fileadmin/images/layout/icons/favicon.ico" />
 </head>
 <body>
-  <h1 style="background-color: magenta;">Webserver 1.2</h1>
-  <ul>
-    <li><a href="/projektdaten">Projektdaten</a></li>
-    <li><a href="/kundendaten">Kundendaten</a></li>
-    <li><a href="/mitarbeiterdaten">Mitarbeiterdaten</a></li>
-    <li><a href="/auswertung">Auswertungen</a></li>
-  </ul>
+    <form action="/eval_login" method="post" class="form form--login">
+        <div class="form--field">
+            <label for="login--username">
+                <span>Username</span>
+            </label>
+            <input name="username" type="text" placeholder="Username" required>
+        </div>
+        <div class="form--field">
+            <label for="login--password">
+                <span>Password</span>
+            </label>
+            <input name="password" type="password" placeholder="Password" required>
+        </div>
+        <div class="form__field">
+            <input id="lgnButton" type="submit" value="Login">
+        </div>
+  </form>
 </body>
 </html>

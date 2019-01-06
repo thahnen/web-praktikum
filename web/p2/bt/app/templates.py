@@ -10,6 +10,9 @@
 #
 
 
+import os
+import json
+import codecs
 import cherrypy
 
 
@@ -32,4 +35,19 @@ class Templates(object):
         #   }
         # }
 
-        pass
+        data = {
+            'templates' : {}
+        }
+
+        files = [n for n in os.listdir(self.template_path) if os.path.isfile(os.path.join(self.template_path, n))]
+        for file in files:
+            if not file.endswith(".tpl"):
+                del files[files.index(file)]
+
+        for filename in files:
+            file = codecs.open(self.template_path + filename, 'rU', 'utf-8')
+            inhalt = file.read()
+            file.close()
+            data["templates"][filename] = inhalt
+
+        return json.dumps(data)

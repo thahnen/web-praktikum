@@ -156,6 +156,7 @@ class Application {
    }
 
    notify (self, message, data) {
+
       switch (message) {
       case "templates.failed":
          alert("Vorlagen konnten nicht geladen werden.");
@@ -214,7 +215,8 @@ class Application {
 
 window.onload = function () {
    APPUTIL.eventService = new APPUTIL.EventService();
-   var application = new Application();
    APPUTIL.templateManager = new APPUTIL.TemplateManager();
    APPUTIL.templateManager.init();
+   var application = new Application();
+   console.log("Test");
 }

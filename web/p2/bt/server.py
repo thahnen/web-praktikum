@@ -25,26 +25,32 @@ class WebServer(object):
     # Index-Seite des Webservers, um sich zu authentifizieren
     @cherrypy.expose
     def index(self):
-        # 1. Auswertung Cookie falls vorhanden!
-        try:
-            cookie = cherrypy.request.cookie
-        except Exception as e:
-            raise
+        # Auswertung Cookie falls vorhanden!
+        cookie = cherrypy.request.cookie
+        if "hash" in cookie:
+            # Hier dann den Cookie überprüfen
+            print(f"Cookie 'hash' set to: {cookie['hash'].value}")
+
+            self.application.eval_login()
+        else:
+            print(f"Cookie 'hash' not set")
+
         return self.application.get_static_page("index")
 
     # Nur POST-Verarbeitung der Benutzereingaben
     @cherrypy.expose
-    def eval_login(self, username=None, hash=None):
-        if cherrypy.request.method == "POST" and username != None and hash != None:
+    def eval_login(self, username=None, password=None):
+        if cherrypy.request.method == "POST" and username != None and password != None:
             # 1. Testen, ob Username in QS-Mitarbeiter oder SW-Entwickler (ja -> weiter)
             # 2. Testen, ob Hash mit abgespeichertem übereinstimmt (ja -> weiter)
             # 3. Cookie setzen (Hash aus Username + Hast), Weiterleitung auf /bt zurückgeben
-            pass
+            return f"{username}: {password}"
 
             qs_mitarbeiter_data = self.application.get_values("qs-mitarbeiter")
             if qs_mitarbeiter_data["code"] == 500:
                 # Irgendein Fehler ist aufgetreten
                 pass
+
         return self.application.get_static_page("404")
 
     # Bug-Tracker-Anwendungs-Seite des Webservers
@@ -52,7 +58,7 @@ class WebServer(object):
     def bt(self):
         # Testen, ob man als QS-Mitarbeiter angemeldet ist oder SW-Entwickler
         # je nachdem andere Seite zurückgeben!
-        return self.application.get_static_page("main")
+        return self.application.get_static_page("bt")
 
 
 config = {

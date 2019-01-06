@@ -31,6 +31,21 @@ class Application(object):
             return self.view.render_static_page(self.content_path + "500.html")
 
 
+    # Handhabt den Login-Vorgang
+    def eval_login(self, username, password):
+        try:
+            qsmitarbeiter = self.database.read_json_into_dict("qsmitarbeiter.json")
+            swentwickler = self.database.read_json_into_dict("swentwickler.json")
+        except Exception as e:
+            raise
+
+        # Rückgabe sollte Array mit (klar ist nicht sicher aber simpel)
+        # => Angaben richtig - True | False
+        # => Type des Benutzers - QSM | SWE
+        # => Halber Hash aus der JSON-Datei!
+        return []
+
+
     # Handhabt Rückgabe der Daten
     def get_values(self, page):
         try:

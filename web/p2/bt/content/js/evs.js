@@ -1,88 +1,91 @@
 //------------------------------------------------------------------------------
 // Event-Service: asynchroner Nachrichtenaustausch
 //------------------------------------------------------------------------------
+
 'use strict'
 
 var APPUTIL = APPUTIL || {};
 
 APPUTIL.EventService = class {
-   constructor () {
-      this.Data = null;
-      this.Subscriber = {};
-      this.Method = null;
-   }
+    constructor () {
+        this.Data = null;
+        this.Subscriber = {};
+        this.Method = null;
+    }
 
-   subscribe (Subscriber, Message) {
-      if (Message in this.Subscriber) {
-         // Message bekannt, Liste der Subscriber untersuchen
-         if (this.Subscriber[Message].indexOf(Subscriber) == -1) {
-            this.Subscriber[Message].push(Subscriber);
-         }
-      } else {
-         // Message noch nicht vorhanden, neu eintragen
-         this.Subscriber[Message] = [Subscriber];
-      }
-   }
-
-   unsubscribe (Subscriber, Message) {
-      if (Message in this.Subscriber) {
-         // Message bekannt, Liste der Subscriber untersuchen
-         let Entry = this.Subscriber[Message];
-         let index = Entry.indexOf(Subscriber);
-         if (index >= 0) {
-            // Eintrag entfernen
-            Entry[index] = null;
-            Entry = this.compact(Entry); // compact liefert Kopie!
-            if (Entry.length == 0) {
-               // keine Subscriber mehr, kann entfernt werden
-               delete this.Subscriber[Message];
+    subscribe (subscriber, message) {
+        if (message in this.Subscriber) {
+            // Message bekannt, Liste der Subscriber untersuchen
+            if (this.Subscriber[message].indexOf(subscriber) == -1) {
+                this.Subscriber[message].push(subscriber);
             }
-         }
-      } else {
-         // Message nicht vorhanden, falsche Anforderung
-      }
-   }
+        } else {
+            // Message noch nicht vorhanden, neu eintragen
+            this.Subscriber[message] = [subscriber];
+        }
+    }
 
-   publish (Message, Data) {
-      this.each(this.Subscriber, function (value, key) {
-         // geliefert wird jeweils ein Wert, hier ein Array, und der Key
-         if (key == Message) {
-            // an alle Subscriber weitergeben
-            this.each(value, function (entry, index) {
-               // geliefert wird hier das Element und der Index
-               this.defer(entry.notify, entry, Message, Data);
-            });
-         }
-      })
-   }
+    unsubscribe (subscriber, message) {
+        if (message in this.Subscriber) {
+            // Message bekannt, Liste der Subscriber untersuchen
+            let entry = this.Subscriber[message];
+            let index = entry.indexOf(subscriber);
 
-   defer (notifier, entry, Message, Data) {
-      return setTimeout(function() {
-         return notifier.apply(entry, [entry, Message, Data]);
-      }, 1);
-   }
+            if (index >= 0) {
+                // Eintrag entfernen
+                entry[index] = null;
+                entry = this.compact(entry); // compact liefert Kopie!
 
-   each (object, iterator) {
-      for (let key in object) {
-         iterator.call(this, object[key], key);
-      }
-   }
+                if (entry.length == 0) {
+                    // keine Subscriber mehr, kann entfernt werden
+                    delete this.Subscriber[message];
+                }
+            }
+        } else {
+            // Message nicht vorhanden, falsche Anforderung
+        }
+    }
 
-   findAll (object, iterator) {
-      let results = [];
+    publish (message, data) {
+        this.each(this.Subscriber, function (value, key) {
+            // geliefert wird jeweils ein Wert, hier ein Array, und der Key
+            if (key == message) {
+                // an alle Subscriber weitergeben
+                this.each(value, function (entry, index) {
+                    // geliefert wird hier das Element und der Index
+                    this.defer(entry.notify, entry, message, data);
+                });
+            }
+        })
+    }
 
-      this.each(object, function(value, index) {
-         if (iterator.call(this, value, index)) {
-            results.push(value);
-         }
-      });
-      
-      return results;
-   }
+    defer (notifier, entry, message, data) {
+        return setTimeout(function() {
+            return notifier.apply(entry, [entry, message, data]);
+        }, 1);
+    }
 
-   compact (object) {
-      return this.findAll(object, function(value) {
-         return value != null;
-      });
-   }
+    each (object, iterator) {
+        for (let key in object) {
+            iterator.call(this, object[key], key);
+        }
+    }
+
+    findAll (object, iterator) {
+        let results = [];
+
+        this.each(object, function(value, index) {
+            if (iterator.call(this, value, index)) {
+                results.push(value);
+            }
+        });
+
+        return results;
+    }
+
+    compact (object) {
+        return this.findAll(object, function(value) {
+            return value != null;
+        });
+    }
 }
