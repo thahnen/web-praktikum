@@ -38,4 +38,4 @@ class View(object):
             if not file.endswith(".tpl"):
                 del files[files.index(file)]
 
-        return {name : open(name).read() for name in files}
+        return {name : open(self.template_path + name).read() for name in files}

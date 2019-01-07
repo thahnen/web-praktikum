@@ -37,11 +37,40 @@ class SWEntwickler(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
-        #   "swentwickler" : "Software-Entwickler"-Objekt | List["Software-Entwickler"-Objekt]
+        #   ("1...n" : "SW-Entwickler"-Objekt) oder "SW-Entwickler"-Objekt-Inhalt
         # }
-        pass
+
+        try:
+            swentwickler = self.application.database.read_json_into_dict("sw-entwickler.json")
+            # Annahme aus database.py dass "Elements" in JSON exisitert!
+            swentwickler = swentwickler["Elements"]
+            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500)
+            a = int(swentwickler_id) if swentwickler_id != None else None
+        except Exception as e:
+            cherrypy.response.status = 500
+            return
+
+        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
+        if len(swentwickler) == 0:
+            cherrypy.response.status = 204
+            return
+
+        if swentwickler_id == None:
+            # Alle SW-Entwickler zurückgeben
+            return swentwickler
+
+        # Speziellen SW-Entwickler (falls vorhanden) zurückgeben
+        # ansonsten 404 nicht gefunden zurückgeben
+        for elem in swentwickler:
+            print(elem)
+            if int(elem["unique_id"]) == int(swentwickler_id):
+                return elem
+
+        cherrypy.response.status = 404
+        return
 
 
     @cherrypy.tools.json_in()
@@ -50,8 +79,9 @@ class SWEntwickler(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
         #   "swentwickler_id" : int
         # }
         pass
@@ -62,6 +92,10 @@ class SWEntwickler(object):
     def PUT(self, swentwickler_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
+        #
         # {
         #   "code" : 200 | 404 | 500
         # }
@@ -71,6 +105,10 @@ class SWEntwickler(object):
     @cherrypy.tools.json_out()
     def DELETE(self, swentwickler_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
         #
         # {
         #   "code" : 200 | 404 | 500

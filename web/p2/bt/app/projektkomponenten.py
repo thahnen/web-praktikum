@@ -36,13 +36,14 @@ class Projektkomponenten(object):
 
 
     @cherrypy.tools.json_out()
-    def GET(self, projekt_id=None):
+    def GET(self, projekt_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
-        #   "Komponenten" : "Komponente"-Objekt | List["Komponente"-Objekt]
+        #   "1...n" : "Komponenten"-Objekt
         # }
         pass
 
@@ -59,9 +60,10 @@ class Komponente(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
-        #   "Komponenten" : "Komponente"-Objekt | List["Komponente"-Objekt]
+        #   ("1...n" : "Komponenten"-Objekt) oder "Komponenten"-Objekt-Inhalt
         # }
         pass
 
@@ -72,8 +74,9 @@ class Komponente(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
         #   "komponente_id" : int
         # }
         pass
@@ -84,6 +87,10 @@ class Komponente(object):
     def PUT(self, komponente_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
+        #
         # {
         #   "code" : 200 | 404 | 500
         # }
@@ -93,6 +100,10 @@ class Komponente(object):
     @cherrypy.tools.json_out()
     def DELETE(self, komponente_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
         #
         # {
         #   "code" : 200 | 404 | 500

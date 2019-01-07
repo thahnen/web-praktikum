@@ -37,11 +37,40 @@ class KatUrsache(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 204 | 400 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
-        #   "fehler" : "Fehlerursachenkategorie"-Objekt | List["Fehlerursachenkategorie"-Objekt]
+        #   ("1...n" : "Fehlerursachenkategorie"-Objekt) oder "Fehlerursachenkategorie"-Objekt-Inhalt
         # }
-        pass
+
+        try:
+            katursache = self.application.database.read_json_into_dict("fehlerursachenkategorien.json")
+            # Annahme aus database.py dass "Elements" in JSON exisitert!
+            katursache = katursache["Elements"]
+            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500)
+            a = int(katursache_id) if katursache_id != None else None
+        except Exception as e:
+            cherrypy.response.status = 500
+            return
+
+        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
+        if len(katursache) == 0:
+            cherrypy.response.status = 204
+            return
+
+        if katursache_id == None:
+            # Alle Fehlerursachenkategorien zurückgeben
+            return katursache
+
+        # Spezielle Fehlerursachenkategorie (falls vorhanden) zurückgeben
+        # ansonsten 404 nicht gefunden zurückgeben
+        for elem in katursache:
+            print(elem)
+            if int(elem["unique_id"]) == int(katursache_id):
+                return elem
+
+        cherrypy.response.status = 404
+        return
 
 
     @cherrypy.tools.json_in()
@@ -50,8 +79,9 @@ class KatUrsache(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
         #   "katursache_id" : int
         # }
         pass
@@ -62,6 +92,10 @@ class KatUrsache(object):
     def PUT(self, katursache_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
+        #
         # {
         #   "code" : 200 | 404 | 500
         # }
@@ -71,6 +105,10 @@ class KatUrsache(object):
     @cherrypy.tools.json_out()
     def DELETE(self, katursache_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
         #
         # {
         #   "code" : 200 | 404 | 500

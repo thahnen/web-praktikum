@@ -37,11 +37,40 @@ class QSMitarbeiter(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
-        #   "qsmitarbeiter" : "QS-Mitarbeiter"-Objekt | List["QS-Mitarbeiter"-Objekt]
+        #   ("1...n" : "QS-Mitarbeiter"-Objekt) oder "QS-Mitarbeiter"-Objekt-Inhalt
         # }
-        pass
+
+        try:
+            qsmitarbeiter = self.application.database.read_json_into_dict("qs-mitarbeiter.json")
+            # Annahme aus database.py dass "Elements" in JSON exisitert!
+            qsmitarbeiter = qsmitarbeiter["Elements"]
+            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500)
+            a = int(qsmitarbeiter_id) if qsmitarbeiter_id != None else None
+        except Exception as e:
+            cherrypy.response.status = 500
+            return
+
+        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
+        if len(qsmitarbeiter) == 0:
+            cherrypy.response.status = 204
+            return
+
+        if qsmitarbeiter_id == None:
+            # Alle QS-Mitarbeiter zurückgeben
+            return qsmitarbeiter
+
+        # Speziellen QS-Mitarbeiter (falls vorhanden) zurückgeben
+        # ansonsten 404 nicht gefunden zurückgeben
+        for elem in qsmitarbeiter:
+            print(elem)
+            if int(elem["unique_id"]) == int(qsmitarbeiter_id):
+                return elem
+
+        cherrypy.response.status = 404
+        return
 
 
     @cherrypy.tools.json_in()
@@ -50,8 +79,9 @@ class QSMitarbeiter(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
         #   "qsmitarbeiter_id" : int
         # }
         pass
@@ -62,6 +92,10 @@ class QSMitarbeiter(object):
     def PUT(self, qsmitarbeiter_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
+        #
         # {
         #   "code" : 200 | 404 | 500
         # }
@@ -71,6 +105,10 @@ class QSMitarbeiter(object):
     @cherrypy.tools.json_out()
     def DELETE(self, qsmitarbeiter_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
+        # ggf so? oder wie auswerten?
         #
         # {
         #   "code" : 200 | 404 | 500

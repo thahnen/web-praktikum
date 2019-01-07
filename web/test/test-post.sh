@@ -31,10 +31,6 @@ echo "3. Update"
 echo "4. Loeschen"
 
 
-# funktioniert noch alles nicht, weil beim hinzufuegen eine neue unique_id generiert wird!
-exit
-
-
 ################################################################################
 ################################################################################
 ################################################################################
@@ -101,6 +97,9 @@ echo "1. Anfordern (vor dem hinzufuegen):"
 echo $(K_GET)
 echo ""
 curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
+
+# funktioniert noch alles nicht, weil beim hinzufuegen eine neue unique_id generiert wird!
+exit
 
 echo ""
 echo "2. Hinzufuegen:"

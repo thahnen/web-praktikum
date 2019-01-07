@@ -25,9 +25,10 @@ class KatList(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
+        # cherrypy.response.status = 200 | 404 | 500
+        #
         # {
-        #   "code" : 200 | 404 | 500,
-        #   "fehler" : List["Fehler"-Objekte]
+        #   "1...n" : "Fehler"-Objekt
         # }
 
         # Fehler aus Application auslesen und hier sortieren
