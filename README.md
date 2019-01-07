@@ -6,7 +6,7 @@ Das erste Praktikumsprojekt bestehend aus zwei Aufgaben für die ersten beide Pr
 Der Inhalt ist ein "Projektinformationssystem", alle Feinheiten siehe Technik usw.
 
 Das zweite Praktikumsprojekt besteht aus einer Aufgabe für den letzten Praktikumstermin.
-Der Inhalt ist ein "Bug-Tracker" mit REST-API.
+Der Inhalt ist ein "Bug-Tracker" mit Template-Engine und REST-API.
 
 ## ~~Team~~-Member:
 1. Tobias Hahnen (1218710)
@@ -15,11 +15,12 @@ Der Inhalt ist ein "Bug-Tracker" mit REST-API.
 1. Server:
   * Python 3.7+
   * CherryPy - Framework
-  * Moko - Templateengine
+  * Moko - Template-Engine
 2. Client:
   * HTML5
   * CSS3
   * JavaScript
+  * Beims seine Template-Engine
 
 ## Informationen
 1. Projektinformationssystem:
@@ -28,4 +29,4 @@ Der Inhalt ist ein "Bug-Tracker" mit REST-API.
   * 2. Teilaufgabe:
   * Realisierung über JavaScript only
 2. Bug-Tracker:
-  * Informationen folgen ...
+  * Realisierung über Beims seine Template-Engine und REST-API

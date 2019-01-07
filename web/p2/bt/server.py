@@ -22,6 +22,7 @@ class WebServer(object):
     def __init__(self, application):
         self.application = application
 
+
     # Index-Seite des Webservers, um sich zu authentifizieren
     @cherrypy.expose
     def index(self):
@@ -36,6 +37,7 @@ class WebServer(object):
             print(f"Cookie 'hash' not set")
 
         return self.application.get_static_page("index")
+
 
     # Nur POST-Verarbeitung der Benutzereingaben
     @cherrypy.expose
@@ -52,6 +54,7 @@ class WebServer(object):
                 pass
 
         return self.application.get_static_page("404")
+
 
     # Bug-Tracker-Anwendungs-Seite des Webservers
     @cherrypy.expose
@@ -86,53 +89,18 @@ if __name__ == '__main__':
     server_path = os.path.dirname(os.path.abspath(__file__))
     logic = app.Application(server_path)
 
-    cherrypy.tree.mount(
-        WebServer(logic), "/", config=config
-    )
-
-    cherrypy.tree.mount(
-        app.Projekt(logic), "/projekt", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.Projektkomponenten(logic), "/projektkomponenten", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.Komponente(logic), "/komponente", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.QSMitarbeiter(logic), "/qsmitarbeiter", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.SWEntwickler(logic), "/swentwickler", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.KatFehler(logic), "/katfehler", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.KatUrsache(logic), "/katursache", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.Fehler(logic), "/fehler", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.ProList(logic), "/prolist", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.KatList(logic), "/katlist", config=config_rest
-    )
-
-    cherrypy.tree.mount(
-        app.Templates(logic), "/templates", config=config_rest
-    )
+    cherrypy.tree.mount(WebServer(logic), "/", config=config)
+    cherrypy.tree.mount(app.Projekt(logic), "/projekt", config=config_rest)
+    cherrypy.tree.mount(app.Projektkomponenten(logic), "/projektkomponenten", config=config_rest)
+    cherrypy.tree.mount(app.Komponente(logic), "/komponente", config=config_rest)
+    cherrypy.tree.mount(app.QSMitarbeiter(logic), "/qsmitarbeiter", config=config_rest)
+    cherrypy.tree.mount(app.SWEntwickler(logic), "/swentwickler", config=config_rest)
+    cherrypy.tree.mount(app.KatFehler(logic), "/katfehler", config=config_rest)
+    cherrypy.tree.mount(app.KatUrsache(logic), "/katursache", config=config_rest)
+    cherrypy.tree.mount(app.Fehler(logic), "/fehler", config=config_rest)
+    cherrypy.tree.mount(app.ProList(logic), "/prolist", config=config_rest)
+    cherrypy.tree.mount(app.KatList(logic), "/katlist", config=config_rest)
+    cherrypy.tree.mount(app.Templates(logic), "/templates", config=config_rest)
 
     cherrypy.engine.start()
     cherrypy.engine.block()

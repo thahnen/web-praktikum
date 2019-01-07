@@ -9,6 +9,7 @@
 #   => Rückgabe einer Liste aller Fehler nach Kategorie/Status sortiert
 #
 
+# REVIEW: Ist eigentlich soweit fertig, auf Richtigkeit überprüfen
 
 import cherrypy
 
@@ -25,11 +26,26 @@ class ProList(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
-        # cherrypy.response.status = 200 | 404 | 500
+        # cherrypy.response.status = 200 | 204 | 500
         #
         # {
         #   "1...n" : "Fehler"-Objekt
         # }
 
-        # Fehler aus Application auslesen und hier sortieren
-        pass
+        code, data = self.application.get_values("fehler.json", None)
+        if code != 200:
+            cherrypy.response.status = code
+            return
+
+        try:
+            # Fehler nach:
+            # 1) Fehlerkategorien (eine Liste)
+            # 2) Status (erkannt oder behoben)
+            # sortieren
+            data = dict(sorted(
+                data, key=lambda elem: (elem["erkannt"]["fehlerkategorien"], elem["status"])
+            ))
+
+            return data
+        except Exception as e:
+            cherrypy.response.status = 500

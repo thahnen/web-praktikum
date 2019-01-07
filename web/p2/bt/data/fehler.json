@@ -7,6 +7,7 @@
             "bearbeiter" : "QS-Mitarbeiter, der Fehler erfasst hat (unique_id)",
             "datum" : "Datum der Fehlererfassung (string)",
             "fehlerkategorien" : "Vom QS-Mitarbeiter vergebene Kategorien (List[unique_id])",
+            "projekt" : "Dem Fehler zugeordnetes Projekt (unique_id)",
             "komponenten" : "Dem Fehler zugeordnete Komponenten (List[unique_id])"
         },
         "beseitigt" : {

@@ -43,34 +43,10 @@ class KatUrsache(object):
         #   ("1...n" : "Fehlerursachenkategorie"-Objekt) oder "Fehlerursachenkategorie"-Objekt-Inhalt
         # }
 
-        try:
-            katursache = self.application.database.read_json_into_dict("fehlerursachenkategorien.json")
-            # Annahme aus database.py dass "Elements" in JSON exisitert!
-            katursache = katursache["Elements"]
-            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500)
-            a = int(katursache_id) if katursache_id != None else None
-        except Exception as e:
-            cherrypy.response.status = 500
-            return
-
-        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
-        if len(katursache) == 0:
-            cherrypy.response.status = 204
-            return
-
-        if katursache_id == None:
-            # Alle Fehlerursachenkategorien zurückgeben
-            return katursache
-
-        # Spezielle Fehlerursachenkategorie (falls vorhanden) zurückgeben
-        # ansonsten 404 nicht gefunden zurückgeben
-        for elem in katursache:
-            print(elem)
-            if int(elem["unique_id"]) == int(katursache_id):
-                return elem
-
-        cherrypy.response.status = 404
-        return
+        code, data = self.application.get_values("fehlerursachenkategorien.json", katursache_id)
+        cherrypy.response.status = code
+        if code == 200:
+            return data
 
 
     @cherrypy.tools.json_in()

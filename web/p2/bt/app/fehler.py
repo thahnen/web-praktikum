@@ -47,42 +47,29 @@ class Fehler(object):
         #   ("1...n" : "Fehler"-Objekt) oder "Fehler"-Objekt-Inhalt
         # }
 
+        filename = "fehler.json"
+
+        if type == None:
+            code, data = self.application.get_values(filename, fehler_id)
+            cherrypy.response.status = code
+            if code == 200:
+                return data
+            return
+
         try:
-            fehler = self.application.database.read_json_into_dict("fehler.json")
+            fehler = self.application.database.read_json_into_dict(filename)
             # Annahme aus database.py dass "Elements" in JSON exisitert!
             fehler = fehler["Elements"]
-            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500)
-            a = int(fehler_id) if fehler_id != None else None
         except Exception as e:
-            cherrypy.response.status = 500
-            return
+            return [500, None]
 
-        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
-        if len(fehler) == 0:
-            cherrypy.response.status = 204
-            return
-
-        if fehler_id == None and type == None:
-            # Alle Fehler zurückgeben
-            return fehler
-        elif fehler_id != None and type == None:
-            # Speziellen Fehler (falls vorhanden) zurückgeben
-            # ansonsten 404 nicht gefunden zurückgeben
-            for elem in fehler:
-                print(elem)
-                if int(elem["unique_id"]) == int(fehler_id):
-                    return elem
-
-            cherrypy.response.status = 404
-            return
-        elif fehler_id == None and type == "erkannt":
+        if fehler_id == None and type == "erkannt":
             # Alle erkannten Fehler zurückgeben
             for elem in fehler:
                 if elem["type"] != "erkannt":
                     del elem
             if len(fehler) != 0:
                 return fehler
-
             cherrypy.response.status = 204
             return
         elif fehler_id == None and type == "behoben":
@@ -92,7 +79,6 @@ class Fehler(object):
                     del elem
             if len(fehler) != 0:
                 return fehler
-
             cherrypy.response.status = 204
             return
 

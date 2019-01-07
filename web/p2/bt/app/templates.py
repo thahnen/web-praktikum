@@ -11,7 +11,6 @@
 
 # REVIEW: Ist eigentlich soweit fertig, es fehlen vlt. nur die Auswertung bezüglich Code?
 
-
 import cherrypy
 
 

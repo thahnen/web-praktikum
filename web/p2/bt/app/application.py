@@ -45,20 +45,25 @@ class Application(object):
         # => Halber Hash aus der JSON-Datei!
         return []
 
+
     # HIER MUSS ALLES ÜBERARBEITET WERDEN!
 
-    # Handhabt Rückgabe der Daten (noch nicht fertig)
-    # Rückgabe Array mit zwei Elementen? [code für HTTP, ggf. Daten]
-    # TODO: TESTEN OB ALLES KLAPPT
+    # Handhabt Rückgabe der Daten
+    # Gibt Fehler-Codes zurück: 200 | 204 | 400 | 404 | 500
     def get_values(self, json_file, unique_id):
         try:
-            data = self.application.database.read_json_into_dict(json_file)
+            data = self.database.read_json_into_dict(json_file)
             # Annahme aus database.py dass "Elements" in JSON exisitert!
             data = data["Elements"]
-            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500) -> auslagern
-            a = int(unique_id) if unique_id != None else None
         except Exception as e:
             return [500, None]
+
+        if unique_id != None:
+            # War die Eingabe überhaupt richtig?
+            try:
+                unique_id = int(unique_id)
+            except Exception as e:
+                return [400, None]
 
         # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
         if len(data) == 0:

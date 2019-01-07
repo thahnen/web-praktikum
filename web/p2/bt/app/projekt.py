@@ -43,34 +43,10 @@ class Projekt(object):
         #   ("1...n" : "Projekt"-Objekt) oder "Projekt"-Objekt-Inhalt
         # }
 
-        try:
-            projekte = self.application.database.read_json_into_dict("projekte.json")
-            # Annahme aus database.py dass "Elements" in JSON exisitert!
-            projekte = projekte["Elements"]
-            # Erstmal hier, vlt geht das irgendwie besser (400 anstatt 500)
-            a = int(projekt_id) if projekt_id != None else None
-        except Exception as e:
-            cherrypy.response.status = 500
-            return
-
-        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
-        if len(projekte) == 0:
-            cherrypy.response.status = 204
-            return
-
-        if projekt_id == None:
-            # Alle Projekte zurückgeben
-            return projekte
-
-        # Spezielles Projekt (falls vorhanden) zurückgeben
-        # ansonsten 404 nicht gefunden zurückgeben
-        for elem in projekte:
-            print(elem)
-            if int(elem["unique_id"]) == int(projekt_id):
-                return elem
-
-        cherrypy.response.status = 404
-        return
+        code, data = self.application.get_values("projekte.json", projekt_id)
+        cherrypy.response.status = code
+        if code == 200:
+            return data
 
 
     @cherrypy.tools.json_in()

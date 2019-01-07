@@ -136,21 +136,6 @@ class Database(object):
 
         if not found: raise
 
-        # hier auf andere Dateien und ihre Integrität achten!
-        if filename in ["Kundendaten", "Mitarbeiterdaten"]:
-            project_path = self.data_path + "Projektdaten.json"
-            project_data = self.validate_integrity(project_path)
-            unique_id = int(old["unique_id"])
-            for pro in project_data["Elements"]:
-                if filename == "Kundendaten":
-                    if int(project_data["Elements"][pro]["kunden_id"]) == unique_id:
-                        print("Kunde wird verwendet")
-                        raise
-                elif filename == "Mitarbeiterdaten":
-                    if unique_id in project_data["Elements"][pro]["mitarbeiter_ids"]:
-                        print("Mitarbeiter wird verwendet")
-                        raise
-
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
 

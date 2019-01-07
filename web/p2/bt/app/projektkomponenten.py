@@ -40,12 +40,35 @@ class Projektkomponenten(object):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
-        # cherrypy.response.status = 200 | 404 | 500
+        # cherrypy.response.status = 200 | 204 | 400 | 500
         #
         # {
         #   "1...n" : "Komponenten"-Objekt
         # }
-        pass
+
+        # War die Eingabe überhaupt richtig?
+        if projekt_id != None:
+            try:
+                projekt_id = int(projekt_id)
+            except Exception as e:
+                cherrypy.response.status = 400
+                return
+
+        code, data = self.application.get_values("komponenten.json", None)
+        if code != 200:
+            cherrypy.response.status = code
+            return
+
+        # Alle Komponenten überprüfen, ob sie zum Projekt gehören
+        for elem in data:
+            if int(elem["projekt"]) != projekt_id:
+                del elem
+
+        if len(data) == 0:
+            cherrypy.response.status = 204
+            return
+
+        return data
 
 
 @cherrypy.expose
@@ -65,7 +88,11 @@ class Komponente(object):
         # {
         #   ("1...n" : "Komponenten"-Objekt) oder "Komponenten"-Objekt-Inhalt
         # }
-        pass
+
+        code, data = self.application.get_values("komponenten.json", komponente_id)
+        cherrypy.response.status = code
+        if code == 200:
+            return data
 
 
     @cherrypy.tools.json_in()
