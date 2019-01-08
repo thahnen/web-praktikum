@@ -64,6 +64,20 @@ class Database(object):
         return self.validate_integrity(file_path)
 
 
+    # get_new_unique_id(...) returns int
+    def get_new_unique_id(self):
+        file_path = self.data_path + "unique_id.json"
+        json_data = self.validate_integrity(file_path)
+
+        json_data["unique_id"] += 1
+        new = int(json_data["unique_id"])
+
+        with open(file_path, "w") as json_out:
+            json.dump(json_data, json_out, indent=4)
+
+        return new
+
+
     # add_json_into_file(...) throws Exception
     def add_json_into_file(self, filename, add_dict):
         # Dictionary add_dict hat folgenden Aufbau:
@@ -73,12 +87,12 @@ class Database(object):
         #   "..." : ...;
         # }
 
-        file_path = filename[0].lower() + filename[1::]
-        file_path = self.data_path + file_path + ".json"
+        file_path = self.data_path + filename
         json_data = self.validate_integrity(file_path)
 
         # "Generierte" neue unique_id bekommen
-        add_dict["unique_id"] = self.get_new_unique_id()
+        new_unique_id = self.get_new_unique_id()
+        add_dict["unique_id"] = new_unique_id
 
         index = 0
         for elem in json_data["Elements"]:
@@ -91,6 +105,8 @@ class Database(object):
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
 
+        return new_unique_id
+
 
     # update_json_into_file(...) throws Exception
     def update_json_into_file(self, filename, update_dict):
@@ -102,8 +118,7 @@ class Database(object):
         # }
         #
 
-        file_path = filename[0].lower() + filename[1::]
-        file_path = self.data_path + file_path + ".json"
+        file_path = self.data_path + filename
         json_data = self.validate_integrity(file_path)
 
         found = False
@@ -121,16 +136,15 @@ class Database(object):
 
     # remove_json_from_file(...) throws Exception
     def remove_json_from_file(self, filename, unique_id):
-        file_path = filename[0].lower() + filename[1::]
-        file_path = self.data_path + file_path + ".json"
+        file_path = self.data_path + filename
         json_data = self.validate_integrity(file_path)
 
         found = False
-        old = None
+        #old = None
         for elem in json_data["Elements"]:
             if int(json_data["Elements"][elem]["unique_id"]) == int(unique_id):
                 found = True
-                old = json_data["Elements"][elem]
+                #old = json_data["Elements"][elem]
                 del json_data["Elements"][elem]
                 break
 
@@ -138,17 +152,3 @@ class Database(object):
 
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
-
-
-    # get_new_unique_id(...) returns int
-    def get_new_unique_id(self):
-        file_path = self.data_path + "unique_id.json"
-        json_data = self.validate_integrity(file_path)
-
-        json_data["unique_id"] += 1
-        new = int(json_data["unique_id"])
-
-        with open(file_path, "w") as json_out:
-            json.dump(json_data, json_out, indent=4)
-
-        return new

@@ -74,40 +74,51 @@ class Application(object):
             return [200, data]
 
         # Spezielle Fehlerkategorie (falls vorhanden) zurückgeben
-        # ansonsten 404 nicht gefunden zurückgeben
         for elem in data:
             print(elem)
             if int(elem["unique_id"]) == int(unique_id):
                 return [200, elem]
 
+        # ansonsten 404 nicht gefunden zurückgeben
         return [404, None]
 
 
     # Handhabt Hinzufügen der Daten
-    def add_values(self, page, values):
+    # überarbeiten, dass mehr Fehlercodes möglich sind! Genau: 404...
+    def add_values(self, json_file, add_dict):
         try:
-            self.database.add_json_into_file(page, values)
-            return '{"code" : 200}'
+            new_unique_id = self.database.add_json_into_file(json_file, add_dict)
+            return [200, new_unique_id]
         except Exception as e:
             print("Error on API add!")
-            return '{"code" : 500}'
+            return [500, None]
 
 
     # Handhabt Updates der Daten
-    def update_values(self, page, values):
+    # überarbeiten, dass mehr Fehlercodes möglich sind! Genau: 404...
+    # noch gucken, wie man hier die unique_id unterbringen kann!
+    def update_values(self, json_file, unique_id, update_dict):
         try:
-            self.database.update_json_into_file(page, values)
-            return '{"code" : 200}'
+            self.database.update_json_into_file(json_file, update_dict)
+            return 200
         except Exception as e:
             print("Error on API update!")
-            return '{"code" : 500}'
+            return 500
 
 
     # Handhabt Löschen der Daten
-    def delete_values(self, page, values):
+    # überarbeiten, dass mehr Fehlercodes möglich sind! Genau: 404...
+    def delete_values(self, json_file, unique_id):
+        if unique_id != None:
+            # War die Eingabe überhaupt richtig?
+            try:
+                unique_id = int(unique_id)
+            except Exception as e:
+                return 400
+
         try:
-            self.database.remove_json_from_file(page, values)
-            return '{"code" : 200}'
+            self.database.remove_json_from_file(json_file, unique_id)
+            return 200
         except Exception as e:
             print("Error on API delete! Item maybe used!")
-            return '{"code" : 500}'
+            return 500

@@ -60,7 +60,12 @@ class KatFehler(object):
         # {
         #   "katfehler_id" : int
         # }
-        pass
+
+        try:
+            input_json = cherrypy.request.json
+            pass
+        except Exception as e:
+            raise
 
 
     @cherrypy.tools.json_in()
@@ -82,11 +87,8 @@ class KatFehler(object):
     def DELETE(self, katfehler_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
+        # cherrypy.response.status = 200 | 400 | 404 | 500
         #
-        # ggf so? oder wie auswerten?
-        #
-        # {
-        #   "code" : 200 | 404 | 500
-        # }
-        pass
+
+        code = self.application.delete_values("fehlerkategorien.json", katfehler_id)
+        cherrypy.response.status = code

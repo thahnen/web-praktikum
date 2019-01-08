@@ -94,9 +94,22 @@ class Fehler(object):
         # cherrypy.response.status = 200 | 404 | 500
         #
         # {
-        #   "fehler_id" : int
+        #   "unique_id" : int
         # }
-        pass
+
+        try:
+            input_json = cherrypy.request.json
+        except Exception as e:
+            cherrypy.response.status = 400
+            return
+
+        code, data = self.application.add_values("fehler.json", input_json)
+        cherrypy.response.status = code
+
+        if code == 200:
+            return {
+                "unique_id" : data
+            }
 
 
     @cherrypy.tools.json_in()

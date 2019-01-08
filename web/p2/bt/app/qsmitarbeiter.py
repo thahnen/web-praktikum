@@ -58,9 +58,22 @@ class QSMitarbeiter(object):
         # cherrypy.response.status = 200 | 404 | 500
         #
         # {
-        #   "qsmitarbeiter_id" : int
+        #   "unique_id" : int
         # }
-        pass
+
+        try:
+            input_json = cherrypy.request.json
+        except Exception as e:
+            cherrypy.response.status = 400
+            return
+
+        code, data = self.application.add_values("qs-mitarbeiter.json", input_json)
+        cherrypy.response.status = code
+
+        if code == 200:
+            return {
+                "unique_id" : data
+            }
 
 
     @cherrypy.tools.json_in()
@@ -84,9 +97,10 @@ class QSMitarbeiter(object):
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
-        # ggf so? oder wie auswerten?
-        #
-        # {
-        #   "code" : 200 | 404 | 500
-        # }
-        pass
+
+        code = self.application.delete_values("qs-mitarbeiter.json", qsmitarbeiter_id)
+        cherrypy.response.status = code
+
+        if code == 200:
+            # Hier alle anderen Dateien bereinigen!
+            pass

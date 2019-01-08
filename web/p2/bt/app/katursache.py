@@ -60,7 +60,12 @@ class KatUrsache(object):
         # {
         #   "katursache_id" : int
         # }
-        pass
+
+        try:
+            input_json = cherrypy.request.json
+            pass
+        except Exception as e:
+            raise
 
 
     @cherrypy.tools.json_in()
@@ -84,9 +89,6 @@ class KatUrsache(object):
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
-        # ggf so? oder wie auswerten?
-        #
-        # {
-        #   "code" : 200 | 404 | 500
-        # }
-        pass
+
+        code = self.application.delete_values("fehlerursachenkategorien.json", katursache_id)
+        cherrypy.response.status = code
