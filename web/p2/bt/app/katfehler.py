@@ -58,29 +58,39 @@ class KatFehler(object):
         # cherrypy.response.status = 200 | 404 | 500
         #
         # {
-        #   "katfehler_id" : int
+        #   "unique_id" : int
         # }
 
         try:
             input_json = cherrypy.request.json
-            pass
         except Exception as e:
-            raise
+            cherrypy.response.status = 400
+            return
+
+        code, data = self.application.add_values("fehlerkategorien.json", input_json)
+        cherrypy.response.status = code
+
+        if code == 200:
+            return {
+                "unique_id" : data
+            }
 
 
     @cherrypy.tools.json_in()
-    @cherrypy.tools.json_out()
     def PUT(self, katfehler_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
-        # ggf so? oder wie auswerten?
-        #
-        # {
-        #   "code" : 200 | 404 | 500
-        # }
-        pass
+
+        try:
+            input_json = cherrypy.request.json
+        except Exception as e:
+            cherrypy.response.status = 400
+            return
+
+        code = self.application.add_values("fehlerkategorien.json", katfehler_id, input_json)
+        cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()

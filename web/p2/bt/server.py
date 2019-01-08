@@ -8,6 +8,9 @@
 #   - "/":
 #       => Hauptseite, hier wird sich angemeldet
 #
+#   - "/eval_login" (Pseudo-Seite)
+#       => Hier werden alle Anmeldedaten überprüft!
+#
 #   - "/bt":
 #       => Bug-Tracker-Seite
 #

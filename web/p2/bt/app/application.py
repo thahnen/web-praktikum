@@ -48,6 +48,7 @@ class Application(object):
 
     # HIER MUSS ALLES ÜBERARBEITET WERDEN!
 
+
     # Handhabt Rückgabe der Daten
     # Gibt Fehler-Codes zurück: 200 | 204 | 400 | 404 | 500
     def get_values(self, json_file, unique_id):
@@ -98,6 +99,13 @@ class Application(object):
     # überarbeiten, dass mehr Fehlercodes möglich sind! Genau: 404...
     # noch gucken, wie man hier die unique_id unterbringen kann!
     def update_values(self, json_file, unique_id, update_dict):
+        if unique_id != None:
+            # War die Eingabe überhaupt richtig?
+            try:
+                unique_id = int(unique_id)
+            except Exception as e:
+                return 400
+
         try:
             self.database.update_json_into_file(json_file, update_dict)
             return 200

@@ -83,7 +83,7 @@ class Database(object):
         # Dictionary add_dict hat folgenden Aufbau:
         #
         # {
-        #   "unique_id" : XYZ,
+        #   "unique_id" : EGAL,
         #   "..." : ...;
         # }
 

@@ -77,18 +77,20 @@ class SWEntwickler(object):
 
 
     @cherrypy.tools.json_in()
-    @cherrypy.tools.json_out()
     def PUT(self, swentwickler_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
-        # ggf so? oder wie auswerten?
-        #
-        # {
-        #   "code" : 200 | 404 | 500
-        # }
-        pass
+
+        try:
+            input_json = cherrypy.request.json
+        except Exception as e:
+            cherrypy.response.status = 400
+            return
+
+        code = self.application.add_values("sw-entwickler.json", swentwickler_id, input_json)
+        cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()

@@ -115,17 +115,11 @@ class Komponente(object):
 
 
     @cherrypy.tools.json_in()
-    @cherrypy.tools.json_out()
     def PUT(self, komponente_id):
         # Zurückgegebene JSON-Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
-        # ggf so? oder wie auswerten?
-        #
-        # {
-        #   "code" : 200 | 404 | 500
-        # }
         pass
 
 
