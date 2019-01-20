@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Stellt API-Funktionen für den Server bereit:
 #   ===========================================
 #
 #   Datei kümmert sich um Validität der Parameter und Daten
 #   NICHT: Validität der JSON-Dateien
 
-# TODO: MUSS Noch für P2 angepasst werden!
-
 import json
+import hashlib
 import app.database
 import app.view
 
@@ -34,23 +32,39 @@ class Application(object):
     # Handhabt den Login-Vorgang
     def eval_login(self, username, password):
         try:
-            qsmitarbeiter = self.database.read_json_into_dict("qsmitarbeiter.json")
-            swentwickler = self.database.read_json_into_dict("swentwickler.json")
+            code1, qs_mitarbeiter_data = self.get_values("qs-mitarbeiter")
+            code2, sw_entwickler_data = self.get_values("sw-entwickler")
+
+            if code1 != 200 or code2 != 200: raise
+
+            qs_mitarbeiter_data = qs_mitarbeiter_data["Elements"]
+            sw_entwickler_data = sw_entwickler_data["Elements"]
         except Exception as e:
-            raise
+            # Irgendein Fehler ist aufgetreten
+            return [500, None, None]
 
-        # Rückgabe sollte Array mit (klar ist nicht sicher aber simpel)
-        # => Angaben richtig - True | False
-        # => Type des Benutzers - QSM | SWE
-        # => Halber Hash aus der JSON-Datei!
-        return []
+        found = None
+        password_hash = haslib.sha256(password.encode("utf-8")).hexdigest()
+        for elem in qs_mitarbeiter_data:
+            # Hier ggf Username nicht mehr nötig, kann durch unique_id ersetzt werden
+            if elem["username"] == username and elem["password"] == password_hash:
+                found = "QSM"
 
+        if found == "QSM":
+            return [200, found, password_hash]
 
-    # HIER MUSS ALLES ÜBERARBEITET WERDEN!
+        for elem in sw_entwickler_data:
+            # Hier ggf Username nicht mehr nötig, kann durch unique_id ersetzt werden
+            if elem["username"] == username and elem["password"] == password_hash:
+                found = "SWE"
+
+        if found == "SWE":
+            return [200, found, password_hash]
+
+        return [404, None, None]
 
 
     # Handhabt Rückgabe der Daten
-    # Gibt Fehler-Codes zurück: 200 | 204 | 400 | 404 | 500
     def get_values(self, json_file, unique_id):
         try:
             data = self.database.read_json_into_dict(json_file)
@@ -60,19 +74,17 @@ class Application(object):
             return [500, None]
 
         if unique_id != None:
-            # War die Eingabe überhaupt richtig?
             try:
                 unique_id = int(unique_id)
             except Exception as e:
                 return [400, None]
 
-        # so umstellen, dass das hier nicht bei fehlerhafter Anfrage auch ausgelöst wird!
-        if len(data) == 0:
+        if unique_id == None and len(data) == 0:
             return [204, None]
-
-        if unique_id == None:
-            # Alle Fehlerkategorien zurückgeben
+        elif unique_id == None and len(data) != 0:
             return [200, data]
+        elif unique_id != None and len(data) == 0:
+            return [404, None]
 
         # Spezielle Fehlerkategorie (falls vorhanden) zurückgeben
         for elem in data:
@@ -80,7 +92,6 @@ class Application(object):
             if int(elem["unique_id"]) == int(unique_id):
                 return [200, elem]
 
-        # ansonsten 404 nicht gefunden zurückgeben
         return [404, None]
 
 
@@ -100,7 +111,6 @@ class Application(object):
     # noch gucken, wie man hier die unique_id unterbringen kann!
     def update_values(self, json_file, unique_id, update_dict):
         if unique_id != None:
-            # War die Eingabe überhaupt richtig?
             try:
                 unique_id = int(unique_id)
             except Exception as e:
@@ -118,7 +128,6 @@ class Application(object):
     # überarbeiten, dass mehr Fehlercodes möglich sind! Genau: 404...
     def delete_values(self, json_file, unique_id):
         if unique_id != None:
-            # War die Eingabe überhaupt richtig?
             try:
                 unique_id = int(unique_id)
             except Exception as e:

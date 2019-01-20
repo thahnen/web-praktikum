@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Ver-/Bearbeitung aller Fehlerkategorien:
 #   =======================================
 #
@@ -19,8 +18,6 @@
 #
 #   5. DELETE /katfehler/<katfehler_id>
 #   => Fehlerkategorie mit entsprechender Fehlerkategorie-Id löschen
-#
-
 
 import cherrypy
 
@@ -34,7 +31,7 @@ class KatFehler(object):
 
     @cherrypy.tools.json_out()
     def GET(self, katfehler_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 204 | 400 | 404 | 500
@@ -52,7 +49,7 @@ class KatFehler(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -71,17 +68,14 @@ class KatFehler(object):
         cherrypy.response.status = code
 
         if code == 200:
-            return {
-                "unique_id" : data
-            }
+            return { "unique_id" : data }
 
 
     @cherrypy.tools.json_in()
     def PUT(self, katfehler_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
-        #
+        # cherrypy.response.status = 200 | 400 | 404 | 500
 
         try:
             input_json = cherrypy.request.json
@@ -89,16 +83,15 @@ class KatFehler(object):
             cherrypy.response.status = 400
             return
 
-        code = self.application.add_values("fehlerkategorien.json", katfehler_id, input_json)
+        code = self.application.update_values("fehlerkategorien.json", katfehler_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
     def DELETE(self, katfehler_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
-        #
 
         code = self.application.delete_values("fehlerkategorien.json", katfehler_id)
         cherrypy.response.status = code

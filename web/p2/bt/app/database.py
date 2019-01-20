@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
-# REVIEW: Fast alles über Annahmen (assert's), um Fehlerbehandlung kümmert sich die App!
-
-
 #   Zur Verarbeitung der Daten im JSON-Format:
 #   =========================================
 #
@@ -35,9 +31,6 @@
 #       => Wird eingelesen aus der JSON-Datei "unique_id.json"
 #       => Dann Zähler inkrementiert und abgespeichert!
 
-# TODO: Muss noch für P2 angepasst werden!
-
-
 import os
 import json
 
@@ -54,7 +47,6 @@ class Database(object):
 
         # Validierung der JSON-Daten um für alle Fälle sicher zu sein
         # kommt noch (irgendwann) :)
-
         return data
 
 
@@ -116,7 +108,6 @@ class Database(object):
         #   "unique_id" : XYZ,
         #   "..." : ...;
         # }
-        #
 
         file_path = self.data_path + filename
         json_data = self.validate_integrity(file_path)

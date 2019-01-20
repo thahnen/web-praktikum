@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Ver-/Bearbeitung aller Projekte:
 #   ===============================
 #
@@ -19,8 +18,8 @@
 #
 #   5. DELETE /projekt/<projekt_id>
 #   => Projekt mit entsprechender Projekt-Id löschen
-#
 
+# TODO: DELETE Verarbeitung
 
 import cherrypy
 
@@ -34,7 +33,7 @@ class Projekt(object):
 
     @cherrypy.tools.json_out()
     def GET(self, projekt_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -52,7 +51,7 @@ class Projekt(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -71,16 +70,14 @@ class Projekt(object):
         cherrypy.response.status = code
 
         if code == 200:
-            return {
-                "unique_id" : data
-            }
+            return { "unique_id" : data }
 
 
     @cherrypy.tools.json_in()
     def PUT(self, projekt_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
+        # cherrypy.response.status = 200 | 400 | 404 | 500
         #
 
         try:
@@ -89,13 +86,13 @@ class Projekt(object):
             cherrypy.response.status = 400
             return
 
-        code = self.application.add_values("projekte.json", projekt_id, input_json)
+        code = self.application.update_values("projekte.json", projekt_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
     def DELETE(self, projekt_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
@@ -105,4 +102,5 @@ class Projekt(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
+            # -> Komponenten (loeschen) -> Fehler (loeschen) -> QS-Mitarbeiter / SW-Entwickler (entfernen)
             pass

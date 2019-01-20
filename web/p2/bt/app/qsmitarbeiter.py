@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Ver-/Bearbeitung aller Qualitätssicherungs-Mitarbeiter:
 #   ======================================================
 #
@@ -19,8 +18,8 @@
 #
 #   5. DELETE /qsmitarbeiter/<qsmitarbeiter_id>
 #   => QS-Mitarbeiter mit entsprechender QS-Mitarbeiter-Id löschen
-#
 
+# TODO: DELETE Verarbeitung
 
 import cherrypy
 
@@ -34,7 +33,7 @@ class QSMitarbeiter(object):
 
     @cherrypy.tools.json_out()
     def GET(self, qsmitarbeiter_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -52,7 +51,7 @@ class QSMitarbeiter(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -71,16 +70,14 @@ class QSMitarbeiter(object):
         cherrypy.response.status = code
 
         if code == 200:
-            return {
-                "unique_id" : data
-            }
+            return { "unique_id" : data }
 
 
     @cherrypy.tools.json_in()
     def PUT(self, qsmitarbeiter_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
+        # cherrypy.response.status = 200 | 400 | 404 | 500
         #
 
         try:
@@ -89,13 +86,13 @@ class QSMitarbeiter(object):
             cherrypy.response.status = 400
             return
 
-        code = self.application.add_values("qs-mitarbeiter.json", qsmitarbeiter_id, input_json)
+        code = self.application.update_values("qs-mitarbeiter.json", qsmitarbeiter_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
     def DELETE(self, qsmitarbeiter_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
@@ -105,4 +102,5 @@ class QSMitarbeiter(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
+            # -> Fehler (loeschen) -> Komponenten (entfernen) ->  SW-Entwickler (entfernen)
             pass

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Ver-/Bearbeitung aller Fehler:
 #   ==============================
 #
@@ -22,7 +21,6 @@
 #
 #   6. PUT /fehler/<fehler_id> + JSON-Daten
 #   => Fehler mit entsprechender Fehler-Id verändern
-#
 
 
 import json
@@ -38,7 +36,7 @@ class Fehler(object):
 
     @cherrypy.tools.json_out()
     def GET(self, fehler_id=None, type=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 204 | 400 | 404 | 500
@@ -57,11 +55,12 @@ class Fehler(object):
             return
 
         try:
-            fehler = self.application.database.read_json_into_dict(filename)
+            fehler = self.application.get_values(filename, None)
             # Annahme aus database.py dass "Elements" in JSON exisitert!
             fehler = fehler["Elements"]
         except Exception as e:
-            return [500, None]
+            cherrypy.response.status = 500
+            return
 
         if fehler_id == None and type == "erkannt":
             # Alle erkannten Fehler zurückgeben
@@ -88,7 +87,7 @@ class Fehler(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -107,17 +106,14 @@ class Fehler(object):
         cherrypy.response.status = code
 
         if code == 200:
-            return {
-                "unique_id" : data
-            }
+            return { "unique_id" : data }
 
 
     @cherrypy.tools.json_in()
     def PUT(self, fehler_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
-        #
+        # cherrypy.response.status = 200 | 400 | 404 | 500
 
         try:
             input_json = cherrypy.request.json
@@ -125,5 +121,5 @@ class Fehler(object):
             cherrypy.response.status = 400
             return
 
-        code = self.application.add_values("fehler.json", fehler_id, input_json)
+        code = self.application.update_values("fehler.json", fehler_id, input_json)
         cherrypy.response.status = code

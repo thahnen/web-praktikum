@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Ver-/Bearbeitung aller (Projekt-)Komponenten:
 #   ============================================
 #
@@ -22,8 +21,8 @@
 #
 #   6. DELETE /komponente/<komponente_id>
 #   => Projektkomponente mit entsprechender Komponenten-Id löschen
-#
 
+# TODO: DELETE Verarbeitung
 
 import cherrypy
 
@@ -37,7 +36,7 @@ class Projektkomponenten(object):
 
     @cherrypy.tools.json_out()
     def GET(self, projekt_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 204 | 400 | 500
@@ -46,7 +45,6 @@ class Projektkomponenten(object):
         #   "1...n" : "Komponenten"-Objekt
         # }
 
-        # War die Eingabe überhaupt richtig?
         if projekt_id != None:
             try:
                 projekt_id = int(projekt_id)
@@ -80,7 +78,7 @@ class Komponente(object):
 
     @cherrypy.tools.json_out()
     def GET(self, komponente_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -98,7 +96,7 @@ class Komponente(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self, projekt_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -116,16 +114,23 @@ class Komponente(object):
 
     @cherrypy.tools.json_in()
     def PUT(self, komponente_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
+        # cherrypy.response.status = 200 | 400 | 404 | 500
         #
-        pass
+        try:
+            input_json = cherrypy.request.json
+        except Exception as e:
+            cherrypy.response.status = 400
+            return
+
+        code = self.application.update_values("komponenten.json", komponente_id, input_json)
+        cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
     def DELETE(self, komponente_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
@@ -135,4 +140,5 @@ class Komponente(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
+            # -> Projekt (entfernen) -> Fehler (loeschen) -> QS-Mitarbeiter / SW-Entwickler (entfernen)
             pass

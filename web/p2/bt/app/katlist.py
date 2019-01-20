@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Auswertung aller Fehler nach Projekt/Komponente/Status:
 #   ======================================================
 #
 #   1. GET /katlist/
 #   => Rückgabe einer Liste aller Fehler nach Projekt/Komponente/Status sortiert
-#
-
-# REVIEW: Ist eigentlich soweit fertig, auf Richtigkeit überprüfen
 
 import cherrypy
 
@@ -23,7 +19,7 @@ class KatList(object):
 
     @cherrypy.tools.json_out()
     def GET(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 204 | 500
@@ -43,10 +39,8 @@ class KatList(object):
             # 2) Komponenten (eine Liste)
             # 3) Status (erkannt oder behoben)
             # sortieren
-            data = dict(sorted(
+            return dict(sorted(
                 data, key=lambda elem: (elem["erkannt"]["projekt"], elem["erkannt"]["komponenten"], elem["status"])
             ))
-
-            return data
         except Exception as e:
             cherrypy.response.status = 500

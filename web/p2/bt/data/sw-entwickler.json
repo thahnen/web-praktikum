@@ -6,5 +6,23 @@
         "fehler" : "Dem SW-Entwickler zugeordnete Fehler (List[unique_id])"
     },
     "Elements" : {
+        "1" : {
+            "unique_id" : 128,
+            "username" : "abc",
+            "password" : "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+            "fehler" : []
+        },
+        "2" : {
+            "unique_id" : 129,
+            "username" : "def",
+            "password" : "cb8379ac2098aa165029e3938a51da0bcecfc008fd6795f401178647f96c5b34",
+            "fehler" : []
+        },
+        "3" : {
+            "unique_id" : 130,
+            "username" : "web",
+            "password" : "4b5e57f6eb2f42b9039b3d1e13929295f231749c510cbe341cd68036d9af97e2",
+            "fehler" : []
+        }
     }
 }

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Webserver mit Config und Routing:
 #   ================================
 #
@@ -14,7 +13,6 @@
 #   - "/bt":
 #       => Bug-Tracker-Seite
 #
-
 
 import os
 import cherrypy
@@ -31,13 +29,12 @@ class WebServer(object):
     def index(self):
         # Auswertung Cookie falls vorhanden!
         cookie = cherrypy.request.cookie
-        if "hash" in cookie:
-            # Hier dann den Cookie überprüfen
-            print(f"Cookie 'hash' set to: {cookie['hash'].value}")
-
-            self.application.eval_login()
+        if "type" in cookie and "username" in cookie and "password" in cookie:
+            print(f"User-Typ: {cookie['type']}")
+            print(f"Username: {cookie['username']}")
+            print(f"Passwort: {cookie['password']}")
         else:
-            print(f"Cookie 'hash' not set")
+            print("Kein Cookie gesetzt!")
 
         return self.application.get_static_page("index")
 
@@ -48,13 +45,27 @@ class WebServer(object):
         if cherrypy.request.method == "POST" and username != None and password != None:
             # 1. Testen, ob Username in QS-Mitarbeiter oder SW-Entwickler (ja -> weiter)
             # 2. Testen, ob Hash mit abgespeichertem übereinstimmt (ja -> weiter)
-            # 3. Cookie setzen (Hash aus Username + Hast), Weiterleitung auf /bt zurückgeben
-            return f"{username}: {password}"
+            # 3. Cookie setzen (Username + Hash), Weiterleitung auf /bt zurückgeben
 
-            qs_mitarbeiter_data = self.application.get_values("qs-mitarbeiter")
-            if qs_mitarbeiter_data["code"] == 500:
-                # Irgendein Fehler ist aufgetreten
-                pass
+            code, user_type, password_hash = self.application.eval_login(username, password)
+            if code == 200:
+                cherrypy.response.cookie["type"] = user_type
+                cherrypy.response.cookie["username"] = username
+                cherrypy.response.cookie["password"] = password_hash
+                return "Hier kommt noch ne Weiterleitung zu BT hin!"
+
+            cherrypy.response.cookie["type"] = ""
+            cherrypy.response.cookie["type"]["expires"] = 0
+            cherrypy.response.cookie["type"]["max-age"] = 0
+            cherrypy.response.cookie["username"] = ""
+            cherrypy.response.cookie["username"]["expires"] = 0
+            cherrypy.response.cookie["username"]["max-age"] = 0
+            cherrypy.response.cookie["password"] = ""
+            cherrypy.response.cookie["password"]["expires"] = 0
+            cherrypy.response.cookie["password"]["max-age"] = 0
+
+            if code == 500:
+                return "Hier kommt noch die Weiterleitung zurück zum Index hin!"
 
         return self.application.get_static_page("404")
 

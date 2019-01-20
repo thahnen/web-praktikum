@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Auswertung aller Fehler nach Kategorie/Status:
 #   =============================================
 #
 #   1. GET /prolist/
 #   => Rückgabe einer Liste aller Fehler nach Kategorie/Status sortiert
-#
-
-# REVIEW: Ist eigentlich soweit fertig, auf Richtigkeit überprüfen
 
 import cherrypy
 
@@ -23,7 +19,7 @@ class ProList(object):
 
     @cherrypy.tools.json_out()
     def GET(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 204 | 500
@@ -42,10 +38,8 @@ class ProList(object):
             # 1) Fehlerkategorien (eine Liste)
             # 2) Status (erkannt oder behoben)
             # sortieren
-            data = dict(sorted(
+            return dict(sorted(
                 data, key=lambda elem: (elem["erkannt"]["fehlerkategorien"], elem["status"])
             ))
-
-            return data
         except Exception as e:
             cherrypy.response.status = 500

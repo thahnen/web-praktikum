@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 #   Ver-/Bearbeitung aller Fehlerursachenkategorien:
 #   ===============================================
 #
@@ -19,8 +18,6 @@
 #
 #   5. DELETE /katursache/<katursache_id>
 #   => Fehlerursachenkategorie mit entsprechender Fehlerursachenkategorie-Id löschen
-#
-
 
 import cherrypy
 
@@ -34,7 +31,7 @@ class KatUrsache(object):
 
     @cherrypy.tools.json_out()
     def GET(self, katursache_id=None):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 204 | 400 | 404 | 500
@@ -52,7 +49,7 @@ class KatUrsache(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def POST(self):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau,
+        # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
         # cherrypy.response.status = 200 | 404 | 500
@@ -69,19 +66,15 @@ class KatUrsache(object):
 
         code, data = self.application.add_values("fehlerursachenkategorien.json", input_json)
         cherrypy.response.status = code
-
         if code == 200:
-            return {
-                "unique_id" : data
-            }
+            return { "unique_id" : data }
 
 
     @cherrypy.tools.json_in()
     def PUT(self, katursache_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
-        # cherrypy.response.status = 200 | 404 | 500
-        #
+        # cherrypy.response.status = 200 | 400 | 404 | 500
 
         try:
             input_json = cherrypy.request.json
@@ -89,16 +82,15 @@ class KatUrsache(object):
             cherrypy.response.status = 400
             return
 
-        code = self.application.add_values("fehlerursachenkategorien.json", katursache_id, input_json)
+        code = self.application.update_values("fehlerursachenkategorien.json", katursache_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
     def DELETE(self, katursache_id):
-        # Zurückgegebene JSON-Daten mit folgenden Aufbau:
+        # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
-        #
 
         code = self.application.delete_values("fehlerursachenkategorien.json", katursache_id)
         cherrypy.response.status = code
