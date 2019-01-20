@@ -30,38 +30,57 @@ class Application(object):
 
 
     # Handhabt den Login-Vorgang
-    def eval_login(self, username, password):
+    def eval_login(self, username, password, cookie=False):
         try:
-            code1, qs_mitarbeiter_data = self.get_values("qs-mitarbeiter")
-            code2, sw_entwickler_data = self.get_values("sw-entwickler")
+            code1, qs_mitarbeiter_data = self.get_values("qs-mitarbeiter.json", None)
+            code2, sw_entwickler_data = self.get_values("sw-entwickler.json", None)
 
-            if code1 != 200 or code2 != 200: raise
+            if code1 in [200, 204]:
+                if code1 == 204: qs_mitarbeiter_data = {}
+            else: raise
 
-            qs_mitarbeiter_data = qs_mitarbeiter_data["Elements"]
-            sw_entwickler_data = sw_entwickler_data["Elements"]
+            if code2 in [200, 204]:
+                if code2 == 204: sw_entwickler_data = {}
+            else: raise
         except Exception as e:
             # Irgendein Fehler ist aufgetreten
             return [500, None, None]
 
+        if not cookie: password_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        else: password_hash = password
+
         found = None
-        password_hash = haslib.sha256(password.encode("utf-8")).hexdigest()
         for elem in qs_mitarbeiter_data:
-            # Hier ggf Username nicht mehr nötig, kann durch unique_id ersetzt werden
-            if elem["username"] == username and elem["password"] == password_hash:
+            if qs_mitarbeiter_data[elem]["username"] == username and qs_mitarbeiter_data[elem]["password"] == password_hash:
                 found = "QSM"
 
-        if found == "QSM":
-            return [200, found, password_hash]
+        if found == "QSM": return [200, found, password_hash]
 
         for elem in sw_entwickler_data:
-            # Hier ggf Username nicht mehr nötig, kann durch unique_id ersetzt werden
-            if elem["username"] == username and elem["password"] == password_hash:
+            if sw_entwickler_data[elem]["username"] == username and sw_entwickler_data[elem]["password"] == password_hash:
                 found = "SWE"
 
-        if found == "SWE":
-            return [200, found, password_hash]
+        if found == "SWE": return [200, found, password_hash]
 
         return [404, None, None]
+
+
+    # Setzt Cookie bzw. loescht ihn
+    def setCookies(self, set=True, user_type=None, username=None, password_hash=None):
+        if set:
+            cherrypy.response.cookie["type"] = user_type
+            cherrypy.response.cookie["username"] = username
+            cherrypy.response.cookie["password"] = password_hash
+        else:
+            cherrypy.response.cookie["type"] = ""
+            cherrypy.response.cookie["type"]["expires"] = 0
+            cherrypy.response.cookie["type"]["max-age"] = 0
+            cherrypy.response.cookie["username"] = ""
+            cherrypy.response.cookie["username"]["expires"] = 0
+            cherrypy.response.cookie["username"]["max-age"] = 0
+            cherrypy.response.cookie["password"] = ""
+            cherrypy.response.cookie["password"]["expires"] = 0
+            cherrypy.response.cookie["password"]["max-age"] = 0
 
 
     # Handhabt Rückgabe der Daten
@@ -108,7 +127,6 @@ class Application(object):
 
     # Handhabt Updates der Daten
     # überarbeiten, dass mehr Fehlercodes möglich sind! Genau: 404...
-    # noch gucken, wie man hier die unique_id unterbringen kann!
     def update_values(self, json_file, unique_id, update_dict):
         if unique_id != None:
             try:

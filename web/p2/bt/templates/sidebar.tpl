@@ -1,7 +1,4 @@
-<!--
-	Navigationsleiste
--->
-
+<!-- Navigationsleiste -->
 <ul>
 @var entry;@
 @var loop;@

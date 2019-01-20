@@ -1,9 +1,28 @@
 {
     "Template" : {
         "unique_id" : "Eindeutige Id der Komponente (int)",
-        "projekt" : "Eindeutige Id des zugeordneten Projekts (unique_id)",
         "fehler" : "Die von der Komponente verursachten Fehler (List[unique_id])"
     },
     "Elements" : {
+        "1" : {
+            "unique_id" : 64,
+            "fehler" : []
+        },
+        "2" : {
+            "unique_id" : 65,
+            "fehler" : []
+        },
+        "3" : {
+            "unique_id" : 66,
+            "fehler" : []
+        },
+        "4" : {
+            "unique_id" : 67,
+            "fehler" : []
+        },
+        "5" : {
+            "unique_id" : 68,
+            "fehler" : []
+        }
     }
 }

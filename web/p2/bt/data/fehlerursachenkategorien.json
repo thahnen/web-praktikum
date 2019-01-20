@@ -4,5 +4,17 @@
         "beschreibung" : "Beschreibung der Fehlerursachenkategorie (string)"
     },
     "Elements" : {
+        "1" : {
+            "unique_id" : 16,
+            "beschreibung" : "Falsche Dateneingabe als Ursache"
+        },
+        "2" : {
+            "unique_id" : 17,
+            "beschreibung" : "Duemmster anzunehmender User"
+        },
+        "3" : {
+            "unique_id" : 18,
+            "beschreibung" : "Serverinterner Fehler"
+        }
     }
 }

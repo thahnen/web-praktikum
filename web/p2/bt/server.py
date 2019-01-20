@@ -30,12 +30,11 @@ class WebServer(object):
         # Auswertung Cookie falls vorhanden!
         cookie = cherrypy.request.cookie
         if "type" in cookie and "username" in cookie and "password" in cookie:
-            print(f"User-Typ: {cookie['type']}")
-            print(f"Username: {cookie['username']}")
-            print(f"Passwort: {cookie['password']}")
-        else:
-            print("Kein Cookie gesetzt!")
+            code, user_type, password_hash = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
+            if code == 200:
+                return self.application.get_static_page("forward")
 
+        self.application.setCookies(False)
         return self.application.get_static_page("index")
 
 
@@ -43,29 +42,13 @@ class WebServer(object):
     @cherrypy.expose
     def eval_login(self, username=None, password=None):
         if cherrypy.request.method == "POST" and username != None and password != None:
-            # 1. Testen, ob Username in QS-Mitarbeiter oder SW-Entwickler (ja -> weiter)
-            # 2. Testen, ob Hash mit abgespeichertem übereinstimmt (ja -> weiter)
-            # 3. Cookie setzen (Username + Hash), Weiterleitung auf /bt zurückgeben
-
             code, user_type, password_hash = self.application.eval_login(username, password)
             if code == 200:
-                cherrypy.response.cookie["type"] = user_type
-                cherrypy.response.cookie["username"] = username
-                cherrypy.response.cookie["password"] = password_hash
-                return "Hier kommt noch ne Weiterleitung zu BT hin!"
+                self.application.setCookies(True, user_type, username, password_hash)
+                return self.application.get_static_page("forward")
 
-            cherrypy.response.cookie["type"] = ""
-            cherrypy.response.cookie["type"]["expires"] = 0
-            cherrypy.response.cookie["type"]["max-age"] = 0
-            cherrypy.response.cookie["username"] = ""
-            cherrypy.response.cookie["username"]["expires"] = 0
-            cherrypy.response.cookie["username"]["max-age"] = 0
-            cherrypy.response.cookie["password"] = ""
-            cherrypy.response.cookie["password"]["expires"] = 0
-            cherrypy.response.cookie["password"]["max-age"] = 0
-
-            if code == 500:
-                return "Hier kommt noch die Weiterleitung zurück zum Index hin!"
+            self.application.setCookies(False)
+            return self.application.get_static_page("backward")
 
         return self.application.get_static_page("404")
 
@@ -73,9 +56,21 @@ class WebServer(object):
     # Bug-Tracker-Anwendungs-Seite des Webservers
     @cherrypy.expose
     def bt(self):
-        # Testen, ob man als QS-Mitarbeiter angemeldet ist oder SW-Entwickler
-        # je nachdem andere Seite zurückgeben!
-        return self.application.get_static_page("bt")
+        # Auswertung Cookie (muss vorhanden sein)!
+        cookie = cherrypy.request.cookie
+        if "type" in cookie and "username" in cookie and "password" in cookie:
+            code, user_type, password_hash = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
+            if code == 200:
+                # Noch testen, ob es ein QS-Mitarbeiter oder SW-Entwickler ist!
+                """
+                if user_type == "SWE":
+                    return self.application.get_static_page("bt-swe")
+                return self.application.get_static_page("bt-qsm")
+                """
+                return self.application.get_static_page("bt")
+
+        self.application.setCookies(False)
+        return self.application.get_static_page("backward")
 
 
 config = {

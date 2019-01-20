@@ -14,6 +14,7 @@ class DetailView {
       let path = "/app/" + id;
       let requester = new APPUTIL.Requester();
 
+      console.log("[DetailView] Request /app/");
       requester.request(path, function (response) {
             let data = JSON.parse(response);
             this.doRender(data);
@@ -62,6 +63,7 @@ class ListView {
       let path = "/app/";
       let requester = new APPUTIL.Requester();
 
+      console.log("[ListView] Request /app/");
       requester.request(path, function (response) {
             let data = JSON.parse(response);
             this.doRender(data);
@@ -150,9 +152,9 @@ class Application {
       APPUTIL.eventService.subscribe(this, "templates.loaded");
       APPUTIL.eventService.subscribe(this, "templates.failed");
       APPUTIL.eventService.subscribe(this, "app.cmd");
-      this.sideBar = new SideBar("aside", "sidebar.tpl.html");
-      this.listView = new ListView("main", "list.tpl.html");
-      this.detailView = new DetailView("main", "detail.tpl.html");
+      this.sideBar = new SideBar("aside", "sidebar.tpl");
+      this.listView = new ListView("main", "list.tpl");
+      this.detailView = new DetailView("main", "detail.tpl");
    }
 
    notify (self, message, data) {
@@ -165,20 +167,27 @@ class Application {
          // Templates stehen zur Verfügung, Bereiche mit Inhalten füllen
          let markup;
          let html_element;
-         markup = APPUTIL.templateManager.execute("header.tpl.html", null);
+         markup = APPUTIL.templateManager.execute("header.tpl", null);
          html_element = document.querySelector("header");
 
          if (html_element != null) {
             html_element.innerHTML = markup;
          }
 
+         // Hier dann noch die einzelnen "Kommandos zu verfassen"
          let navigation = [
-            ["home", "Startseite"],
-            ["list", "Liste"]
-         ];
+             ["home", "Startseite"],
+             ["overview_errors", "Bearbeitung Fehlerdaten"],
+             ["overview_projects", "Pflege Projekte"],
+             ["overview_components", "Pflege Komponenten"],
+             ["overview_workersdata", "Pflege Daten Mitarbeiter"],
+             ["overview_kategories", "Pflege Kategorien"],
+             ["evaluation_projects", "Auswertung Projekte/Fehler"],
+             ["evaluation_kategories", "Auswertung Kategorien/Fehler"]
+        ];
 
          self.sideBar.render(navigation);
-         markup = APPUTIL.templateManager.execute("home.tpl.html", null);
+         markup = APPUTIL.templateManager.execute("home.tpl", null);
          html_element = document.querySelector("main");
 
          if (html_element != null) {
@@ -190,7 +199,7 @@ class Application {
          // hier müsste man überprüfen, ob der Inhalt gewechselt werden darf
          switch (data[0]) {
          case "home":
-            let markup = APPUTIL.templateManager.execute("home.tpl.html", null);
+            let markup = APPUTIL.templateManager.execute("home.tpl", null);
             let html_element = document.querySelector("main");
 
             if (html_element != null) {
@@ -218,5 +227,4 @@ window.onload = function () {
    APPUTIL.templateManager = new APPUTIL.TemplateManager();
    APPUTIL.templateManager.init();
    var application = new Application();
-   console.log("Test");
 }

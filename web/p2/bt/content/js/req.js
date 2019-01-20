@@ -12,7 +12,7 @@ APPUTIL.Requester = class {
     request (pfad, erfolg_callback, fail_callback) {
         fetch(pfad).then(function (response) {
             let rueckgabe = null;
-            if(response.ok) { // 200er-Status-Code
+            if (response.ok) { // 200er-Status-Code
                 rueckgabe = response.text().then(function (text) {
                     console.log("[Requester] request->erfolg");
                     erfolg_callback(text);

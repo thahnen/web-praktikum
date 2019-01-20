@@ -4,5 +4,17 @@
         "komponenten" : "Dem Projekt zugehörige Komponenten (List[unique_id])"
     },
     "Elements" : {
+        "1" : {
+            "unique_id" : 512,
+            "komponenten" : [64, 65]
+        },
+        "2" : {
+            "unique_id" : 513,
+            "komponenten" : [66]
+        },
+        "3" : {
+            "unique_id" : 514,
+            "komponenten" : [67, 68]
+        }
     }
 }
