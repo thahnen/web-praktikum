@@ -1,20 +1,28 @@
 {
-    "Template" : {
-        "unique_id" : "Eindeutige Id des Projekts (int)",
-        "komponenten" : "Dem Projekt zugehörige Komponenten (List[unique_id])"
+    "Template": {
+        "unique_id": "Eindeutige Id des Projekts (int)",
+        "komponenten": "Dem Projekt zugeh\u00f6rige Komponenten (List[unique_id])"
     },
-    "Elements" : {
-        "1" : {
-            "unique_id" : 512,
-            "komponenten" : [64, 65]
+    "Elements": {
+        "1": {
+            "unique_id": 512,
+            "komponenten": [
+                64,
+                65
+            ]
         },
-        "2" : {
-            "unique_id" : 513,
-            "komponenten" : [66]
+        "2": {
+            "unique_id": 513,
+            "komponenten": [
+                66
+            ]
         },
-        "3" : {
-            "unique_id" : 514,
-            "komponenten" : [67, 68]
+        "3": {
+            "unique_id": 514,
+            "komponenten": [
+                67,
+                68
+            ]
         }
     }
 }

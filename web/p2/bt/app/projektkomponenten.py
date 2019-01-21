@@ -42,7 +42,7 @@ class Projektkomponenten(object):
         # cherrypy.response.status = 200 | 204 | 400 | 500
         #
         # {
-        #   "1...n" : "Komponenten"-Objekt
+        #   "1...n" : List["Komponenten"-Unique-Id]
         # }
 
         if projekt_id != None:
@@ -52,21 +52,19 @@ class Projektkomponenten(object):
                 cherrypy.response.status = 400
                 return
 
-        code, data = self.application.get_values("komponenten.json", None)
+        code, data = self.application.get_values("projekte.json", None)
         if code != 200:
             cherrypy.response.status = code
             return
 
-        # Alle Komponenten überprüfen, ob sie zum Projekt gehören
+        # Alle Unique-Ids ueberpruefen und wenn vorhanden, Liste mit den Komponenten-Ids zurueckgeben
         for elem in data:
-            if int(elem["projekt"]) != projekt_id:
-                del elem
+            if int(data[elem]["unique_id"]) == projekt_id:
+                return {
+                    "data" : data[elem]["komponenten"]
+                }
 
-        if len(data) == 0:
-            cherrypy.response.status = 204
-            return
-
-        return data
+        cherrypy.response.status = 404
 
 
 @cherrypy.expose

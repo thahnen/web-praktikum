@@ -24,13 +24,15 @@ APPUTIL.TemplateManager = class {
         let pfad = "/templates";
         let requester = new APPUTIL.Requester();
 
-        console.log("[TemplateManager] Request /templates");
+        console.log("[TemplateManager] init->request /templates");
         requester.request(pfad, function (response) {
             let data = JSON.parse(response);
             this.templates = data["templates"];
 
+            console.log("[TemplateManager] init->publish templates.loaded");
             APPUTIL.eventService.publish("templates.loaded", null);
         }.bind(this), function (response) {
+            console.log("[TemplateManager] init->publish templates.failed");
             APPUTIL.eventService.publish("templates.failed", response);
         });
     }

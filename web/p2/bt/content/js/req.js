@@ -16,11 +16,13 @@ APPUTIL.Requester = class {
                 rueckgabe = response.text().then(function (text) {
                     console.log("[Requester] request->erfolg");
                     erfolg_callback(text);
+                    console.log("[Requester] request->erfolg_callback");
                 });
             } else {
                 rueckgabe = response.text().then(function (text) {
                     console.log("[Requester] request->fail");
                     fail_callback(text);
+                    console.log("[Requester] request->fail_callback");
                 });
             }
             return rueckgabe;

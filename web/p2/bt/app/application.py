@@ -9,6 +9,7 @@
 
 import json
 import hashlib
+import cherrypy
 import app.database
 import app.view
 
@@ -108,8 +109,8 @@ class Application(object):
         # Spezielle Fehlerkategorie (falls vorhanden) zurückgeben
         for elem in data:
             print(elem)
-            if int(elem["unique_id"]) == int(unique_id):
-                return [200, elem]
+            if int(data[elem]["unique_id"]) == unique_id:
+                return [200, data[elem]]
 
         return [404, None]
 
