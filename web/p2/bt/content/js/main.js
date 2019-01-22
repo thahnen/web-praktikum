@@ -1,8 +1,81 @@
-//------------------------------------------------------------------------------
-//Demonstrator evs/tco/tmg
-//------------------------------------------------------------------------------
 'use strict'
 
+// Seitenleiste (bei QSM/SWE gleich!)
+class SideBar {
+    constructor (name, template) {
+        this.elem_name = name;
+        this.template_name = template;
+        this.html_element = document.querySelector(this.elem_name);
+
+        if (this.html_element == null) {
+            alert("[SideBar] HTML-Element nicht gefunden!")
+            return;
+        }
+
+        html_element.addEventListener("click", function(event) {
+            APPUTIL.eventService.publish("app.cmd", [
+                event.target.dataset.action, null
+            ]);
+        });
+    }
+
+    render (data) {
+        let markup = APPUTIL.templateManager.execute(this.template_name, data);
+        this.html_element.innerHTML = markup;
+    }
+}
+
+
+// Uebersicht Fehler -> QSM kann neue hinzufuegen, SWE die zugewiesenen bearbeiten!
+class ErrorView {
+    constructor () {
+    }
+}
+
+
+// Uebersicht Projekte (bei QSM/SWE gleich!)
+class ProjectView {
+    constructor () {
+    }
+}
+
+
+// Uebersicht Komponenten (bei QSM/SWE gleich!)
+class ComponentView {
+    constructor () {
+    }
+}
+
+
+// Uebersicht Mitarbeiter -> QSM kann QSM bearbeiten, SWE kann SWE bearbeiten!
+class WorkerView {
+    constructor() {
+    }
+}
+
+
+// Uebersicht Kategorien -> QSM kann Fehlerkategorien bearbeiten, SWE kann Fehlerursachenkategorien bearbeiten!
+class CategoryView {
+    constructor() {
+    }
+}
+
+
+// Uebersicht aller Fehler nach Projekten sortiert (bei QSM/SWE gleich!)
+class ErrorsByProjectsView {
+    constructor() {
+    }
+}
+
+
+// Uebersicht aller Fehler nach Kategorien (bei QSM/SWE gleich!)
+class ErrorsByCategoriesView {
+    constructor() {
+    }
+}
+
+
+// das kann irgendwann weg, muss nur so ungefaehr in die anderen uebernommen werden
 class DetailView {
     constructor (name, template) {
         this.elem_name = name;
@@ -48,6 +121,7 @@ class DetailView {
 }
 
 
+// das kann irgendwann weg, muss nur so ungefaehr in die anderen uebernommen werden
 class ListView {
     constructor (name, template) {
         this.elem_name = name;
@@ -107,33 +181,7 @@ class ListView {
 }
 
 
-// TODO: Alles mehr zusammenfassen!
-class SideBar {
-    constructor (name, template) {
-        this.elem_name = name;
-        this.template_name = template;
-
-        // Event-Listener setzen (aus Beims sein Beispiel)
-        let html_element = document.querySelector(this.elem_name);
-        if (html_element != null) {
-            html_element.addEventListener("click", function(event) {
-                APPUTIL.eventService.publish("app.cmd", [
-                    event.target.dataset.action, null
-                ]);
-            });
-        }
-    }
-
-    render (data) {
-        let markup = APPUTIL.templateManager.execute(this.template_name, data);
-        let html_element = document.querySelector(this.elem_name);
-        if (html_element != null) {
-            html_element.innerHTML = markup;
-        }
-    }
-}
-
-
+// Hier muss noch dran gearbeitet werden!
 class Application {
     constructor () {
         // Registrieren zum Empfang von Nachrichten
