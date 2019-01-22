@@ -1,22 +1,39 @@
 {
-    "Template" : {
-        "unique_id" : "Eindeutige Id des Fehlers (int)",
-        "type" : "Zustand des Fehlers (erkannt | beseitigt)",
-        "erkannt" : {
-            "beschreibung" : "Beschreibung des Fehlers durch QS-Mitarbeiter (string)",
-            "bearbeiter" : "QS-Mitarbeiter, der Fehler erfasst hat (unique_id)",
-            "datum" : "Datum der Fehlererfassung (string)",
-            "fehlerkategorien" : "Vom QS-Mitarbeiter vergebene Kategorien (List[unique_id])",
-            "projekt" : "Dem Fehler zugeordnetes Projekt (unique_id)",
-            "komponenten" : "Dem Fehler zugeordnete Komponenten (List[unique_id])"
+    "Template": {
+        "unique_id": "Eindeutige Id des Fehlers (int)",
+        "type": "Zustand des Fehlers (erkannt | beseitigt)",
+        "erkannt": {
+            "beschreibung": "Beschreibung des Fehlers durch QS-Mitarbeiter (string)",
+            "bearbeiter": "QS-Mitarbeiter, der Fehler erfasst hat (unique_id)",
+            "datum": "Datum der Fehlererfassung (string)",
+            "fehlerkategorien": "Vom QS-Mitarbeiter vergebene Kategorien (List[unique_id])"
         },
-        "beseitigt" : {
-            "beschreibung" : "Beschreibung der Fehlerursache durch SW-Entwickler (string)",
-            "bearbeiter" : "SW-Entwickler, der Fehler bearbeitet hat (unique_id)",
-            "datum" : "Datum der Fehlerbearbeitung (string)",
-            "fehlerursachenkategorie" : "Dem Fehler final zugeordnete Fehlerursachenkategorie (unique_id)"
+        "beseitigt": {
+            "beschreibung": "Beschreibung der Fehlerursache durch SW-Entwickler (string)",
+            "bearbeiter": "SW-Entwickler, der Fehler bearbeitet hat (unique_id)",
+            "datum": "Datum der Fehlerbearbeitung (string)",
+            "fehlerursachenkategorie": "Dem Fehler final zugeordnete Fehlerursachenkategorie (unique_id)"
         }
     },
-    "Elements" : {
+    "Elements": {
+        "1": {
+            "unique_id": 1,
+            "type": "erkannt",
+            "erkannt": {
+                "beschreibung": "",
+                "bearbeiter": 1,
+                "datum": "",
+                "fehlerkategorien": [
+                    1,
+                    2
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": null,
+                "bearbeiter": null,
+                "datum": null,
+                "fehlerursachenkategorie": null
+            }
+        }
     }
 }

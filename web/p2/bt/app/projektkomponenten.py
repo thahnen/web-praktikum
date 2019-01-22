@@ -104,10 +104,32 @@ class Komponente(object):
         # }
 
         try:
+            projekt_id = int(projekt_id)
             input_json = cherrypy.request.json
         except Exception as e:
             cherrypy.response.status = 400
             return
+
+        code, data = self.application.get_values("projekte.json", projekt_id)
+        cherrypy.response.status = code
+        if code != 200:
+            return
+
+        code, neue_id = self.application.add_values("komponenten.json", input_json)
+        cherrypy.response.status = code
+        if code != 200:
+            print("Zu Komponenten hinzugefuegt aber nicht zum Projekt!")
+            return
+
+        data["komponenten"].append(int(neue_id))
+
+        code = self.application.update_values("projekte.json", projekt_id, data)
+        cherrypy.response.status = code
+        if code != 200:
+            print("Projekt updaten hat nicht geklappt")
+            return
+
+        return { "unique_id" : neue_id }
 
 
     @cherrypy.tools.json_in()

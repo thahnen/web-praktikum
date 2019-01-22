@@ -1,20 +1,20 @@
 {
-    "Template" : {
-        "unique_id" : "Eindeutige Id der Fehlerursachenkategorie (int)",
-        "beschreibung" : "Beschreibung der Fehlerursachenkategorie (string)"
+    "Template": {
+        "unique_id": "Eindeutige Id der Fehlerursachenkategorie (int)",
+        "beschreibung": "Beschreibung der Fehlerursachenkategorie (string)"
     },
-    "Elements" : {
-        "1" : {
-            "unique_id" : 16,
-            "beschreibung" : "Falsche Dateneingabe als Ursache"
+    "Elements": {
+        "1": {
+            "unique_id": 1,
+            "beschreibung": "Falsche Dateneingabe als Ursache"
         },
-        "2" : {
-            "unique_id" : 17,
-            "beschreibung" : "Duemmster anzunehmender User"
+        "2": {
+            "unique_id": 2,
+            "beschreibung": "Duemmster anzunehmender User"
         },
-        "3" : {
-            "unique_id" : 18,
-            "beschreibung" : "Serverinterner Fehler"
+        "3": {
+            "unique_id": 3,
+            "beschreibung": "Serverinterner Fehler"
         }
     }
 }

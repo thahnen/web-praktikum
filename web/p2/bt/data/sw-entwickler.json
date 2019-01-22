@@ -1,28 +1,28 @@
 {
-    "Template" : {
-        "unique_id" : "Eindeutige Id des SW-Entwickler (int)",
-        "username" : "Benutzername des SW-Entwickler (string)",
-        "password" : "Password-Hash des SW-Entwickler zur Authentifikation (string)",
-        "fehler" : "Dem SW-Entwickler zugeordnete Fehler (List[unique_id])"
+    "Template": {
+        "unique_id": "Eindeutige Id des SW-Entwickler (int)",
+        "username": "Benutzername des SW-Entwickler (string)",
+        "password": "Password-Hash des SW-Entwickler zur Authentifikation (string)",
+        "fehler": "Dem SW-Entwickler zugeordnete Fehler (List[unique_id])"
     },
-    "Elements" : {
-        "1" : {
-            "unique_id" : 128,
-            "username" : "swe1",
-            "password" : "8faeada7e7575389cd271a51d83b99e222e2e08f800a46f7ea530a9b8882edbe",
-            "fehler" : []
+    "Elements": {
+        "1": {
+            "unique_id": 1,
+            "username": "swe1",
+            "password": "8faeada7e7575389cd271a51d83b99e222e2e08f800a46f7ea530a9b8882edbe",
+            "fehler": []
         },
-        "2" : {
-            "unique_id" : 129,
-            "username" : "swe2",
-            "password" : "62ea7a380439e988fdf6d3c74d96d6180736805540cd0e40523be53ded387230",
-            "fehler" : []
+        "2": {
+            "unique_id": 2,
+            "username": "swe2",
+            "password": "62ea7a380439e988fdf6d3c74d96d6180736805540cd0e40523be53ded387230",
+            "fehler": []
         },
-        "3" : {
-            "unique_id" : 130,
-            "username" : "swe3",
-            "password" : "15a7d579215ae82ae1ad9f6abbf6a41d7ba73c90510f28aaf491b10737d7f19e",
-            "fehler" : []
+        "3": {
+            "unique_id": 3,
+            "username": "swe3",
+            "password": "15a7d579215ae82ae1ad9f6abbf6a41d7ba73c90510f28aaf491b10737d7f19e",
+            "fehler": []
         }
     }
 }

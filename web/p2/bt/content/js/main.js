@@ -12,7 +12,7 @@ class SideBar {
             return;
         }
 
-        html_element.addEventListener("click", function(event) {
+        this.html_element.addEventListener("click", function(event) {
             APPUTIL.eventService.publish("app.cmd", [
                 event.target.dataset.action, null
             ]);
@@ -28,7 +28,13 @@ class SideBar {
 
 // Uebersicht Fehler -> QSM kann neue hinzufuegen, SWE die zugewiesenen bearbeiten!
 class ErrorView {
-    constructor () {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+    }
+
+    render (data) {
+        //
     }
 }
 
@@ -90,26 +96,18 @@ class DetailView {
         console.log("[DetailView] Request /app/");
         requester.request(path, function (response) {
             let data = JSON.parse(response);
-            this.doRender(data);
+            let markup = APPUTIL.templateManager.execute(this.template_name, data);
+            let html_element = document.querySelector(this.elem_name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+                let html_element = document.querySelector("form");
+                if (html_element != null) {
+                    html_element.addEventListener("click", this.handleEvent);
+                }
+            }
         }.bind(this), function (response) {
             alert("Detail - render failed");
         });
-    }
-
-    doRender (data) {
-        let markup = APPUTIL.templateManager.execute(this.template_name, data);
-        let html_element = document.querySelector(this.elem_name);
-        if (html_element != null) {
-            html_element.innerHTML = markup;
-            this.configHandleElement();
-        }
-    }
-
-    configHandleElement () {
-        let html_element = document.querySelector("form");
-        if (html_element != null) {
-            html_element.addEventListener("click", this.handleEvent);
-        }
     }
 
     handleEvent (event) {
@@ -137,18 +135,14 @@ class ListView {
         console.log("[ListView] Request /app/");
         requester.request(path, function (response) {
             let data = JSON.parse(response);
-            this.doRender(data);
+            let markup = APPUTIL.templateManager.execute(this.template_name, data);
+            let html_element = document.querySelector(this.elem_name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+            }
         }.bind(this), function (response) {
             alert("List - render failed");
         });
-    }
-
-    doRender (data) {
-        let markup = APPUTIL.templateManager.execute(this.template_name, data);
-        let html_element = document.querySelector(this.elem_name);
-        if (html_element != null) {
-            html_element.innerHTML = markup;
-        }
     }
 
     configHandleElement () {

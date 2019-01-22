@@ -5,23 +5,23 @@
     },
     "Elements": {
         "1": {
-            "unique_id": 512,
+            "unique_id": 1,
             "komponenten": [
-                64,
-                65
+                1,
+                2
             ]
         },
         "2": {
-            "unique_id": 513,
+            "unique_id": 2,
             "komponenten": [
-                66
+                3
             ]
         },
         "3": {
-            "unique_id": 514,
+            "unique_id": 3,
             "komponenten": [
-                67,
-                68
+                4,
+                5
             ]
         }
     }

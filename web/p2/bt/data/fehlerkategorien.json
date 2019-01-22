@@ -1,20 +1,20 @@
 {
-    "Template" : {
-        "unique_id" : "Eindeutige Id der Fehlerkategorie (int)",
-        "beschreibung" : "Beschreibung der Fehlerkategorie (string)"
+    "Template": {
+        "unique_id": "Eindeutige Id der Fehlerkategorie (int)",
+        "beschreibung": "Beschreibung der Fehlerkategorie (string)"
     },
-    "Elements" : {
-        "1" : {
-            "unique_id" : 1,
-            "beschreibung" : "Irgendwas funktioniert nicht."
+    "Elements": {
+        "1": {
+            "unique_id": 1,
+            "beschreibung": "Irgendwas funktioniert nicht."
         },
-        "2" : {
-            "unique_id" : 2,
-            "beschreibung" : "Ich weiss nicht, was falsch ist"
+        "2": {
+            "unique_id": 2,
+            "beschreibung": "Ich weiss nicht, was falsch ist"
         },
-        "3" : {
-            "unique_id" : 3,
-            "beschreibung" : "Stuerzt immer bei mir ab"
+        "3": {
+            "unique_id": 3,
+            "beschreibung": "Stuerzt immer bei mir ab"
         }
     }
 }

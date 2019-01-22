@@ -1,6 +1,7 @@
 <!--
     Hier wird der jeweilige Benutzer angezeigt, mit "Modus", sowie ein Logout-Knopf
     Variable Context mit Aufbau:
+    context-Typ = Arrays
     1) context[0] -> Cookie "type"
     2) context[0] -> Cookie "username"
 -->

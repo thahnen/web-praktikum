@@ -54,30 +54,28 @@ class Fehler(object):
                 return data
             return
 
-        try:
-            fehler = self.application.get_values(filename, None)
-            # Annahme aus database.py dass "Elements" in JSON exisitert!
-            fehler = fehler["Elements"]
-        except Exception as e:
-            cherrypy.response.status = 500
+        code, fehler = self.application.get_values(filename, None)
+        cherrypy.response.status = code
+        if code != 200:
             return
 
+        return_dict = {}
         if fehler_id == None and type == "erkannt":
             # Alle erkannten Fehler zurückgeben
             for elem in fehler:
-                if elem["type"] != "erkannt":
-                    del elem
-            if len(fehler) != 0:
-                return fehler
+                if fehler[elem]["type"] == "erkannt":
+                    return_dict[elem] = fehler[elem]
+            if len(return_dict) != 0:
+                return return_dict
             cherrypy.response.status = 204
             return
         elif fehler_id == None and type == "behoben":
             # Alle behobenen Fehler zurückgeben
             for elem in fehler:
-                if elem["type"] != "behoben":
-                    del elem
-            if len(fehler) != 0:
-                return fehler
+                if fehler[elem]["type"] == "behoben":
+                    return_dict[elem] = fehler[elem]
+            if len(return_dict) != 0:
+                return return_dict
             cherrypy.response.status = 204
             return
 

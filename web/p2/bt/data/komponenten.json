@@ -1,28 +1,30 @@
 {
-    "Template" : {
-        "unique_id" : "Eindeutige Id der Komponente (int)",
-        "fehler" : "Die von der Komponente verursachten Fehler (List[unique_id])"
+    "Template": {
+        "unique_id": "Eindeutige Id der Komponente (int)",
+        "fehler": "Die von der Komponente verursachten Fehler (List[unique_id])"
     },
-    "Elements" : {
-        "1" : {
-            "unique_id" : 64,
-            "fehler" : []
+    "Elements": {
+        "1": {
+            "unique_id": 1,
+            "fehler": [
+                1
+            ]
         },
-        "2" : {
-            "unique_id" : 65,
-            "fehler" : []
+        "2": {
+            "unique_id": 2,
+            "fehler": []
         },
-        "3" : {
-            "unique_id" : 66,
-            "fehler" : []
+        "3": {
+            "unique_id": 3,
+            "fehler": []
         },
-        "4" : {
-            "unique_id" : 67,
-            "fehler" : []
+        "4": {
+            "unique_id": 4,
+            "fehler": []
         },
-        "5" : {
-            "unique_id" : 68,
-            "fehler" : []
+        "5": {
+            "unique_id": 5,
+            "fehler": []
         }
     }
 }
