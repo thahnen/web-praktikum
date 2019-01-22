@@ -20,19 +20,41 @@
             "unique_id": 1,
             "type": "erkannt",
             "erkannt": {
-                "beschreibung": "",
+                "beschreibung": "Irgendeine Beschreibung",
                 "bearbeiter": 1,
-                "datum": "",
+                "datum": "01.01.01",
                 "fehlerkategorien": [
                     1,
                     2
                 ]
             },
             "beseitigt": {
-                "beschreibung": null,
-                "bearbeiter": null,
-                "datum": null,
-                "fehlerursachenkategorie": null
+                "beschreibung": "null",
+                "bearbeiter": "null",
+                "datum": "null",
+                "fehlerursachenkategorie": "null"
+            }
+        },
+        "2": {
+            "unique_id": 1110,
+            "type": "behoben",
+            "erkannt": {
+                "beschreibung": "Erkannter Fehler",
+                "bearbeiter": 1,
+                "datum": "01.01.2001",
+                "fehlerkategorien": [
+                    1,
+                    2
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "Fehler wurde beseitigt",
+                "bearbeiter": 2,
+                "datum": "12.12.2012",
+                "fehlerursachenkategorie": [
+                    2,
+                    3
+                ]
             }
         }
     }

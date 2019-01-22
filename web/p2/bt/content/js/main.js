@@ -31,52 +31,208 @@ class ErrorView {
     constructor (name, template) {
         this.name = name;
         this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
     }
 
-    render (data) {
-        //
+    render () {
+        // Daten anfordern
+        let path = "/fehler";
+        let requester = new APPUTIL.Requester();
+
+        console.log("[ErrorView] Request /fehler");
+        requester.request(path, function (response) {
+            let data = JSON.parse(response);
+
+            let context = [];
+            for (let fehler in data) {
+                if (data.hasOwnProperty(fehler)) {
+                    context.push(data[fehler]);
+                }
+            }
+
+            let markup = APPUTIL.templateManager.execute(this.template, context);
+            let html_element = document.querySelector(this.name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+            }
+        }.bind(this), function (response) {
+            alert("[ErrorView] render->failed");
+        });
     }
 }
 
 
 // Uebersicht Projekte (bei QSM/SWE gleich!)
 class ProjectView {
-    constructor () {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
+    }
+
+    render () {
+        // Daten anfordern
+        let path = "/projekt";
+        let requester = new APPUTIL.Requester();
+
+        console.log("[ProjectView] Request /projekt");
+        requester.request(path, function (response) {
+            let data = JSON.parse(response);
+
+            let context = [];
+            for (var fehler in data) {
+                if (data.hasOwnProperty(fehler)) {
+                    context.push(data[fehler]);
+                }
+            }
+
+            let markup = APPUTIL.templateManager.execute(this.template, context);
+            let html_element = document.querySelector(this.name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+            }
+        }.bind(this), function (response) {
+            alert("[ProjectView] render->failed");
+        });
     }
 }
 
 
 // Uebersicht Komponenten (bei QSM/SWE gleich!)
 class ComponentView {
-    constructor () {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
+    }
+
+    render () {
+        // Daten anfordern
+        let path = "/komponente";
+        let requester = new APPUTIL.Requester();
+
+        console.log("[ErrorView] Request /komponente");
+        requester.request(path, function (response) {
+            let data = JSON.parse(response);
+
+            let context = [];
+            for (var fehler in data) {
+                if (data.hasOwnProperty(fehler)) {
+                    context.push(data[fehler]);
+                }
+            }
+
+            let markup = APPUTIL.templateManager.execute(this.template, context);
+            let html_element = document.querySelector(this.name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+            }
+        }.bind(this), function (response) {
+            alert("[ComponentView] render->failed");
+        });
     }
 }
 
 
 // Uebersicht Mitarbeiter -> QSM kann QSM bearbeiten, SWE kann SWE bearbeiten!
 class WorkerView {
-    constructor() {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
+    }
+
+    render () {
+        // Daten anfordern
+        //let path = "/qsmitarbeiter"
+        let path = "/swentwickler";
+        let requester = new APPUTIL.Requester();
+
+        //console.log("[CategoryView] Request /qsmitarbeiter");
+        console.log("[WorkerView] Request /swentwickler");
+        requester.request(path, function (response) {
+            let data = JSON.parse(response);
+
+            let context = [];
+            for (var fehler in data) {
+                if (data.hasOwnProperty(fehler)) {
+                    context.push(data[fehler]);
+                }
+            }
+
+            let markup = APPUTIL.templateManager.execute(this.template, context);
+            let html_element = document.querySelector(this.name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+            }
+        }.bind(this), function (response) {
+            alert("[WorkerView] render->failed");
+        });
     }
 }
 
 
 // Uebersicht Kategorien -> QSM kann Fehlerkategorien bearbeiten, SWE kann Fehlerursachenkategorien bearbeiten!
 class CategoryView {
-    constructor() {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
+    }
+
+    render () {
+        // Daten anfordern
+        //let path = "/katursache"
+        let path = "/katfehler";
+        let requester = new APPUTIL.Requester();
+
+        //console.log("[CategoryView] Request /katursache");
+        console.log("[CategoryView] Request /katfehler");
+        requester.request(path, function (response) {
+            let data = JSON.parse(response);
+
+            let context = [];
+            for (var fehler in data) {
+                if (data.hasOwnProperty(fehler)) {
+                    context.push(data[fehler]);
+                }
+            }
+
+            let markup = APPUTIL.templateManager.execute(this.template, context);
+            let html_element = document.querySelector(this.name);
+            if (html_element != null) {
+                html_element.innerHTML = markup;
+            }
+        }.bind(this), function (response) {
+            alert("[CategoryView] render->failed");
+        });
     }
 }
 
 
 // Uebersicht aller Fehler nach Projekten sortiert (bei QSM/SWE gleich!)
 class ErrorsByProjectsView {
-    constructor() {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
     }
 }
 
 
 // Uebersicht aller Fehler nach Kategorien (bei QSM/SWE gleich!)
 class ErrorsByCategoriesView {
-    constructor() {
+    constructor (name, template) {
+        this.name = name;
+        this.template = template;
+
+        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
     }
 }
 
@@ -185,6 +341,11 @@ class Application {
         this.sideBar = new SideBar("aside", "sidebar.tpl");
         this.listView = new ListView("main", "list.tpl");
         this.detailView = new DetailView("main", "detail.tpl");
+        this.errorView = new ErrorView("main", "overview_errors.tpl");
+        this.projectView = new ProjectView("main", "overview_projects.tpl");
+        this.componentView = new ComponentView("main", "overview_components.tpl");
+        this.categoryView = new CategoryView("main", "overview_categories.tpl");
+        this.workerView = new WorkerView("main", "overview_workersdata.tpl");
     }
 
     notify (self, message, data) {
@@ -216,9 +377,9 @@ class Application {
                 ["overview_projects", "Pflege Projekte"],
                 ["overview_components", "Pflege Komponenten"],
                 ["overview_workersdata", "Pflege Daten Mitarbeiter"],
-                ["overview_kategories", "Pflege Kategorien"],
+                ["overview_categories", "Pflege Kategorien"],
                 ["evaluation_projects", "Auswertung Projekte/Fehler"],
-                ["evaluation_kategories", "Auswertung Kategorien/Fehler"]
+                ["evaluation_categories", "Auswertung Kategorien/Fehler"]
             ];
 
             self.sideBar.render(navigation);
@@ -240,24 +401,24 @@ class Application {
                 }
                 break;
             case "overview_errors":
-                alert("Bearbeitung Fehlerdaten noch nicht hinzugefuegt!")
+                this.errorView.render();
                 break;
             case "overview_projects":
-                alert("Pflege Projekte noch nicht hinzugefuegt!")
+                this.projectView.render();
                 break;
             case "overview_components":
-                alert("Pflege Komponenten noch nicht hinzugefuegt!")
+                this.componentView.render();
                 break;
             case "overview_workersdata":
-                alert("Pflege Daten Mitarbeiter noch nicht hinzugefuegt!")
+                this.workerView.render();
                 break;
-            case "overview_kategories":
-                alert("Pflege Kategorien noch nicht hinzugefuegt!")
+            case "overview_categories":
+                this.categoryView.render();
                 break;
             case "evaluation_projects":
                 alert("Auswertung Projekte/Fehler noch nicht hinzugefuegt!")
                 break;
-            case "evaluation_kategories":
+            case "evaluation_categories":
                 alert("Auswertung Kategorien/Fehler noch nicht hinzugefuegt!")
                 break;
             case "list":

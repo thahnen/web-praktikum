@@ -7,20 +7,26 @@
         "1": {
             "unique_id": 1,
             "fehler": [
-                1
+                1, 1110
             ]
         },
         "2": {
             "unique_id": 2,
-            "fehler": []
+            "fehler": [
+                1110
+            ]
         },
         "3": {
             "unique_id": 3,
-            "fehler": []
+            "fehler": [
+                1
+            ]
         },
         "4": {
             "unique_id": 4,
-            "fehler": []
+            "fehler": [
+                1, 1110
+            ]
         },
         "5": {
             "unique_id": 5,

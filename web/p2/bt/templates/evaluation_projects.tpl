@@ -4,7 +4,7 @@
     => context[0...n] -> Fehler-Objekt
 -->
 <div class="overview_errors">
-    <h2>Liste aller Fehler:</h2>
+    <h2>Uebersicht aller Fehler nach Projekt sortiert:</h2>
     <table>
         <tr>
             <th>Eindeutige Id</th>
@@ -36,16 +36,4 @@
         </tr>
     @endfor@
     </table>
-
-    <!--
-        Hier unten noch alle moeglichen Knoepfe:
-        1) Übersicht alle erkannten Fehler
-        2) Übersicht alle behobenen Fehler
-        3.1) QSM: Fehler neu hinzufuegen
-        3.2) SWE: Fehler bearbeiten
-    -->
-    <button id="btn--erkannt">Alle erkannten Fehler anzeigen</button>
-    <button id="btn--behoben">Alle behobenen Fehler anzeigen</button>
-    <button id="btn--bearbeiten">Markiertn Fehler bearbeiten</button>
-    <button id="btn--hinzufuegen">Neuen Fehler hinzufuegen</button>
 </div>

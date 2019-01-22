@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-# TODO: ALLE anderen moeglichen REST-Anfragen hinzufuegen!
+# TODO: Vielleicht alles noch ein bisschen zusammenfassen? Andere Farben und so!
 
 
 # Test, ob der Server ueberhaupt online ist !
@@ -626,10 +626,10 @@ FEHLER_POST() {
 		"fehlerkategorien" : [1, 2]
 	},
 	"beseitigt" : {
-		"beschreibung" : null,
-		"bearbeiter" : null,
-		"datum" : null,
-		"fehlerursachenkategorie" : null
+		"beschreibung" : "null",
+		"bearbeiter" : "null",
+		"datum" : "null",
+		"fehlerursachenkategorie" : "null"
 	}
 }
 EOF
