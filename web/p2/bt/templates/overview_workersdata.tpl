@@ -15,7 +15,7 @@
     @var loop_i;@
     @for loop_i = 0; loop_i < context.length; loop_i++@
         @entry_a = context[loop_i];@
-        <tr id="tr--#entry_a['unique_id']#" class="tr--fehler">
+        <tr id="tr--#entry_a['unique_id']#" class="tr--arbeiter">
             <td>#entry_a['unique_id']#</td>
             <td>#entry_a['username']#</td>
             <td>#entry_a['password']#</td>
@@ -23,6 +23,6 @@
     @endfor@
     </table>
 
-    <button id="btn--bearbeiten">Markierten -Arbeiter bearbeiten</button>
-    <button id="btn--hinzufuegen">Neuen -Arbeiter hinzufuegen</button>
+    <button id="btn--arbeiter--edit">Markierten -Arbeiter bearbeiten</button>
+    <button id="btn--arbeiter--add">Neuen -Arbeiter hinzufuegen</button>
 </div>

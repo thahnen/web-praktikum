@@ -56,6 +56,28 @@
                     3
                 ]
             }
+        },
+        "3": {
+            "unique_id": 1117,
+            "type": "behoben",
+            "erkannt": {
+                "beschreibung": "Erkannter Fehler",
+                "bearbeiter": 1,
+                "datum": "01.01.2001",
+                "fehlerkategorien": [
+                    1,
+                    2
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "Fehler wurde beseitigt",
+                "bearbeiter": 2,
+                "datum": "12.12.2012",
+                "fehlerursachenkategorie": [
+                    2,
+                    3
+                ]
+            }
         }
     }
 }

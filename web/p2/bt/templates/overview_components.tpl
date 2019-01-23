@@ -14,14 +14,14 @@
     @var loop_i;@
     @for loop_i = 0; loop_i < context.length; loop_i++@
         @entry_a = context[loop_i];@
-        <tr id="tr--#entry_a['unique_id']#" class="tr--fehler">
+        <tr id="tr--#entry_a['unique_id']#" class="tr--komponente">
             <td>#entry_a['unique_id']#</td>
             <td>#entry_a['fehler']#</td>
         </tr>
     @endfor@
     </table>
 
-    <button id="btn--sortiert">Nach Projekten sortiert</button>
-    <button id="btn--bearbeiten">Markierte Komponente bearbeiten</button>
-    <button id="btn--hinzufuegen">Neue Komponente hinzufuegen</button>
+    <button id="btn--komponente--sort">Nach Projekten sortiert</button>
+    <button id="btn--komponente--edit">Markierte Komponente bearbeiten</button>
+    <button id="btn--komponente--add">Neue Komponente hinzufuegen</button>
 </div>

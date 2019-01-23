@@ -3,3 +3,4 @@
    Startseite
 </p>
 @include footer.tpl "Hahnen"@
+<h6>Lol</h6>

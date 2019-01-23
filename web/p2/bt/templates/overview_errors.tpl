@@ -36,16 +36,8 @@
         </tr>
     @endfor@
     </table>
-
-    <!--
-        Hier unten noch alle moeglichen Knoepfe:
-        1) Übersicht alle erkannten Fehler
-        2) Übersicht alle behobenen Fehler
-        3.1) QSM: Fehler neu hinzufuegen
-        3.2) SWE: Fehler bearbeiten
-    -->
-    <button id="btn--erkannt">Alle erkannten Fehler anzeigen</button>
-    <button id="btn--behoben">Alle behobenen Fehler anzeigen</button>
-    <button id="btn--bearbeiten">Markiertn Fehler bearbeiten</button>
-    <button id="btn--hinzufuegen">Neuen Fehler hinzufuegen</button>
+    <button id="btn--fehler--erkannt">Alle erkannten Fehler anzeigen</button>
+    <button id="btn--fehler--behoben">Alle behobenen Fehler anzeigen</button>
+    <button id="btn--fehler--edit">Markierten Fehler bearbeiten (SWE)</button>
+    <button id="btn--fehler--add">Neuen Fehler hinzufuegen (QSM)</button>
 </div>
