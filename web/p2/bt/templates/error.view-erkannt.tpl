@@ -1,11 +1,11 @@
-<!-- REVIEW: Nur bis die einzelnen Views genommen werden! -->
+<!-- REVIEW: Soweit fertig! -->
 <!--
     Variable Context mit Aufbau:
     => context-Typ = Array
     => context[0...n] -> Fehler-Objekt
 -->
 <div class="overview_errors">
-    <h2>Liste aller Fehler:</h2>
+    <h2>Liste aller erkannten Fehler:</h2>
     <table>
         <tr>
             <th>Eindeutige Id</th>
@@ -39,8 +39,5 @@
         </tr>
     @endfor@
     </table>
-    <button id="btn--fehler--erkannt">Alle erkannten Fehler anzeigen</button>
-    <button id="btn--fehler--behoben">Alle behobenen Fehler anzeigen</button>
-    <button id="btn--fehler--edit">Markierten Fehler bearbeiten (SWE)</button>
-    <button id="btn--fehler--add">Neuen Fehler hinzufuegen (QSM)</button>
+    <button id="btn--fehler--back">Zurück</button>
 </div>

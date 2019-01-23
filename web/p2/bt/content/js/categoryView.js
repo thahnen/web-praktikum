@@ -55,19 +55,19 @@ export default class {
                     this.ausgewaehle_tabellenzeile = x;
                     x.style.setProperty("background-color", "lightblue");
                 }.bind(this)); // -> muss, da sonst mit "this" das falsche gemeint ist!
+            });
 
-                document.getElementById("btn--kategorie--edit").addEventListener("click", function() {
-                    if (this.ausgewaehle_tabellenzeile != null) {
-                        let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
-                        APPUTIL.eventService.publish("app.cmd", ["kategorie--edit", id]);
-                    } else {
-                        alert("Keine kategorie ausgewaehlt!")
-                    }
-                }.bind(this));
+            document.getElementById("btn--kategorie--edit").addEventListener("click", function() {
+                if (this.ausgewaehle_tabellenzeile != null) {
+                    let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
+                    APPUTIL.eventService.publish("app.cmd", ["kategorie--edit", id]);
+                } else {
+                    alert("Keine kategorie ausgewaehlt!")
+                }
+            }.bind(this));
 
-                document.getElementById("btn--kategorie--add").addEventListener("click", function() {
-                    APPUTIL.eventService.publish("app.cmd", ["kategorie--add", null]);
-                });
+            document.getElementById("btn--kategorie--add").addEventListener("click", function() {
+                APPUTIL.eventService.publish("app.cmd", ["kategorie--add", null]);
             });
         }.bind(this), function (response) {
             alert("[CategoryView] render->failed");

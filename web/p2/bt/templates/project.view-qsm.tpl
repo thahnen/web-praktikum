@@ -20,8 +20,4 @@
         </tr>
     @endfor@
     </table>
-
-    <button id="btn--projekt--edit">Markiertes Projekt bearbeiten</button>
-    <button id="btn--projekt--add">Neues Projekt hinzufuegen</button>
-    <button id="btn--projekt--delete">Markiertes Projekt loeschen</button>
 </div>

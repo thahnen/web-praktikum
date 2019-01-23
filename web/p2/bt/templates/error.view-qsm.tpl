@@ -1,4 +1,4 @@
-<!-- REVIEW: Nur bis die einzelnen Views genommen werden! -->
+<!-- REVIEW: Soweit fertig! -->
 <!--
     Variable Context mit Aufbau:
     => context-Typ = Array
@@ -41,6 +41,5 @@
     </table>
     <button id="btn--fehler--erkannt">Alle erkannten Fehler anzeigen</button>
     <button id="btn--fehler--behoben">Alle behobenen Fehler anzeigen</button>
-    <button id="btn--fehler--edit">Markierten Fehler bearbeiten (SWE)</button>
-    <button id="btn--fehler--add">Neuen Fehler hinzufuegen (QSM)</button>
+    <button id="btn--fehler--add">Neuen Fehler hinzufuegen</button>
 </div>

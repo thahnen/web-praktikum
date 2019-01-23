@@ -55,19 +55,19 @@ export default class {
                     this.ausgewaehle_tabellenzeile = x;
                     x.style.setProperty("background-color", "lightblue");
                 }.bind(this)); // -> muss, da sonst mit "this" das falsche gemeint ist!
+            });
 
-                document.getElementById("btn--arbeiter--edit").addEventListener("click", function() {
-                    if (this.ausgewaehle_tabellenzeile != null) {
-                        let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
-                        APPUTIL.eventService.publish("app.cmd", ["arbeiter--edit", id]);
-                    } else {
-                        alert("Kein Arbeiter ausgewaehlt!")
-                    }
-                }.bind(this));
+            document.getElementById("btn--arbeiter--edit").addEventListener("click", function() {
+                if (this.ausgewaehle_tabellenzeile != null) {
+                    let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
+                    APPUTIL.eventService.publish("app.cmd", ["arbeiter--edit", id]);
+                } else {
+                    alert("Kein Arbeiter ausgewaehlt!")
+                }
+            }.bind(this));
 
-                document.getElementById("btn--arbeiter--add").addEventListener("click", function() {
-                    APPUTIL.eventService.publish("app.cmd", ["arbeiter--add", null]);
-                });
+            document.getElementById("btn--arbeiter--add").addEventListener("click", function() {
+                APPUTIL.eventService.publish("app.cmd", ["arbeiter--add", null]);
             });
         }.bind(this), function (response) {
             alert("[WorkerView] render->failed");

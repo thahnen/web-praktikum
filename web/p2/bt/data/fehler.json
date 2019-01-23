@@ -2,6 +2,7 @@
     "Template": {
         "unique_id": "Eindeutige Id des Fehlers (int)",
         "type": "Zustand des Fehlers (erkannt | beseitigt)",
+        "komponente": "Eindeutige Id der Komponente (unique_id)",
         "erkannt": {
             "beschreibung": "Beschreibung des Fehlers durch QS-Mitarbeiter (string)",
             "bearbeiter": "QS-Mitarbeiter, der Fehler erfasst hat (unique_id)",
@@ -18,26 +19,28 @@
     "Elements": {
         "1": {
             "unique_id": 1,
-            "type": "erkannt",
+            "type": "behoben",
+            "komponente": 12,
             "erkannt": {
                 "beschreibung": "Irgendeine Beschreibung",
                 "bearbeiter": 1,
                 "datum": "01.01.01",
                 "fehlerkategorien": [
-                    1,
-                    2
+                    "1",
+                    "2"
                 ]
             },
             "beseitigt": {
-                "beschreibung": "null",
-                "bearbeiter": "null",
-                "datum": "null",
-                "fehlerursachenkategorie": "null"
+                "beschreibung": "War ein lamer Fehler",
+                "bearbeiter": 12,
+                "datum": "23.01.2019",
+                "fehlerursachenkategorie": 3
             }
         },
         "2": {
             "unique_id": 1110,
             "type": "behoben",
+            "komponente": 12,
             "erkannt": {
                 "beschreibung": "Erkannter Fehler",
                 "bearbeiter": 1,
@@ -51,15 +54,13 @@
                 "beschreibung": "Fehler wurde beseitigt",
                 "bearbeiter": 2,
                 "datum": "12.12.2012",
-                "fehlerursachenkategorie": [
-                    2,
-                    3
-                ]
+                "fehlerursachenkategorie": 2
             }
         },
         "3": {
             "unique_id": 1117,
             "type": "behoben",
+            "komponente": 12,
             "erkannt": {
                 "beschreibung": "Erkannter Fehler",
                 "bearbeiter": 1,
@@ -73,10 +74,47 @@
                 "beschreibung": "Fehler wurde beseitigt",
                 "bearbeiter": 2,
                 "datum": "12.12.2012",
-                "fehlerursachenkategorie": [
-                    2,
-                    3
+                "fehlerursachenkategorie": 3
+            }
+        },
+        "4": {
+            "unique_id": 1118,
+            "type": "behoben",
+            "komponente": 12,
+            "erkannt": {
+                "beschreibung": "Irgendwas klappt nicht",
+                "bearbeiter": 1111,
+                "datum": "12.12.12",
+                "fehlerkategorien": [
+                    "1",
+                    "2",
+                    "3"
                 ]
+            },
+            "beseitigt": {
+                "beschreibung": "Alles klappt jetzt wieder",
+                "bearbeiter": 5,
+                "datum": "24.12.2099",
+                "fehlerursachenkategorie": 1
+            }
+        },
+        "5": {
+            "unique_id": 1119,
+            "type": "erkannt",
+            "komponente": 1,
+            "erkannt": {
+                "beschreibung": "Hier Fehlerbeschreibung eintragen",
+                "bearbeiter": 1,
+                "datum": "Hier das Erfassungs-Datum eintragen",
+                "fehlerkategorien": [
+                    "Hier Fehlerkategorie-Ids mit Kommata getrennt eintragen"
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "null",
+                "bearbeiter": 1,
+                "datum": "null",
+                "fehlerursachenkategorie": "null"
             }
         }
     }

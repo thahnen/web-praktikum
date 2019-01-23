@@ -1,8 +1,8 @@
 'use strict'
 
 import SideBar from "./sideBar.js";
-import ErrorView from "./errorView.js";
-import ProjectView from "./projectView.js";
+import ErrorView, {ErrorErkanntView, ErrorBehobenView, ErrorEditView, ErrorAddView} from "./errorView.js";
+import ProjectView, {ProjectEditView, ProjectAddView} from "./projectView.js";
 import ComponentView from "./componentView.js";
 import WorkerView from "./workerView.js";
 import CategoryView from "./categoryView.js";
@@ -30,97 +30,6 @@ class ErrorsByCategoriesView {
 }
 
 
-// das kann irgendwann weg, muss nur so ungefaehr in die anderen uebernommen werden
-class DetailView {
-    constructor (name, template) {
-        this.elem_name = name;
-        this.template_name = template;
-    }
-
-    render (id) {
-        // Daten anfordern
-        let path = "/app/" + id;
-        let requester = new APPUTIL.Requester();
-
-        console.log("[DetailView] Request /app/");
-        requester.request(path, function (response) {
-            let data = JSON.parse(response);
-            let markup = APPUTIL.templateManager.execute(this.template_name, data);
-            let html_element = document.querySelector(this.elem_name);
-            if (html_element != null) {
-                html_element.innerHTML = markup;
-                let html_element = document.querySelector("form");
-                if (html_element != null) {
-                    html_element.addEventListener("click", this.handleEvent);
-                }
-            }
-        }.bind(this), function (response) {
-            alert("Detail - render failed");
-        });
-    }
-
-    handleEvent (event) {
-        if (event.target.id == "idBack") {
-            APPUTIL.eventService.publish("app.cmd", ["idBack", null]);
-            event.preventDefault();
-        }
-    }
-}
-
-
-// das kann irgendwann weg, muss nur so ungefaehr in die anderen uebernommen werden
-class ListView {
-    constructor (name, template) {
-        this.elem_name = name;
-        this.template_name = template;
-        this.configHandleElement();
-    }
-
-    render () {
-        // Daten anfordern
-        let path = "/app/";
-        let requester = new APPUTIL.Requester();
-
-        console.log("[ListView] Request /app/");
-        requester.request(path, function (response) {
-            let data = JSON.parse(response);
-            let markup = APPUTIL.templateManager.execute(this.template_name, data);
-            let html_element = document.querySelector(this.elem_name);
-            if (html_element != null) {
-                html_element.innerHTML = markup;
-            }
-        }.bind(this), function (response) {
-            alert("List - render failed");
-        });
-    }
-
-    configHandleElement () {
-        let html_element = document.querySelector(this.elem_name);
-        if (html_element != null) {
-            html_element.addEventListener("click", function (event) {
-                if (event.target.tagName.toUpperCase() == "TD") {
-                    let selected_elem = document.querySelector(".clSelected");
-                    if (selected_elem != null) {
-                        selected_elem.classList.remove("clSelected");
-                    }
-
-                    event.target.parentNode.classList.add("clSelected");
-                    event.preventDefault();
-                } else if (event.target.id == "idShowListEntry") {
-                    let selected_elem = document.querySelector(".clSelected");
-                    if (selected_elem == null) {
-                        alert("Bitte zuerst einen Eintrag auswählen!");
-                    } else {
-                        APPUTIL.eventService.publish("app.cmd", ["detail", selected_elem.id] );
-                    }
-
-                    event.preventDefault();
-                }
-            });
-        }
-    }
-}
-
 
 // Hier muss noch dran gearbeitet werden!
 class Application {
@@ -130,13 +39,23 @@ class Application {
         APPUTIL.eventService.subscribe(this, "templates.failed");
         APPUTIL.eventService.subscribe(this, "app.cmd");
         this.sideBar = new SideBar("aside", "sidebar.tpl");
-        //this.listView = new ListView("main", "list.tpl");
-        //this.detailView = new DetailView("main", "detail.tpl");
+
         this.errorView = new ErrorView("main", "overview_errors.tpl");
+        this.errorErkanntView = new ErrorErkanntView();
+        this.errorBehobenView = new ErrorBehobenView();
+        this.errorEditView = new ErrorEditView();
+        this.errorAddView = new ErrorAddView();
+
         this.projectView = new ProjectView("main", "overview_projects.tpl");
+        this.projectEditView = new ProjectEditView();
+        this.projectAddView = new ProjectAddView();
+
         this.componentView = new ComponentView("main", "overview_components.tpl");
+
         this.categoryView = new CategoryView("main", "overview_categories.tpl");
+
         this.workerView = new WorkerView("main", "overview_workersdata.tpl");
+
     }
 
     notify (self, message, data) {
@@ -164,13 +83,13 @@ class Application {
             // Hier dann noch die einzelnen "Kommandos zu verfassen"
             let navigation = [
                 ["home", "Startseite"],
-                ["overview_errors", "Bearbeitung Fehlerdaten"],
-                ["overview_projects", "Pflege Projekte"],
-                ["overview_components", "Pflege Komponenten"],
-                ["overview_workersdata", "Pflege Daten Mitarbeiter"],
-                ["overview_categories", "Pflege Kategorien"],
-                ["evaluation_projects", "Auswertung Projekte/Fehler"],
-                ["evaluation_categories", "Auswertung Kategorien/Fehler"]
+                ["fehler--view", "Bearbeitung Fehlerdaten"],
+                ["projekt--view", "Pflege Projekte"],
+                ["komponente--view", "Pflege Komponenten"],
+                ["arbeiter--view", "Pflege Daten Mitarbeiter"],
+                ["kategorie--view", "Pflege Kategorien"],
+                ["fehler--projekt--evaluation", "Auswertung Projekte/Fehler"],
+                ["fehler--kategorie--evaluation", "Auswertung Kategorien/Fehler"]
             ];
 
             self.sideBar.render(navigation);
@@ -193,35 +112,38 @@ class Application {
                 break;
 
             // Alles was mit den Fehlern zu tun hat!
-            case "overview_errors":
+            case "fehler--view":
+            case "fehler--back":
                 this.errorView.render();
                 break;
             case "fehler--erkannt":
-                alert("'Fehler erkannt'-View noch nicht hinzugefuegt")
+                this.errorErkanntView.render();
                 break;
             case "fehler--behoben":
-                alert("'Fehler behoben'-View noch nicht hinzugefuegt")
+                this.errorBehobenView.render();
                 break;
             case "fehler--edit":
-                alert("'Fehler bearbeiten'-View noch nicht hinzugefuegt")
+                this.errorEditView.render(data[1]);
                 break;
             case "fehler--add":
-                alert("'Fehler hinzufuegen'-View noch nicht hinzugefuegt")
+                this.errorAddView.render();
                 break;
 
             // Alles was mit den Projekten zu tun hat!
-            case "overview_projects":
+            case "projekt--view":
+            case "projekt--back":
                 this.projectView.render();
                 break;
             case "projekt--edit":
-                alert("'Projekt bearbeiten'-View noch nicht hinzugefuegt")
+                this.projectEditView.render(data[1]);
                 break;
             case "projekt--add":
-                alert("'Projekt hinzufuegen'-View noch nicht hinzugefuegt")
+                this.projectAddView.render();
                 break;
 
             // Alles was mit den Komponenten zu tun hat!
-            case "overview_components":
+            case "komponente--view":
+            case "komponente--back":
                 this.componentView.render();
                 break;
             case "komponente--sort":
@@ -235,7 +157,8 @@ class Application {
                 break;
 
             // Alles was mit den Mitarbeitern zu tun hat!
-            case "overview_workersdata":
+            case "arbeiter--view":
+            case "arbeiter--back":
                 this.workerView.render();
                 break;
             case "arbeiter--edit":
@@ -246,7 +169,8 @@ class Application {
                 break;
 
             // Alles was mit den Kategorien zu tun hat!
-            case "overview_categories":
+            case "kategorie--view":
+            case "kategorie--back":
                 this.categoryView.render();
                 break;
             case "kategorie--edit":
@@ -257,25 +181,16 @@ class Application {
                 break;
 
             // Sortierte Fehler nach Projekten
-            case "evaluation_projects":
+            case "fehler--projekt--evaluation":
                 alert("Auswertung Projekte/Fehler noch nicht hinzugefuegt!")
                 break;
 
             // Sortierte Fehler nach Kategorien
-            case "evaluation_categories":
+            case "fehler--kategorie--evaluation":
                 alert("Auswertung Kategorien/Fehler noch nicht hinzugefuegt!")
                 break;
-            case "list":
-                // Daten anfordern und darstellen
-                this.listView.render();
-                break;
-            case "detail":
-                this.detailView.render(data[1]);
-                break;
-            case "idBack": // hier aus einem der Detail-Views, so auch fuer alle Details bei mir machen!
-                APPUTIL.eventService.publish("app.cmd", ["list", null]);
-                break;
             }
+
             break;
         }
     }

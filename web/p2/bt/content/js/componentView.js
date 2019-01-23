@@ -53,23 +53,23 @@ export default class {
                     this.ausgewaehle_tabellenzeile = x;
                     x.style.setProperty("background-color", "lightblue");
                 }.bind(this)); // -> muss, da sonst mit "this" das falsche gemeint ist!
+            });
 
-                document.getElementById("btn--komponente--sort").addEventListener("click", function() {
-                    APPUTIL.eventService.publish("app.cmd", ["komponente--sort", null]);
-                });
+            document.getElementById("btn--komponente--sort").addEventListener("click", function() {
+                APPUTIL.eventService.publish("app.cmd", ["komponente--sort", null]);
+            });
 
-                document.getElementById("btn--komponente--edit").addEventListener("click", function() {
-                    if (this.ausgewaehle_tabellenzeile != null) {
-                        let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
-                        APPUTIL.eventService.publish("app.cmd", ["komponente--edit", id]);
-                    } else {
-                        alert("Keine Komponente ausgewaehlt!")
-                    }
-                }.bind(this));
+            document.getElementById("btn--komponente--edit").addEventListener("click", function() {
+                if (this.ausgewaehle_tabellenzeile != null) {
+                    let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
+                    APPUTIL.eventService.publish("app.cmd", ["komponente--edit", id]);
+                } else {
+                    alert("Keine Komponente ausgewaehlt!")
+                }
+            }.bind(this));
 
-                document.getElementById("btn--komponente--add").addEventListener("click", function() {
-                    APPUTIL.eventService.publish("app.cmd", ["komponente--add", null]);
-                });
+            document.getElementById("btn--komponente--add").addEventListener("click", function() {
+                APPUTIL.eventService.publish("app.cmd", ["komponente--add", null]);
             });
         }.bind(this), function (response) {
             alert("[ComponentView] render->failed");
@@ -80,12 +80,16 @@ export default class {
 // Übersicht für QSM (Knöpfe: KEINE)
 export class ComponentQSMView {
     constructor () {
+        this.name = "main";
+        this.template = "component.view-qsm.tpl";
     }
 }
 
 // Übersicht für SWE (Knöpfe: Bearbeiten + Hinzufügen)
 export class ComponentSWEView {
-    constructor() {
+    constructor () {
+        this.name = "main";
+        this.template = "component.view-swe.tpl";
     }
 }
 
