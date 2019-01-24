@@ -28,6 +28,8 @@ class ProList(object):
         #   "1...n" : "Fehler"-Objekt
         # }
 
+        # REVIEW: Funktioniert mit Curl ohne Probleme! Nur Online: fetch sortiert selbst!
+
         code, data = self.application.get_values("fehler.json", None)
         if code != 200:
             cherrypy.response.status = code
@@ -35,12 +37,12 @@ class ProList(object):
 
         try:
             # Fehler nach:
-            # 1) Fehlerkategorien (eine Liste)
+            # 1) Projekt-Komponente (eine Zahk)
             # 2) Status (erkannt oder behoben)
             # sortieren
             data = {int(k):v for k,v in data.items()}
             return dict(sorted(
-                data.items(), key=lambda kv: (kv[1]["erkannt"]["fehlerkategorien"], kv[1]["type"])
+                data.items(), key=lambda kv: (int(kv[1]["komponente"]), kv[1]["type"])
             ))
         except Exception as e:
             print(e)

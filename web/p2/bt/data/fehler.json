@@ -19,8 +19,8 @@
     "Elements": {
         "1": {
             "unique_id": 1,
-            "type": "behoben",
-            "komponente": 12,
+            "type": "erkannt",
+            "komponente": 1,
             "erkannt": {
                 "beschreibung": "Irgendeine Beschreibung",
                 "bearbeiter": 1,
@@ -31,150 +31,68 @@
                 ]
             },
             "beseitigt": {
-                "beschreibung": "War ein lamer Fehler",
-                "bearbeiter": 12,
-                "datum": "23.01.2019",
-                "fehlerursachenkategorie": 3
+                "beschreibung": "null",
+                "bearbeiter": 1,
+                "datum": "null",
+                "fehlerursachenkategorie": 0
             }
         },
         "2": {
-            "unique_id": 1110,
+            "unique_id": 2,
             "type": "behoben",
             "komponente": 1,
             "erkannt": {
-                "beschreibung": "Erkannter Fehler",
-                "bearbeiter": 1,
-                "datum": "01.01.2001",
+                "beschreibung": "ABCDEF",
+                "bearbeiter": 2,
+                "datum": "01.01.01",
                 "fehlerkategorien": [
-                    1,
-                    2
+                    3
                 ]
             },
             "beseitigt": {
-                "beschreibung": "Fehler wurde beseitigt",
+                "beschreibung": "Fehler halt",
                 "bearbeiter": 2,
-                "datum": "12.12.2012",
-                "fehlerursachenkategorie": 2
-            }
-        },
-        "3": {
-            "unique_id": 1117,
-            "type": "behoben",
-            "komponente": 2,
-            "erkannt": {
-                "beschreibung": "Erkannter Fehler",
-                "bearbeiter": 1,
-                "datum": "01.01.2001",
-                "fehlerkategorien": [
-                    1,
-                    2
-                ]
-            },
-            "beseitigt": {
-                "beschreibung": "Fehler wurde beseitigt",
-                "bearbeiter": 2,
-                "datum": "12.12.2012",
+                "datum": "Heute",
                 "fehlerursachenkategorie": 3
             }
         },
-        "4": {
-            "unique_id": 1118,
-            "type": "behoben",
-            "komponente": 12,
+        "3": {
+            "unique_id": 3,
+            "type": "erkannt",
+            "komponente": 3,
             "erkannt": {
-                "beschreibung": "Irgendwas klappt nicht",
-                "bearbeiter": 1111,
-                "datum": "12.12.12",
+                "beschreibung": "Lol",
+                "bearbeiter": 1,
+                "datum": "01.01.01",
                 "fehlerkategorien": [
-                    1,
                     2,
                     3
                 ]
             },
             "beseitigt": {
-                "beschreibung": "Alles klappt jetzt wieder",
-                "bearbeiter": 5,
-                "datum": "24.12.2099",
-                "fehlerursachenkategorie": 1
+                "beschreibung": "null",
+                "bearbeiter": 3,
+                "datum": "null",
+                "fehlerursachenkategorie": 0
             }
         },
-        "5": {
-            "unique_id": 1119,
-            "type": "behoben",
-            "komponente": 1,
+        "4": {
+            "unique_id": 1187,
+            "type": "erkannt",
+            "komponente": 3,
             "erkannt": {
                 "beschreibung": "Hier Fehlerbeschreibung eintragen",
                 "bearbeiter": 1,
-                "datum": "Hier das Erfassungs-Datum eintragen",
+                "datum": "11.07.1998",
                 "fehlerkategorien": [
-                    2
-                ]
-            },
-            "beseitigt": {
-                "beschreibung": "Fehlerbeseitigungsbeschreibung",
-                "bearbeiter": 1,
-                "datum": "Heute oder so",
-                "fehlerursachenkategorie": 15
-            }
-        },
-        "6": {
-            "unique_id": 1122,
-            "type": "erkannt",
-            "komponente": 4,
-            "erkannt": {
-                "beschreibung": "Neuer Fehler aus QSM",
-                "bearbeiter": 2,
-                "datum": "Heute",
-                "fehlerkategorien": [
-                    1,
-                    2,
-                    3,
-                    4
+                    "1"
                 ]
             },
             "beseitigt": {
                 "beschreibung": "null",
-                "bearbeiter": 4,
+                "bearbeiter": 3,
                 "datum": "null",
-                "fehlerursachenkategorie": "null"
-            }
-        },
-        "7": {
-            "unique_id": 1135,
-            "type": "behoben",
-            "erkannt": {
-                "beschreibung": "Erkannter Fehler",
-                "bearbeiter": 1,
-                "datum": "01.01.2001",
-                "fehlerkategorien": [
-                    1,
-                    2
-                ]
-            },
-            "beseitigt": {
-                "beschreibung": "Fehler wurde beseitigt",
-                "bearbeiter": 2,
-                "datum": "12.12.2012",
-                "fehlerursachenkategorie": 2
-            }
-        },
-        "8": {
-            "unique_id": 1142,
-            "type": "behoben",
-            "erkannt": {
-                "beschreibung": "Erkannter Fehler",
-                "bearbeiter": 1,
-                "datum": "01.01.2001",
-                "fehlerkategorien": [
-                    1,
-                    2
-                ]
-            },
-            "beseitigt": {
-                "beschreibung": "Fehler wurde beseitigt",
-                "bearbeiter": 2,
-                "datum": "12.12.2012",
-                "fehlerursachenkategorie": 2
+                "fehlerursachenkategorie": 0
             }
         }
     }

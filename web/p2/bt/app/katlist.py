@@ -28,6 +28,8 @@ class KatList(object):
         #   "1...n" : "Fehler"-Objekt
         # }
 
+        # REVIEW: Funktioniert mit Curl ohne Probleme! Nur Online: fetch sortiert selbst!
+
         code, data = self.application.get_values("fehler.json", None)
         if code != 200:
             cherrypy.response.status = code
@@ -35,13 +37,12 @@ class KatList(object):
 
         try:
             # Fehler nach:
-            # 1) Projekt-Id (eine Zahl)
-            # 2) Komponente (eine Zahl)
+            # 1) Kategorie (Liste von Zahlen) -> hier einfach nur das erste Element!
             # 3) Status (erkannt oder behoben)
             # sortieren
             data = {int(k):v for k,v in data.items()}
             return dict(sorted(
-                data.items(), key=lambda kv: (kv[1]["unique_id"], kv[1]["type"])
+                data.items(), key=lambda kv: (int(kv[1]["erkannt"]["fehlerkategorien"][0]), kv[1]["type"])
             ))
         except Exception as e:
             print(e)

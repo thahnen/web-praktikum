@@ -21,5 +21,5 @@
     @endfor@
     </table>
 
-    <button id="btn--komponente--sort">Nach Projekten sortiert</button>
+    <!--<button id="btn--komponente--sort">Nach Projekten sortiert</button>-->
 </div>

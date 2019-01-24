@@ -110,6 +110,9 @@ class Komponente(object):
             cherrypy.response.status = 400
             return
 
+        # Gibt eine elegantere Lösung!
+        input_json["fehler"] = []
+
         code, data = self.application.get_values("projekte.json", projekt_id)
         cherrypy.response.status = code
         if code != 200:

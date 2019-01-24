@@ -10,7 +10,7 @@
             <input id="unique_id" type="number" value="1234567890" disabled>
         </li>
             <p>Komponenten</p>
-            <input id="komponenten" type="text" value="Hier Komponenten mit Kommata getrennt eintragen">
+            <input id="komponenten" type="text" value="Leer lassen!">
         </li>
     </ul>
     <button id="btn--projekt--back">Zurück</button>

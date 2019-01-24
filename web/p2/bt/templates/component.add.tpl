@@ -14,7 +14,7 @@
             <input id="unique_id" type="number" value="1234567890" disabled>
         </li>
             <p>Fehler</p>
-            <input id="fehler" type="text" value="Hier Fehler mit Kommata getrennt eintragen">
+            <input id="fehler" type="text" value="Leer lassen!">
         </li>
     </ul>
     <button id="btn--komponente--back">Zurück</button>

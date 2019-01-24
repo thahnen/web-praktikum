@@ -15,10 +15,6 @@
         "3": {
             "unique_id": 3,
             "beschreibung": "Serverinterner Fehler"
-        },
-        "4": {
-            "unique_id": 1127,
-            "beschreibung": "Dummer Zufall"
         }
     }
 }

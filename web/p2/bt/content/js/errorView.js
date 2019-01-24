@@ -242,6 +242,7 @@ export class ErrorEditView {
                 let erkannt_bearbeiter = parseInt(document.getElementById("erkannt.bearbeiter").value);
                 let erkannt_datum = document.getElementById("erkannt.datum").value;
                 let erkannt_fehlerkategorien = document.getElementById("erkannt.fehlerkategorien").value.split(",");
+                erkannt_fehlerkategorien.map((x) => parseInt(x));
                 let beseitigt_beschreibung = document.getElementById("beseitigt.beschreibung").value;
                 let beseitigt_bearbeiter = parseInt(document.getElementById("beseitigt.bearbeiter").value);
                 let beseitigt_datum = document.getElementById("beseitigt.datum").value;
@@ -315,6 +316,7 @@ export class ErrorAddView {
             let erkannt_bearbeiter = parseInt(document.getElementById("erkannt.bearbeiter").value);
             let erkannt_datum = document.getElementById("erkannt.datum").value;
             let erkannt_fehlerkategorien = document.getElementById("erkannt.fehlerkategorien").value.split(",");
+            erkannt_fehlerkategorien.map((x) => parseInt(x));
             let beseitigt_bearbeiter = parseInt(document.getElementById("beseitigt.bearbeiter").value);
 
             let post_data = {
@@ -331,7 +333,7 @@ export class ErrorAddView {
                     "beschreibung" : "null",
                     "bearbeiter" : beseitigt_bearbeiter,
                     "datum" : "null",
-                    "fehlerursachenkategorie" : "null"
+                    "fehlerursachenkategorie" : 0
                 }
             };
 

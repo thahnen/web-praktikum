@@ -620,6 +620,7 @@ FEHLER_POST() {
 {
 	"unique_id" : 12345,
 	"type" : "erkannt",
+	"komponente" : 1,
 	"erkannt" : {
 		"beschreibung" : "Erkannter Fehler",
 		"bearbeiter" : 1,
@@ -655,6 +656,7 @@ FEHLER_PUT() {
 {
     "unique_id" : $FEHLER_ID,
 	"type" : "behoben",
+	"komponente" : 1,
 	"erkannt" : {
 		"beschreibung" : "Erkannter Fehler",
 		"bearbeiter" : 1,
@@ -704,8 +706,8 @@ printf "==================\n"
 printf "\nGET http://127.0.0.1:8080/prolist:\n"
 printf "HTTP-Rueckgabe-Code: "
 echo $(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/prolist)
-#printf "Zurueckgegebene JSON-Daten: "
-#curl -s http://127.0.0.1:8080/prolist
+printf "\nZurueckgegebene JSON-Daten: "
+curl -s http://127.0.0.1:8080/prolist
 
 
 printf "\n\n${RED}================================================================================\n\n"
@@ -732,8 +734,8 @@ printf "==================\n"
 printf "\nGET http://127.0.0.1:8080/katlist:\n"
 printf "HTTP-Rueckgabe-Code: "
 echo $(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/katlist)
-#printf "Zurueckgegebene JSON-Daten: "
-#curl -s http://127.0.0.1:8080/katlist
+printf "\nZurueckgegebene JSON-Daten: "
+curl -s http://127.0.0.1:8080/katlist
 
 
 printf "\n\n${RED}================================================================================\n\n"
@@ -760,5 +762,5 @@ printf "==================\n"
 printf "\nGET http://127.0.0.1:8080/templates:\n"
 printf "HTTP-Rueckgabe-Code: "
 echo $(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/templates)
-#printf "Zurueckgegebene JSON-Daten: "
+#printf "\nZurueckgegebene JSON-Daten: "
 #curl -s http://127.0.0.1:8080/templates

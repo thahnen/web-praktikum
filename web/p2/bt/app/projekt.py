@@ -66,6 +66,9 @@ class Projekt(object):
             cherrypy.response.status = 400
             return
 
+        # Gibt eine elegantere Lösung!
+        input_json["komponenten"] = []
+
         code, data = self.application.add_values("projekte.json", input_json)
         cherrypy.response.status = code
 
@@ -102,5 +105,5 @@ class Projekt(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
-            # -> Eigentlich nichts, Komponenten können ohne Projekte bestehen?
+            # -> Löschen der Komponenten -> Fehler
             pass

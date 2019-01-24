@@ -1,5 +1,6 @@
 <div class="overview_errors">
-    <h2>Liste aller Fehler nach Projekt sortiert:</h2>
+    <h2>Liste aller Fehler nach Projekt-Komponente sortiert:</h2>
+    <h3>Sieht man nur mit Curl, fetch sortiert selbst noch einmal!</h3>
     <table>
         <tr>
             <th>Eindeutige Id</th>

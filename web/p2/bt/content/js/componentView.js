@@ -93,9 +93,11 @@ export class ComponentSWEView {
                 }.bind(this)); // -> muss, da sonst mit "this" das falsche gemeint ist!
             });
 
+            /*
             document.getElementById("btn--komponente--sort").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["komponente--sort", null]);
             });
+            */
 
             document.getElementById("btn--komponente--edit").addEventListener("click", function() {
                 if (this.ausgewaehle_tabellenzeile != null) {

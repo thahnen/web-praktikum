@@ -8,36 +8,19 @@
             "unique_id": 1,
             "komponenten": [
                 1,
-                2,
-                1103,
-                1105,
-                1112,
-                1121,
-                1125,
-                1130,
-                1137
+                2
             ]
         },
         "2": {
             "unique_id": 2,
             "komponenten": [
-                3
+                3,
+                4
             ]
         },
         "3": {
             "unique_id": 3,
-            "komponenten": [
-                4,
-                5
-            ]
-        },
-        "4": {
-            "unique_id": 1120,
-            "komponenten": [
-                "4",
-                "3",
-                "2"
-            ]
+            "komponenten": []
         }
     }
 }
