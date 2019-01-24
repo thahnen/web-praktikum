@@ -26,8 +26,8 @@
                 "bearbeiter": 1,
                 "datum": "01.01.01",
                 "fehlerkategorien": [
-                    "1",
-                    "2"
+                    1,
+                    2
                 ]
             },
             "beseitigt": {
@@ -40,7 +40,7 @@
         "2": {
             "unique_id": 1110,
             "type": "behoben",
-            "komponente": 12,
+            "komponente": 1,
             "erkannt": {
                 "beschreibung": "Erkannter Fehler",
                 "bearbeiter": 1,
@@ -60,7 +60,7 @@
         "3": {
             "unique_id": 1117,
             "type": "behoben",
-            "komponente": 12,
+            "komponente": 2,
             "erkannt": {
                 "beschreibung": "Erkannter Fehler",
                 "bearbeiter": 1,
@@ -86,9 +86,9 @@
                 "bearbeiter": 1111,
                 "datum": "12.12.12",
                 "fehlerkategorien": [
-                    "1",
-                    "2",
-                    "3"
+                    1,
+                    2,
+                    3
                 ]
             },
             "beseitigt": {
@@ -107,7 +107,7 @@
                 "bearbeiter": 1,
                 "datum": "Hier das Erfassungs-Datum eintragen",
                 "fehlerkategorien": [
-                    "Hier Fehlerkategorie-Ids mit Kommata getrennt eintragen"
+                    2
                 ]
             },
             "beseitigt": {
@@ -126,10 +126,10 @@
                 "bearbeiter": 2,
                 "datum": "Heute",
                 "fehlerkategorien": [
-                    "1",
-                    "2",
-                    "3",
-                    "4"
+                    1,
+                    2,
+                    3,
+                    4
                 ]
             },
             "beseitigt": {
@@ -137,6 +137,44 @@
                 "bearbeiter": 4,
                 "datum": "null",
                 "fehlerursachenkategorie": "null"
+            }
+        },
+        "7": {
+            "unique_id": 1135,
+            "type": "behoben",
+            "erkannt": {
+                "beschreibung": "Erkannter Fehler",
+                "bearbeiter": 1,
+                "datum": "01.01.2001",
+                "fehlerkategorien": [
+                    1,
+                    2
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "Fehler wurde beseitigt",
+                "bearbeiter": 2,
+                "datum": "12.12.2012",
+                "fehlerursachenkategorie": 2
+            }
+        },
+        "8": {
+            "unique_id": 1142,
+            "type": "behoben",
+            "erkannt": {
+                "beschreibung": "Erkannter Fehler",
+                "bearbeiter": 1,
+                "datum": "01.01.2001",
+                "fehlerkategorien": [
+                    1,
+                    2
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "Fehler wurde beseitigt",
+                "bearbeiter": 2,
+                "datum": "12.12.2012",
+                "fehlerursachenkategorie": 2
             }
         }
     }

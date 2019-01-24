@@ -1,22 +1,17 @@
 #!/usr/bin/env bash
 
 
-# TODO: Vielleicht alles noch ein bisschen zusammenfassen? Andere Farben und so!
-
-
 # Test, ob der Server ueberhaupt online ist !
 curl 127.0.0.1:8080 &> /dev/null
 if test $? -ne 0; then
 	echo "Server not up and running on 127.0.0.1:8080 !"
-	echo "Run> cd $HOME/GitHub/web-praktikum/web/p1/"
+	echo "Run> cd $HOME/GitHub/web-praktikum/web/p2/bt/"
 	echo "Run> python3 server.py"
 	exit
 fi
 
 
 RED='\033[0;31m'
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
 NOCOL='\033[0m'
 
 
@@ -56,6 +51,7 @@ EOF
 printf "\nPOST http://127.0.0.1/projekt + Daten\n"
 echo "Uebermittelte Daten: $(PROJEKT_POST)"
 PROJEKT_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(PROJEKT_POST)" 127.0.0.1:8080/projekt | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue Projekt-Id: ${PROJEKT_ID}"
 
 #
@@ -171,6 +167,7 @@ EOF
 printf "\nPOST http://127.0.0.1/komponente/1 + Daten\n"
 echo "Uebermittelte Daten: $(KOMPONENTE_POST)"
 KOMPONENTE_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(KOMPONENTE_POST)" 127.0.0.1:8080/komponente/1 | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue Komponente-Id: ${KOMPONENTE_ID}"
 
 #
@@ -260,6 +257,7 @@ EOF
 printf "\nPOST http://127.0.0.1/qsmitarbeiter + Daten\n"
 echo "Uebermittelte Daten: $(QSMITARBEITER_POST)"
 QSMITARBEITER_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(QSMITARBEITER_POST)" 127.0.0.1:8080/qsmitarbeiter | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue QS-Mitarbeiter-Id: ${QSMITARBEITER_ID}"
 
 #
@@ -350,6 +348,7 @@ EOF
 printf "\nPOST http://127.0.0.1/swentwickler + Daten\n"
 echo "Uebermittelte Daten: $(SWENTWICKLER_POST)"
 SWENTWICKLER_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(SWENTWICKLER_POST)" 127.0.0.1:8080/swentwickler | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue SW-Entwickler-Id: ${SWENTWICKLER_ID}"
 
 #
@@ -438,6 +437,7 @@ EOF
 printf "\nPOST http://127.0.0.1/katfehler + Daten\n"
 echo "Uebermittelte Daten: $(KATFEHLER_POST)"
 KATFEHLER_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(KATFEHLER_POST)" 127.0.0.1:8080/katfehler | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue Katfehler-Id: ${KATFEHLER_ID}"
 
 #
@@ -526,6 +526,7 @@ EOF
 printf "\nPOST http://127.0.0.1/katursache + Daten\n"
 echo "Uebermittelte Daten: $(KATURSACHE_POST)"
 KATURSACHE_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(KATURSACHE_POST)" 127.0.0.1:8080/katursache | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue Katursache-Id: ${KATURSACHE_ID}"
 
 #
@@ -638,6 +639,7 @@ EOF
 printf "\nPOST http://127.0.0.1/fehler + Daten\n"
 echo "Uebermittelte Daten: $(FEHLER_POST)"
 FEHLER_ID=$(curl -s --header "Content-Type: application/json" --request POST --data "$(FEHLER_POST)" 127.0.0.1:8080/fehler | jq ".unique_id")
+echo "HTTP-Rueckgabe-Code (angenommen): 200"
 echo "Neue Fehler-Id: ${FEHLER_ID}"
 
 #

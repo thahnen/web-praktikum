@@ -102,5 +102,6 @@ class SWEntwickler(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
-            # -> Fehler (loeschen) -> Komponenten (entfernen) ->  QS-Mitarbeiter (entfernen)
+            # -> Fehler mit andere Id versehen (irgendwas generelles 99999?)
+            # -> Loeschen eigentlich nicht vorhergesehen, da Login-Daten noetig!
             pass

@@ -102,5 +102,6 @@ class QSMitarbeiter(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
-            # -> Fehler (loeschen) -> Komponenten (entfernen) ->  SW-Entwickler (entfernen)
+            # -> Fehler mit andere Id versehen (irgendwas generelles 99999?)
+            # -> Loeschen eigentlich nicht vorhergesehen, da Login-Daten noetig!
             pass

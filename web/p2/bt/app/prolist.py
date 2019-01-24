@@ -38,8 +38,10 @@ class ProList(object):
             # 1) Fehlerkategorien (eine Liste)
             # 2) Status (erkannt oder behoben)
             # sortieren
+            data = {int(k):v for k,v in data.items()}
             return dict(sorted(
-                data, key=lambda elem: (elem["erkannt"]["fehlerkategorien"], elem["status"])
+                data.items(), key=lambda kv: (kv[1]["erkannt"]["fehlerkategorien"], kv[1]["type"])
             ))
         except Exception as e:
+            print(e)
             cherrypy.response.status = 500

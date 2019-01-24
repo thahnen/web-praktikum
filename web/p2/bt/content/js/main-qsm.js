@@ -143,12 +143,12 @@ class Application {
 
             // Sortierte Fehler nach Projekten
             case "fehler--projekt--evaluation":
-                alert("Auswertung Projekte/Fehler noch nicht hinzugefuegt!")
+                this.errorsByProjectView.render();
                 break;
 
             // Sortierte Fehler nach Kategorien
             case "fehler--kategorie--evaluation":
-                alert("Auswertung Kategorien/Fehler noch nicht hinzugefuegt!")
+                this.errorsByCategoryView.render();
                 break;
             }
 

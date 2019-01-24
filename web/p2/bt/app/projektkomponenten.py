@@ -160,5 +160,5 @@ class Komponente(object):
 
         if code == 200:
             # Hier alle anderen Dateien bereinigen!
-            # -> Projekt (entfernen) -> Fehler (loeschen) -> QS-Mitarbeiter / SW-Entwickler (entfernen)
+            # -> Eigentlich nichts, Fehler können ohne Komponenten bestehen?
             pass

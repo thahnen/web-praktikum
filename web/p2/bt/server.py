@@ -10,6 +10,9 @@
 #   - "/eval_login" (Pseudo-Seite)
 #       => Hier werden alle Anmeldedaten überprüft!
 #
+#   - "/eval_logout" (Pseudo-Seite)
+#       => Hier wird jeder Nutzer ausgeloggt!
+#
 #   - "/bt":
 #       => Bug-Tracker-Seite
 #

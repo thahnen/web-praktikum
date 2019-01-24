@@ -36,11 +36,13 @@ class KatList(object):
         try:
             # Fehler nach:
             # 1) Projekt-Id (eine Zahl)
-            # 2) Komponenten (eine Liste)
+            # 2) Komponente (eine Zahl)
             # 3) Status (erkannt oder behoben)
             # sortieren
+            data = {int(k):v for k,v in data.items()}
             return dict(sorted(
-                data, key=lambda elem: (elem["erkannt"]["projekt"], elem["erkannt"]["komponenten"], elem["status"])
+                data.items(), key=lambda kv: (kv[1]["unique_id"], kv[1]["type"])
             ))
         except Exception as e:
+            print(e)
             cherrypy.response.status = 500
