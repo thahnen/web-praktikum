@@ -100,7 +100,7 @@
         },
         "5": {
             "unique_id": 1119,
-            "type": "erkannt",
+            "type": "behoben",
             "komponente": 1,
             "erkannt": {
                 "beschreibung": "Hier Fehlerbeschreibung eintragen",
@@ -111,8 +111,30 @@
                 ]
             },
             "beseitigt": {
-                "beschreibung": "null",
+                "beschreibung": "Fehlerbeseitigungsbeschreibung",
                 "bearbeiter": 1,
+                "datum": "Heute oder so",
+                "fehlerursachenkategorie": 15
+            }
+        },
+        "6": {
+            "unique_id": 1122,
+            "type": "erkannt",
+            "komponente": 4,
+            "erkannt": {
+                "beschreibung": "Neuer Fehler aus QSM",
+                "bearbeiter": 2,
+                "datum": "Heute",
+                "fehlerkategorien": [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "null",
+                "bearbeiter": 4,
                 "datum": "null",
                 "fehlerursachenkategorie": "null"
             }

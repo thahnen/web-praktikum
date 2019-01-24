@@ -663,7 +663,7 @@ FEHLER_PUT() {
 		"beschreibung" : "Fehler wurde beseitigt",
 		"bearbeiter" : 2,
 		"datum" : "12.12.2012",
-		"fehlerursachenkategorie" : [2, 3]
+		"fehlerursachenkategorie" : 2
 	}
 }
 EOF

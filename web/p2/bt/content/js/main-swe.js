@@ -1,61 +1,49 @@
 'use strict'
 
-import SideBar from "./sideBar.js";
-import ErrorView, {ErrorErkanntView, ErrorBehobenView, ErrorEditView, ErrorAddView} from "./errorView.js";
-import ProjectView, {ProjectEditView, ProjectAddView} from "./projectView.js";
-import ComponentView from "./componentView.js";
-import WorkerView from "./workerView.js";
-import CategoryView from "./categoryView.js";
+/*
+    ANGEPASSTE VERSION FUER DIE SW-ENTWICKLER!
+*/
+
+import SideBarView from "./sideBar.js";
+import {ErrorSWEView, ErrorErkanntView, ErrorBehobenView, ErrorEditView} from "./errorView.js";
+import {ProjectSWEView, ProjectEditView, ProjectAddView} from "./projectView.js";
+import {ComponentSWEView, ComponentProjectView, ComponentEditView, ComponentAddView} from "./componentView.js";
+import {SWEView} from "./workerView.js";
+import {KatUrsacheView, KatUrsacheEditView, KatUrsacheAddView} from "./categoryView.js";
+import ErrorsByProjectView from "./errorsByProject.js";
+import ErrorsByCategoryView from "./errorsByCategory.js"
 
 
-// Uebersicht aller Fehler nach Projekten sortiert (bei QSM/SWE gleich!)
-class ErrorsByProjectsView {
-    constructor (name, template) {
-        this.name = name;
-        this.template = template;
-
-        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
-    }
-}
-
-
-// Uebersicht aller Fehler nach Kategorien (bei QSM/SWE gleich!)
-class ErrorsByCategoriesView {
-    constructor (name, template) {
-        this.name = name;
-        this.template = template;
-
-        // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
-    }
-}
-
-
-
-// Hier muss noch dran gearbeitet werden!
 class Application {
     constructor () {
         // Registrieren zum Empfang von Nachrichten
         APPUTIL.eventService.subscribe(this, "templates.loaded");
         APPUTIL.eventService.subscribe(this, "templates.failed");
         APPUTIL.eventService.subscribe(this, "app.cmd");
-        this.sideBar = new SideBar("aside", "sidebar.tpl");
+        this.sideBarView = new SideBarView("aside", "sidebar.tpl");
 
-        this.errorView = new ErrorView("main", "overview_errors.tpl");
+        this.errorSWEView = new ErrorSWEView();
         this.errorErkanntView = new ErrorErkanntView();
         this.errorBehobenView = new ErrorBehobenView();
         this.errorEditView = new ErrorEditView();
-        this.errorAddView = new ErrorAddView();
 
-        this.projectView = new ProjectView("main", "overview_projects.tpl");
+        this.projectSWEView = new ProjectSWEView();
         this.projectEditView = new ProjectEditView();
         this.projectAddView = new ProjectAddView();
 
-        this.componentView = new ComponentView("main", "overview_components.tpl");
+        this.componentSWEView = new ComponentSWEView();
+        this.componentProjectView = new ComponentProjectView();
+        this.componentEditView = new ComponentEditView();
+        this.componentAddView = new ComponentAddView();
 
-        this.categoryView = new CategoryView("main", "overview_categories.tpl");
+        this.sweView = new SWEView();
 
-        this.workerView = new WorkerView("main", "overview_workersdata.tpl");
+        this.katUrsacheView = new KatUrsacheView();
+        this.katUrsacheEditView = new KatUrsacheEditView();
+        this.katUrsacheAddView = new KatUrsacheAddView();
 
+        this.errorsByProjectView = new ErrorsByProjectView();
+        this.errorsByCategoryView = new ErrorsByCategoryView();
     }
 
     notify (self, message, data) {
@@ -86,13 +74,13 @@ class Application {
                 ["fehler--view", "Bearbeitung Fehlerdaten"],
                 ["projekt--view", "Pflege Projekte"],
                 ["komponente--view", "Pflege Komponenten"],
-                ["arbeiter--view", "Pflege Daten Mitarbeiter"],
-                ["kategorie--view", "Pflege Kategorien"],
+                ["swentwickler--view", "Pflege Daten Mitarbeiter"],
+                ["katursache--view", "Pflege Kategorien"],
                 ["fehler--projekt--evaluation", "Auswertung Projekte/Fehler"],
                 ["fehler--kategorie--evaluation", "Auswertung Kategorien/Fehler"]
             ];
 
-            self.sideBar.render(navigation);
+            self.sideBarView.render(navigation);
             markup = APPUTIL.templateManager.execute("home.tpl", null);
             html_element = document.querySelector("main");
 
@@ -114,7 +102,7 @@ class Application {
             // Alles was mit den Fehlern zu tun hat!
             case "fehler--view":
             case "fehler--back":
-                this.errorView.render();
+                this.errorSWEView.render();
                 break;
             case "fehler--erkannt":
                 this.errorErkanntView.render();
@@ -125,14 +113,11 @@ class Application {
             case "fehler--edit":
                 this.errorEditView.render(data[1]);
                 break;
-            case "fehler--add":
-                this.errorAddView.render();
-                break;
 
             // Alles was mit den Projekten zu tun hat!
             case "projekt--view":
             case "projekt--back":
-                this.projectView.render();
+                this.projectSWEView.render();
                 break;
             case "projekt--edit":
                 this.projectEditView.render(data[1]);
@@ -144,40 +129,33 @@ class Application {
             // Alles was mit den Komponenten zu tun hat!
             case "komponente--view":
             case "komponente--back":
-                this.componentView.render();
+                this.componentSWEView.render();
                 break;
             case "komponente--sort":
                 alert("'Komponente sortiert nach Projekt-Id'-View noch nicht hinzugefuegt")
                 break;
             case "komponente--edit":
-                alert("'Komponente bearbeiten'-View noch nicht hinzugefuegt")
+                this.componentEditView.render(data[1]);
                 break;
             case "komponente--add":
-                alert("'Komponente hinzufuegen'-View noch nicht hinzugefuegt")
+                this.componentAddView.render();
                 break;
 
-            // Alles was mit den Mitarbeitern zu tun hat!
-            case "arbeiter--view":
-            case "arbeiter--back":
-                this.workerView.render();
-                break;
-            case "arbeiter--edit":
-                alert("'Arbeiter bearbeiten'-View noch nicht hinzugefuegt")
-                break;
-            case "arbeiter--add":
-                alert("'Arbeiter hinzufuegen'-View noch nicht hinzugefuegt")
+            // Alles was mit den SW-Entwicklern zu tun hat!
+            case "swentwickler--view":
+                this.sweView.render();
                 break;
 
             // Alles was mit den Kategorien zu tun hat!
-            case "kategorie--view":
-            case "kategorie--back":
-                this.categoryView.render();
+            case "katursache--view":
+            case "katursache--back":
+                this.katUrsacheView.render();
                 break;
-            case "kategorie--edit":
-                alert("'Kategorie bearbeiten'-View noch nicht hinzugefuegt")
+            case "katursache--edit":
+                this.katUrsacheEditView.render(data[1]);
                 break;
-            case "kategorie--add":
-                alert("'Kategorie hinzufuegen'-View noch nicht hinzugefuegt")
+            case "katursache--add":
+                this.katUrsacheAddView.render();
                 break;
 
             // Sortierte Fehler nach Projekten

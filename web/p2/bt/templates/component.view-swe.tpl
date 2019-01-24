@@ -24,4 +24,5 @@
     <button id="btn--komponente--sort">Nach Projekten sortiert</button>
     <button id="btn--komponente--edit">Markierte Komponente bearbeiten</button>
     <button id="btn--komponente--add">Neue Komponente hinzufuegen</button>
+    <button id="btn--komponente--delete">Markierte Komponente loeschen</button>
 </div>

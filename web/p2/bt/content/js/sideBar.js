@@ -1,6 +1,6 @@
 'use strict';
 
-// REVIEW: Eigentlich soweit fertig!
+// REVIEW: Fertig!
 
 export default class {
     constructor (name, template) {

@@ -53,6 +53,15 @@ class WebServer(object):
         return self.application.get_static_page("404")
 
 
+    # Nur POST-Verarbeitung der Benutzereingaben
+    @cherrypy.expose
+    def eval_logout(self):
+        if cherrypy.request.method == "POST":
+            self.application.setCookies(False)
+            return self.application.get_static_page("backward")
+        return self.application.get_static_page("404")
+
+
     # Bug-Tracker-Anwendungs-Seite des Webservers
     @cherrypy.expose
     def bt(self):
@@ -62,12 +71,9 @@ class WebServer(object):
             code, user_type, password_hash = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
             if code == 200:
                 # Noch testen, ob es ein QS-Mitarbeiter oder SW-Entwickler ist!
-                """
-                if user_type == "SWE":
-                    return self.application.get_static_page("bt-swe")
-                return self.application.get_static_page("bt-qsm")
-                """
-                return self.application.get_static_page("bt")
+                if user_type == "QSM":
+                    return self.application.get_static_page("bt-qsm")
+                return self.application.get_static_page("bt-swe")
 
         self.application.setCookies(False)
         return self.application.get_static_page("backward")
