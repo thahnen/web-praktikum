@@ -41,12 +41,12 @@ import json
 
 
 class Database(object):
-    def __init__(self, data_path):
-        self.data_path = data_path
+    def __init__(self, data_path :str):
+        self.data_path :str = data_path
 
 
     # validate_integrity() throws Exception
-    def validate_integrity(self, file_path):
+    def validate_integrity(self, file_path :str):
         assert (os.path.exists(file_path) and not os.path.isdir(file_path))
         data = json.load(open(file_path))
 
@@ -57,13 +57,13 @@ class Database(object):
 
 
     # read_json_into_dict() throws Exception
-    def read_json_into_dict(self, filename):
-        file_path = self.data_path + filename
+    def read_json_into_dict(self, filename :str):
+        file_path :str = self.data_path + filename
         return self.validate_integrity(file_path)
 
 
     # add_json_into_file(...) throws Exception
-    def add_json_into_file(self, filename, add_dict):
+    def add_json_into_file(self, filename :str, add_dict):
         # Dictionary add_dict hat folgenden Aufbau:
         #
         # {
@@ -71,14 +71,14 @@ class Database(object):
         #   "..." : ...;
         # }
 
-        file_path = filename[0].lower() + filename[1::]
+        file_path :str = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
         json_data = self.validate_integrity(file_path)
 
         # "Generierte" neue unique_id bekommen
         add_dict["unique_id"] = self.get_new_unique_id()
 
-        index = 0
+        index :int = 0
         for elem in json_data["Elements"]:
             if int(elem) > int(index):
                 index = int(elem)
@@ -91,7 +91,7 @@ class Database(object):
 
 
     # update_json_into_file(...) throws Exception
-    def update_json_into_file(self, filename, update_dict):
+    def update_json_into_file(self, filename :str, update_dict):
         # Dictionary json_dict hat folgenden Aufbau:
         #
         # {
@@ -100,30 +100,30 @@ class Database(object):
         # }
         #
 
-        file_path = filename[0].lower() + filename[1::]
+        file_path :str = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
         json_data = self.validate_integrity(file_path)
 
-        found = False
+        found :bool = False
         for elem in json_data["Elements"]:
             if int(json_data["Elements"][elem]["unique_id"]) == int(update_dict["unique_id"]):
                 found = True
                 json_data["Elements"][elem] = update_dict
                 break
 
-        if not found: raise
+        if not found: raise Exception
 
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
 
 
     # remove_json_from_file(...) throws Exception
-    def remove_json_from_file(self, filename, unique_id):
-        file_path = filename[0].lower() + filename[1::]
+    def remove_json_from_file(self, filename :str, unique_id :int):
+        file_path :str = filename[0].lower() + filename[1::]
         file_path = self.data_path + file_path + ".json"
         json_data = self.validate_integrity(file_path)
 
-        found = False
+        found :bool = False
         old = None
         for elem in json_data["Elements"]:
             if int(json_data["Elements"][elem]["unique_id"]) == int(unique_id):
@@ -132,33 +132,31 @@ class Database(object):
                 del json_data["Elements"][elem]
                 break
 
-        if not found: raise
+        if not found: raise Exception
 
         if filename in ["Kundendaten", "Mitarbeiterdaten"]:
-            project_path = self.data_path + "Projektdaten.json"
+            project_path :str = self.data_path + "Projektdaten.json"
             project_data = self.validate_integrity(project_path)
             unique_id = int(old["unique_id"])
             for pro in project_data["Elements"]:
                 if filename == "Kundendaten":
                     if int(project_data["Elements"][pro]["kunden_id"]) == unique_id:
-                        print("Kunde wird verwendet")
-                        raise
+                        raise Exception
                 elif filename == "Mitarbeiterdaten":
                     if unique_id in project_data["Elements"][pro]["mitarbeiter_ids"]:
-                        print("Mitarbeiter wird verwendet")
-                        raise
+                        raise Exception
 
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)
 
 
     # get_new_unique_id(...) returns int
-    def get_new_unique_id(self):
-        file_path = self.data_path + "unique_id.json"
+    def get_new_unique_id(self) -> int:
+        file_path :str = self.data_path + "unique_id.json"
         json_data = self.validate_integrity(file_path)
 
         json_data["unique_id"] += 1
-        new = int(json_data["unique_id"])
+        new :int = int(json_data["unique_id"])
 
         with open(file_path, "w") as json_out:
             json.dump(json_data, json_out, indent=4)

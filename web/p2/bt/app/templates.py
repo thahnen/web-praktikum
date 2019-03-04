@@ -14,7 +14,7 @@ import cherrypy
 class Templates(object):
     def __init__(self, application):
         self.application = application
-        self.template_path = self.application.server_path + "/templates/"
+        self.template_path :str = self.application.server_path + "/templates/"
 
 
     @cherrypy.tools.json_out()
@@ -36,6 +36,6 @@ class Templates(object):
                 cherrypy.response.status = 204
                 return
             return { "templates" : templates }
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 500
             return

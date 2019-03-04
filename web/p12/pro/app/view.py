@@ -22,18 +22,18 @@ from mako.lookup import TemplateLookup
 
 
 class View(object):
-    def __init__(self, template_path):
-        self.template_path = template_path
+    def __init__(self, template_path :str):
+        self.template_path :str = template_path
 
 
     # render_static_page(...) throws Exception
-    def render_static_page(self, pagename):
+    def render_static_page(self, pagename :str):
         return open(pagename)
 
 
     # render_dynamic_page(...) throws Exception
-    def render_dynamic_page(self, pagename, data):
-        page_template_path = self.template_path + pagename + ".tpl"
+    def render_dynamic_page(self, pagename :str, data) -> str:
+        page_template_path :str = self.template_path + pagename + ".tpl"
         assert (os.path.exists(page_template_path) and not os.path.isdir(page_template_path))
 
         template = TemplateLookup(directories = self.template_path).get_template(pagename + ".tpl")

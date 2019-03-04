@@ -94,6 +94,26 @@
                 "datum": "null",
                 "fehlerursachenkategorie": 0
             }
+        },
+        "5": {
+            "unique_id": 1189,
+            "type": "behoben",
+            "komponente": 1,
+            "erkannt": {
+                "beschreibung": "Irgendeine Beschreibung",
+                "bearbeiter": 1,
+                "datum": "23.01.2019",
+                "fehlerkategorien": [
+                    "1",
+                    "2"
+                ]
+            },
+            "beseitigt": {
+                "beschreibung": "Interner Serverfehler",
+                "bearbeiter": 3,
+                "datum": "24.01.2019",
+                "fehlerursachenkategorie": 3
+            }
         }
     }
 }

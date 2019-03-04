@@ -29,11 +29,11 @@ class WebServer(object):
 
     # Index-Seite des Webservers, um sich zu authentifizieren
     @cherrypy.expose
-    def index(self):
+    def index(self) -> str:
         # Auswertung Cookie falls vorhanden!
         cookie = cherrypy.request.cookie
         if "type" in cookie and "username" in cookie and "password" in cookie:
-            code, user_type, password_hash = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
+            code, _, _ = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
             if code == 200:
                 return self.application.get_static_page("forward")
 
@@ -43,7 +43,7 @@ class WebServer(object):
 
     # Nur POST-Verarbeitung der Benutzereingaben
     @cherrypy.expose
-    def eval_login(self, username=None, password=None):
+    def eval_login(self, username :str = None, password :str = None) -> str:
         if cherrypy.request.method == "POST" and username != None and password != None:
             code, user_type, password_hash = self.application.eval_login(username, password)
             if code == 200:
@@ -52,13 +52,12 @@ class WebServer(object):
 
             self.application.setCookies(False)
             return self.application.get_static_page("backward")
-
         return self.application.get_static_page("404")
 
 
     # Nur POST-Verarbeitung der Benutzereingaben
     @cherrypy.expose
-    def eval_logout(self):
+    def eval_logout(self) -> str:
         if cherrypy.request.method == "POST":
             self.application.setCookies(False)
             return self.application.get_static_page("backward")
@@ -67,11 +66,11 @@ class WebServer(object):
 
     # Bug-Tracker-Anwendungs-Seite des Webservers
     @cherrypy.expose
-    def bt(self):
+    def bt(self) -> str:
         # Auswertung Cookie (muss vorhanden sein)!
         cookie = cherrypy.request.cookie
         if "type" in cookie and "username" in cookie and "password" in cookie:
-            code, user_type, password_hash = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
+            code, user_type, _ = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
             if code == 200:
                 # Noch testen, ob es ein QS-Mitarbeiter oder SW-Entwickler ist!
                 if user_type == "QSM":

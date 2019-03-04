@@ -31,11 +31,11 @@ import cherrypy
 class Fehler(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, fehler_id=None, type=None):
+    def GET(self, fehler_id :int = None, type :str = None):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -45,7 +45,7 @@ class Fehler(object):
         #   ("1...n" : "Fehler"-Objekt) oder "Fehler"-Objekt-Inhalt
         # }
 
-        filename = "fehler.json"
+        filename :str = "fehler.json"
 
         if type == None:
             code, data = self.application.get_values(filename, fehler_id)
@@ -96,7 +96,7 @@ class Fehler(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
@@ -108,16 +108,16 @@ class Fehler(object):
 
 
     @cherrypy.tools.json_in()
-    def PUT(self, fehler_id):
+    def PUT(self, fehler_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
-        code = self.application.update_values("fehler.json", fehler_id, input_json)
+        code :int = self.application.update_values("fehler.json", fehler_id, input_json)
         cherrypy.response.status = code

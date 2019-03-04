@@ -53,50 +53,49 @@
 
 
 import os
-import ast # um Liste als String in Liste zurückzuverwandeln
+import ast
 import cherrypy
 import app
 
 
 class WebServer(object):
     def __init__(self):
-        self.server_path = os.path.dirname(os.path.abspath(__file__))
+        self.server_path :str = os.path.dirname(os.path.abspath(__file__))
         self.application = app.Application(self.server_path)
 
 
     # Index-Seite des Webservers (führt zu allen wichtigen Seiten)
     @cherrypy.expose
-    def index(self):
+    def index(self) -> str:
         return self.application.get_static_page("index")
 
 
     # Seite mit allen Projektdaten
     @cherrypy.expose
-    def projektdaten(self, projekt_id_ODER_neu = None):
+    def projektdaten(self, projekt_id_ODER_neu :str = None) -> str:
         # /projektdaten | /projektdaten/<projekt_id> | /projektdaten/neu
         return self.application.get_dynamic_page("projektdaten", projekt_id_ODER_neu)
 
 
     # Seite mit allen Kundendaten
     @cherrypy.expose
-    def kundendaten(self, kunden_id_ODER_neu = None):
+    def kundendaten(self, kunden_id_ODER_neu :str = None) -> str:
         # /kundendaten | /kundendaten/<kunden_id> | /kundendaten/neu
         return self.application.get_dynamic_page("kundendaten", kunden_id_ODER_neu)
 
 
     # Seite mit allen Mitarbeiterdaten
     @cherrypy.expose
-    def mitarbeiterdaten(self, mitarbeiter_id_ODER_neu = None):
+    def mitarbeiterdaten(self, mitarbeiter_id_ODER_neu :str = None) -> str:
         # /mitarbeiterdaten | /mitarbeiterdaten/<mitarbeiter_id> | /mitarbeiterdaten/neu
         return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Hinzufügen der Projektdaten
     @cherrypy.expose
-    def POST_Projektdaten_Add(self, nummer=None, bezeichnung=None, beschreibung=None,
-                                    bearbeitungszeitraum=None, budget=None,
-                                    kunden_id=None, mitarbeiter_ids=None, **kwargs):
+    def POST_Projektdaten_Add(self, nummer :int = None, bezeichnung :str = None, beschreibung :str = None,
+                                    bearbeitungszeitraum :str = None, budget :float = None,
+                                    kunden_id :int = None, mitarbeiter_ids :str = None, **kwargs) -> str:
 
         if cherrypy.request.method == "POST" and nummer != None and \
                                             bezeichnung != None and beschreibung != None and \
@@ -107,19 +106,22 @@ class WebServer(object):
             # GGf "," am Ende!
             while mitarbeiter_ids[-1::] == ",":
                 mitarbeiter_ids = mitarbeiter_ids[:-1]
+
             try:
                 mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
-            except Exception as e:
+            except Exception:
                 # Annahme dass nur 0-9 + "," vorkommen, geht über Regex aber kb
                 if mitarbeiter_ids[-1::] == "]":
                     mitarbeiter_ids = ast.literal_eval(mitarbeiter_ids)
                 else:
                     mitarbeiter_ids = list(mitarbeiter_ids)
+
             # Alles auf Richtigkeit überprüfen
             for mid in mitarbeiter_ids:
                 try:
+                    # das hier anders loesen!
                     x = int(mid)
-                except Exception as e:
+                except Exception:
                     return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             data = {
@@ -136,17 +138,17 @@ class WebServer(object):
 
             # Überprüfen, ob die kunden_id und alle mitarbeiter_ids überhaupt existieren!
             alle_kunden = self.application.database.read_json_into_dict("kundendaten.json")
-            print(f"\n\n{alle_kunden}\n\n")
             alle_mitarbeiter = self.application.database.read_json_into_dict("mitarbeiterdaten.json")
-            print(f"\n\n{alle_mitarbeiter}\n\n")
-            gefunden_k = False
+            
+            gefunden_k :bool = False
             for elem in alle_kunden["Elements"]:
                 if alle_kunden["Elements"][elem]["unique_id"] == data["kunden_id"]:
                     gefunden_k = True
                     break
+
             if not gefunden_k:
-                print("Kunde nicht gefunden")
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+
             for mid in data["mitarbeiter_ids"]:
                 gefunden_m = False
                 for elem in alle_mitarbeiter["Elements"]:
@@ -154,22 +156,22 @@ class WebServer(object):
                         gefunden_m = True
                         break
                 if not gefunden_m:
-                    print("Mitarbeiter nicht gefunden")
                     return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             # Überprüfen, ob "zuordnung_arbeit" in kwargs (dann wurde letzte Seite aufgerufen)
             if "unique_id" in kwargs and "zuordnung_arbeit" in kwargs:
                 for zu in kwargs["zuordnung_arbeit"]:
                     try:
+                        # das hier anders loesen!
                         x = int(zu)
-                    except Exception as e:
+                    except Exception:
                         return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
                 data["unique_id"] = int(kwargs["unique_id"])
                 data["zuordnung_arbeit"] = kwargs["zuordnung_arbeit"]
 
                 zuordnung_arbeit = {}
-                be = int(bearbeitungszeitraum)
+                be :int = int(bearbeitungszeitraum)
 
                 for i in range(0, len(mitarbeiter_ids)):
                     zeiten = []
@@ -178,28 +180,20 @@ class WebServer(object):
                     zuordnung_arbeit.update({f"{mitarbeiter_ids[i]}" : zeiten})
                 data.update({"zuordnung_arbeit" : zuordnung_arbeit})
 
-                addition = self.application.add_values("Projektdaten", data)
-
+                addition :str = self.application.add_values("Projektdaten", data)
                 if addition == '{"code" : 200}':
-                    # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
                     return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-                # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
-            # Das Template muss noch hinzugefügt werden!
             return self.application.view.render_dynamic_page("zuordnung-arbeit-new", data)
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("projektdaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Projektdaten
     @cherrypy.expose
-    def POST_Projektdaten_Update(self, unique_id=None, nummer=None, bezeichnung=None,
-                                    beschreibung=None, bearbeitungszeitraum=None,
-                                    budget=None, kunden_id=None, mitarbeiter_ids=None, **kwargs):
-
-        #return f"{unique_id}, {nummer}, {bezeichnung}, {beschreibung}, {bearbeitungszeitraum}, {budget}, {kunden_id}, {kwargs}"
+    def POST_Projektdaten_Update(self, unique_id :int = None, nummer :int = None, bezeichnung :str= None,
+                                    beschreibung :str = None, bearbeitungszeitraum :str = None,
+                                    budget :float = None, kunden_id :int = None, mitarbeiter_ids = None, **kwargs) -> str:
 
         if cherrypy.request.method == "POST" and unique_id != None and nummer != None and \
                                             bezeichnung != None and beschreibung != None and \
@@ -210,19 +204,22 @@ class WebServer(object):
             # GGf "," am Ende!
             while mitarbeiter_ids[-1::] == ",":
                 mitarbeiter_ids = mitarbeiter_ids[:-1]
+
             try:
                 mitarbeiter_ids = list(map(lambda x: int(x), mitarbeiter_ids.split(",")))
-            except Exception as e:
+            except Exception:
                 # Annahme dass nur 0-9 + "," vorkommen, geht über Regex aber kb
                 if mitarbeiter_ids[-1::] == "]":
                     mitarbeiter_ids = ast.literal_eval(mitarbeiter_ids)
                 else:
                     mitarbeiter_ids = list(mitarbeiter_ids)
+
             # Alles auf Richtigkeit überprüfen
             for mid in mitarbeiter_ids:
                 try:
+                    # das hier anders loesen!
                     x = int(mid)
-                except Exception as e:
+                except Exception:
                     return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             data = {
@@ -238,17 +235,17 @@ class WebServer(object):
 
             # Überprüfen, ob die kunden_id und alle mitarbeiter_ids überhaupt existieren!
             alle_kunden = self.application.database.read_json_into_dict("kundendaten.json")
-            print(f"\n\n{alle_kunden}\n\n")
             alle_mitarbeiter = self.application.database.read_json_into_dict("mitarbeiterdaten.json")
-            print(f"\n\n{alle_mitarbeiter}\n\n")
-            gefunden_k = False
+            
+            gefunden_k :bool = False
             for elem in alle_kunden["Elements"]:
                 if alle_kunden["Elements"][elem]["unique_id"] == data["kunden_id"]:
                     gefunden_k = True
                     break
+
             if not gefunden_k:
-                print("Kunde nicht gefunden")
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
+            
             for mid in data["mitarbeiter_ids"]:
                 gefunden_m = False
                 for elem in alle_mitarbeiter["Elements"]:
@@ -256,7 +253,6 @@ class WebServer(object):
                         gefunden_m = True
                         break
                 if not gefunden_m:
-                    print("Mitarbeiter nicht gefunden")
                     return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             if type(kwargs["zuordnung_arbeit"]) == str:
@@ -266,13 +262,13 @@ class WebServer(object):
                 zuordnung_arbeit = kwargs["zuordnung_arbeit"]
                 data["zuordnung_arbeit"] = zuordnung_arbeit
             else:
-                print("Zuordnung überprüfen nicht erfolgreich")
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
 
             for zu in zuordnung_arbeit:
                 try:
+                    # das hier anders loesen!
                     x = int(zu)
-                except Exception as e:
+                except Exception:
                     # Die alte Zuordnung ist als Element noch in der Liste
                     del zuordnung_arbeit[zuordnung_arbeit.index(zu)]
                     data["zuordnung_arbeit"] = zuordnung_arbeit
@@ -282,7 +278,7 @@ class WebServer(object):
                 return self.application.view.render_dynamic_page("zuordnung-arbeit-edit", data)
 
             zuordnung_arbeit = {}
-            be = int(bearbeitungszeitraum)
+            be :int = int(bearbeitungszeitraum)
 
             for i in range(0, len(mitarbeiter_ids)):
                 zeiten = []
@@ -291,37 +287,29 @@ class WebServer(object):
                 zuordnung_arbeit.update({f"{mitarbeiter_ids[i]}" : zeiten})
             data.update({"zuordnung_arbeit" : zuordnung_arbeit})
 
-            addition = self.application.update_values("Projektdaten", data)
+            addition :str = self.application.update_values("Projektdaten", data)
 
             if addition == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("projektdaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Löschen der Projektdaten
     @cherrypy.expose
-    def POST_Projektdaten_Delete(self, delete_unique_id=None):
+    def POST_Projektdaten_Delete(self, delete_unique_id :int = None) -> str:
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            deletion = self.application.delete_values("Projektdaten", int(delete_unique_id))
+            deletion :str = self.application.delete_values("Projektdaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur zur /projektdaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("projektdaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Hinzufügen der Kundendaten
     @cherrypy.expose
-    def POST_Kundendaten_Add(self, nummer=None, bezeichnung=None, ansprechpartner=None, ort=None):
+    def POST_Kundendaten_Add(self, nummer :int = None, bezeichnung :str = None, ansprechpartner :str = None, ort :str = None) -> str:
         if cherrypy.request.method == "POST" and nummer != None and \
                                             bezeichnung != None and \
                                             ansprechpartner != None and ort != None:
@@ -333,21 +321,18 @@ class WebServer(object):
                 "ansprechpartner" : ansprechpartner,
                 "ort" : ort
             }
-            addition = self.application.add_values("Kundendaten", data)
+
+            addition :str = self.application.add_values("Kundendaten", data)
             if addition == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("kundendaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Kundendaten
     @cherrypy.expose
-    def POST_Kundendaten_Update(self, unique_id=None, nummer=None, bezeichnung=None,
-                                    ansprechpartner=None, ort=None):
+    def POST_Kundendaten_Update(self, unique_id :int = None, nummer :int = None, bezeichnung :str = None,
+                                    ansprechpartner :str = None, ort :str = None) -> str:
         if cherrypy.request.method == "POST" and unique_id != None and nummer != None and \
                                             bezeichnung != None and \
                                             ansprechpartner != None and ort != None:
@@ -359,35 +344,29 @@ class WebServer(object):
                 "ansprechpartner" : ansprechpartner,
                 "ort" : ort
             }
-            addition = self.application.update_values("Kundendaten", data)
+
+            addition :str = self.application.update_values("Kundendaten", data)
             if addition == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("kundendaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Löschen der Kundendaten
     @cherrypy.expose
-    def POST_Kundendaten_Delete(self, delete_unique_id=None):
+    def POST_Kundendaten_Delete(self, delete_unique_id :int = None) -> str:
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            deletion = self.application.delete_values("Kundendaten", int(delete_unique_id))
+            deletion :str = self.application.delete_values("Kundendaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur zur /kundendaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
         return self.application.get_dynamic_page("kundendaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Hinzufügen der Mitarbeiterdaten
     @cherrypy.expose
-    def POST_Mitarbeiterdaten_Add(self, name=None, vorname=None, funktion=None):
+    def POST_Mitarbeiterdaten_Add(self, name :str = None, vorname :str = None, funktion :str = None) -> str:
         if cherrypy.request.method == "POST" and name != None and \
                                             vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
@@ -397,20 +376,17 @@ class WebServer(object):
                 "vorname" : vorname,
                 "funktion" : funktion
             }
-            addition = self.application.add_values("Mitarbeiterdaten", data)
+
+            addition :str = self.application.add_values("Mitarbeiterdaten", data)
             if addition == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("mitarbeiterdaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Bearbeiten der Mitarbeiterdaten
     @cherrypy.expose
-    def POST_Mitarbeiterdaten_Update(self, unique_id=None, name=None, vorname=None, funktion=None):
+    def POST_Mitarbeiterdaten_Update(self, unique_id :int = None, name :str = None, vorname :str = None, funktion :str = None) -> str:
         if cherrypy.request.method == "POST" and unique_id != None and name != None and \
                                             vorname != None and funktion != None:
             # Hier wie in 1.2 mit der API auswerten
@@ -420,29 +396,23 @@ class WebServer(object):
                 "vorname" : vorname,
                 "funktion" : funktion
             }
-            addition = self.application.update_values("Mitarbeiterdaten", data)
+
+            addition :str = self.application.update_values("Mitarbeiterdaten", data)
             if addition == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur history.back() macht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("mitarbeiterdaten", None)
 
 
-    # REVIEW: FERTIG
     # POST-Aktion zum Löschen der Mitarbeiterdaten
     @cherrypy.expose
-    def POST_Mitarbeiterdaten_Delete(self, delete_unique_id=None):
+    def POST_Mitarbeiterdaten_Delete(self, delete_unique_id :int = None) -> str:
         if cherrypy.request.method == "POST" and delete_unique_id != None:
             # Hier wie in 1.2 mit der API auswerten
-            deletion = self.application.delete_values("Mitarbeiterdaten", int(delete_unique_id))
+            deletion :str = self.application.delete_values("Mitarbeiterdaten", int(delete_unique_id))
             if deletion == '{"code" : 200}':
-                # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":True})
-            # Seite zurückgeben die eigentlich nur zur /mitarbeiterdaten - Seite zurückgeht
             return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-        # Vlt. HTML-(Template)-Seite die auf die Seite zurückleitet
         return self.application.get_dynamic_page("mitarbeiterdaten", None)
 
 

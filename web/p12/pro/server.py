@@ -50,40 +50,40 @@ import app
 
 class WebServer(object):
     def __init__(self):
-        self.server_path = os.path.dirname(os.path.abspath(__file__))
+        self.server_path :str = os.path.dirname(os.path.abspath(__file__))
         self.application = app.Application(self.server_path)
 
 
     # Index-Seite des Webservers (führt zu allen wichtigen Seiten)
     @cherrypy.expose
-    def index(self):
+    def index(self) -> str:
         return self.application.get_static_page("index")
 
 
     # Seite mit allen Projektdaten
     @cherrypy.expose
-    def projektdaten(self, projekt_id_ODER_neu = None):
+    def projektdaten(self, projekt_id_ODER_neu :str = None) -> str:
         # /projektdaten | /projektdaten/<projekt_id> | /projektdaten/neu
         return self.application.get_dynamic_page("projektdaten", projekt_id_ODER_neu)
 
 
     # Seite mit allen Kundendaten
     @cherrypy.expose
-    def kundendaten(self, kunden_id_ODER_neu = None):
+    def kundendaten(self, kunden_id_ODER_neu :str = None) -> str:
         # /kundendaten | /kundendaten/<kunden_id> | /kundendaten/neu
         return self.application.get_dynamic_page("kundendaten", kunden_id_ODER_neu)
 
 
     # Seite mit allen Mitarbeiterdaten
     @cherrypy.expose
-    def mitarbeiterdaten(self, mitarbeiter_id_ODER_neu = None):
+    def mitarbeiterdaten(self, mitarbeiter_id_ODER_neu :str = None) -> str:
         # /mitarbeiterdaten | /mitarbeiterdaten/<mitarbeiter_id> | /mitarbeiterdaten/neu
         return self.application.get_dynamic_page("mitarbeiterdaten", mitarbeiter_id_ODER_neu)
 
 
     # Seite mit sortierter Übersicht über alle Projekte und deren Mitarbeiter
     @cherrypy.expose
-    def auswertung(self):
+    def auswertung(self) -> str:
         # /auswertung
         return self.application.get_sorted_evaluation()
 
@@ -91,7 +91,7 @@ class WebServer(object):
     # API für alle Funktionen
     @cherrypy.expose
     @cherrypy.tools.json_in()
-    def api(self, function=None):
+    def api(self, function :str = None) -> str:
         # Erhaltene Daten (input_json) nach der Form:
         # {
         #   "link" : "<Kundendaten/Mitarbeiterdaten/Projektdaten>",
@@ -119,7 +119,7 @@ class WebServer(object):
                 input_json["token"] == "d1e11080c2e0f77d9f0d98bed3d0c8ab5d0cf62024fba955e1d33f32f14437ad"
             )
 
-            page = input_json["link"]
+            page :str = input_json["link"]
 
             if function == "get":
                 return self.application.get_values(page)
@@ -130,9 +130,8 @@ class WebServer(object):
             elif function == "delete":
                 return self.application.delete_values(page, input_json["data"])
             else:
-                print("Wrong API-Call")
                 return '{"code" : 500}'
-        except Exception as e:
+        except Exception:
             # War ein GET :(
             return self.application.get_static_page("404")
 

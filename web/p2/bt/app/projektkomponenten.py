@@ -31,11 +31,11 @@ import cherrypy
 class Projektkomponenten(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, projekt_id):
+    def GET(self, projekt_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -48,7 +48,7 @@ class Projektkomponenten(object):
         if projekt_id != None:
             try:
                 projekt_id = int(projekt_id)
-            except Exception as e:
+            except Exception:
                 cherrypy.response.status = 400
                 return
 
@@ -71,11 +71,11 @@ class Projektkomponenten(object):
 class Komponente(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, komponente_id=None):
+    def GET(self, komponente_id :int = None):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -93,7 +93,7 @@ class Komponente(object):
 
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
-    def POST(self, projekt_id):
+    def POST(self, projekt_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -106,7 +106,7 @@ class Komponente(object):
         try:
             projekt_id = int(projekt_id)
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
@@ -126,7 +126,7 @@ class Komponente(object):
 
         data["komponenten"].append(int(neue_id))
 
-        code = self.application.update_values("projekte.json", projekt_id, data)
+        code :int = self.application.update_values("projekte.json", projekt_id, data)
         cherrypy.response.status = code
         if code != 200:
             print("Projekt updaten hat nicht geklappt")
@@ -136,29 +136,29 @@ class Komponente(object):
 
 
     @cherrypy.tools.json_in()
-    def PUT(self, komponente_id):
+    def PUT(self, komponente_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
         #
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
-        code = self.application.update_values("komponenten.json", komponente_id, input_json)
+        code :int = self.application.update_values("komponenten.json", komponente_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
-    def DELETE(self, komponente_id):
+    def DELETE(self, komponente_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
 
-        code = self.application.delete_values("komponenten.json", komponente_id)
+        code :int= self.application.delete_values("komponenten.json", komponente_id)
         cherrypy.response.status = code
 
         if code == 200:

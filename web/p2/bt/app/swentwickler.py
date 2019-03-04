@@ -28,11 +28,11 @@ import cherrypy
 class SWEntwickler(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, swentwickler_id=None):
+    def GET(self, swentwickler_id :int = None):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -62,7 +62,7 @@ class SWEntwickler(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
@@ -74,7 +74,7 @@ class SWEntwickler(object):
 
 
     @cherrypy.tools.json_in()
-    def PUT(self, swentwickler_id):
+    def PUT(self, swentwickler_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
@@ -82,22 +82,22 @@ class SWEntwickler(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
-        code = self.application.update_values("sw-entwickler.json", swentwickler_id, input_json)
+        code :int = self.application.update_values("sw-entwickler.json", swentwickler_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
-    def DELETE(self, swentwickler_id):
+    def DELETE(self, swentwickler_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
 
-        code = self.application.delete_values("sw-entwickler.json", swentwickler_id)
+        code :int = self.application.delete_values("sw-entwickler.json", swentwickler_id)
         cherrypy.response.status = code
 
         if code == 200:

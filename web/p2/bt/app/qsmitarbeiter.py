@@ -28,11 +28,11 @@ import cherrypy
 class QSMitarbeiter(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, qsmitarbeiter_id=None):
+    def GET(self, qsmitarbeiter_id :int = None):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -62,7 +62,7 @@ class QSMitarbeiter(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
@@ -74,7 +74,7 @@ class QSMitarbeiter(object):
 
 
     @cherrypy.tools.json_in()
-    def PUT(self, qsmitarbeiter_id):
+    def PUT(self, qsmitarbeiter_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
@@ -82,22 +82,22 @@ class QSMitarbeiter(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
-        code = self.application.update_values("qs-mitarbeiter.json", qsmitarbeiter_id, input_json)
+        code :int = self.application.update_values("qs-mitarbeiter.json", qsmitarbeiter_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
-    def DELETE(self, qsmitarbeiter_id):
+    def DELETE(self, qsmitarbeiter_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
         #
 
-        code = self.application.delete_values("qs-mitarbeiter.json", qsmitarbeiter_id)
+        code :int = self.application.delete_values("qs-mitarbeiter.json", qsmitarbeiter_id)
         cherrypy.response.status = code
 
         if code == 200:

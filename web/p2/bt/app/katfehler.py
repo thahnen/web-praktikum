@@ -26,11 +26,11 @@ import cherrypy
 class KatFehler(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, katfehler_id=None):
+    def GET(self, katfehler_id :int = None):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -60,7 +60,7 @@ class KatFehler(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
@@ -72,26 +72,26 @@ class KatFehler(object):
 
 
     @cherrypy.tools.json_in()
-    def PUT(self, katfehler_id):
+    def PUT(self, katfehler_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
-        code = self.application.update_values("fehlerkategorien.json", katfehler_id, input_json)
+        code :int = self.application.update_values("fehlerkategorien.json", katfehler_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
-    def DELETE(self, katfehler_id):
+    def DELETE(self, katfehler_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 400 | 404 | 500
 
-        code = self.application.delete_values("fehlerkategorien.json", katfehler_id)
+        code :int = self.application.delete_values("fehlerkategorien.json", katfehler_id)
         cherrypy.response.status = code

@@ -26,11 +26,11 @@ import cherrypy
 class KatUrsache(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
-    def GET(self, katursache_id=None):
+    def GET(self, katursache_id :int = None):
         # Zurückgegebene Daten mit folgenden Aufbau,
         # bei Fehler wird nur der Code zurückgegeben!
         #
@@ -60,7 +60,7 @@ class KatUrsache(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
@@ -78,19 +78,19 @@ class KatUrsache(object):
 
         try:
             input_json = cherrypy.request.json
-        except Exception as e:
+        except Exception:
             cherrypy.response.status = 400
             return
 
-        code = self.application.update_values("fehlerursachenkategorien.json", katursache_id, input_json)
+        code :int = self.application.update_values("fehlerursachenkategorien.json", katursache_id, input_json)
         cherrypy.response.status = code
 
 
     @cherrypy.tools.json_out()
-    def DELETE(self, katursache_id):
+    def DELETE(self, katursache_id :int):
         # Zurückgegebene Daten mit folgenden Aufbau:
         #
         # cherrypy.response.status = 200 | 404 | 500
 
-        code = self.application.delete_values("fehlerursachenkategorien.json", katursache_id)
+        code :int = self.application.delete_values("fehlerursachenkategorien.json", katursache_id)
         cherrypy.response.status = code

@@ -15,23 +15,23 @@ import app.view
 
 
 class Application(object):
-    def __init__(self, server_path):
-        self.server_path = server_path
-        self.content_path = self.server_path + "/content/"
+    def __init__(self, server_path :str):
+        self.server_path :str = server_path
+        self.content_path :str = self.server_path + "/content/"
         self.database = app.Database(server_path + "/data/")
         self.view = app.View(server_path + "/template/")
 
 
     # Handhabt statische Seiten
-    def get_static_page(self, pagename):
+    def get_static_page(self, pagename :str) -> str:
         try:
             return self.view.render_static_page(self.content_path + pagename + ".html")
-        except Exception as e:
+        except Exception:
             return self.view.render_static_page(self.content_path + "500.html")
 
 
     # Handhabt alle dynamischen Seiten (mit oder ohne Parametern)
-    def get_dynamic_page(self, pagename, parameter=None):
+    def get_dynamic_page(self, pagename :str, parameter=None) -> str:
         try:
             data = self.database.read_json_into_dict(pagename + ".json")
 
@@ -40,7 +40,7 @@ class Application(object):
             elif parameter == "neu":
                 return self.view.render_dynamic_page(pagename + "-new", data)
 
-            found = False
+            found :bool = False
             for elem in data["Elements"]:
                 if int(data["Elements"][elem]["unique_id"]) == int(parameter):
                     # Alles andere Löschen, damit nur noch das eine übrig bleibt!
@@ -52,12 +52,12 @@ class Application(object):
             if found:
                 return self.view.render_dynamic_page(pagename + "-edit", data)
             return self.get_static_page("404")
-        except Exception as e:
+        except Exception:
             return self.get_static_page("500")
 
 
     # Handhabt sortierte Auswertung
-    def get_sorted_evaluation(self):
+    def get_sorted_evaluation(self) -> str:
         # Alle Projekte laden (Template braucht keiner) und Indizes konvertieren (String -> Int)
         projects = self.database.read_json_into_dict("Projektdaten.json")["Elements"]
         projects = {int(k):v for k,v in projects.items()}
@@ -107,7 +107,7 @@ class Application(object):
 
         for pro in projects:
             # Kunde ersetzen
-            kunden_id = projects[pro]["kunden_id"]
+            kunden_id :int = projects[pro]["kunden_id"]
             for kun in kunden:
                 if int(kunden[kun]["unique_id"]) == int(kunden_id):
                     projects[pro]["kunden_id"] = kunden[kun]
@@ -128,7 +128,7 @@ class Application(object):
             # Zuordnung erweitern
             zuordnung_arbeit = projects[pro]["zuordnung_arbeit"]
             gesamt_woche_n = [0] * projects[pro]["bearbeitungszeitraum"]
-            gesamt_anzahl = 0
+            gesamt_anzahl :int = 0
             for zuo in zuordnung_arbeit:
                 for stunden in zuordnung_arbeit[zuo]:
                     gesamt_anzahl += int(stunden)
@@ -140,47 +140,43 @@ class Application(object):
 
         try:
             return self.view.render_dynamic_page("auswertung", projects)
-        except Exception as e:
+        except Exception:
             return self.get_static_page("500")
 
 
     # Handhabt Rückgabe der Daten
-    def get_values(self, page):
+    def get_values(self, page :str) -> str:
         try:
-            filename = page[0].lower() + page[1::] + ".json"
+            filename :str = page[0].lower() + page[1::] + ".json"
             data = self.database.read_json_into_dict(filename)
             del data["Template"]
             return '{"code" : 200, "data" : ' + json.dumps(data) + '}'
-        except Exception as e:
-            print("Error on API get!")
+        except Exception:
             return '{"code" : 500}'
 
 
     # Handhabt Hinzufügen der Daten
-    def add_values(self, page, values):
+    def add_values(self, page :str, values) -> str:
         try:
             self.database.add_json_into_file(page, values)
             return '{"code" : 200}'
-        except Exception as e:
-            print("Error on API add!")
+        except Exception:
             return '{"code" : 500}'
 
 
     # Handhabt Updates der Daten
-    def update_values(self, page, values):
+    def update_values(self, page :str, values) -> str:
         try:
             self.database.update_json_into_file(page, values)
             return '{"code" : 200}'
-        except Exception as e:
-            print("Error on API update!")
+        except Exception:
             return '{"code" : 500}'
 
 
     # Handhabt Löschen der Daten
-    def delete_values(self, page, values):
+    def delete_values(self, page :str, values) -> str:
         try:
             self.database.remove_json_from_file(page, values)
             return '{"code" : 200}'
-        except Exception as e:
-            print("Error on API delete! Item maybe used!")
+        except Exception:
             return '{"code" : 500}'

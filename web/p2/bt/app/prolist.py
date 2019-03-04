@@ -14,7 +14,7 @@ import cherrypy
 class ProList(object):
     def __init__(self, application):
         self.application = application
-        self.data_path = self.application.server_path + "/data/"
+        self.data_path :str = self.application.server_path + "/data/"
 
 
     @cherrypy.tools.json_out()
@@ -45,5 +45,4 @@ class ProList(object):
                 data.items(), key=lambda kv: (int(kv[1]["komponente"]), kv[1]["type"])
             ))
         except Exception as e:
-            print(e)
             cherrypy.response.status = 500
