@@ -19,16 +19,12 @@ export class ErrorQSMView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ErrorQSMView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ErrorQSMView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--fehler--erkannt").addEventListener("click", function() {
@@ -42,9 +38,7 @@ export class ErrorQSMView {
             document.getElementById("btn--fehler--add").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["fehler--add", null]);
             });
-        }.bind(this), function (response) {
-            alert("[ErrorQSMView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ErrorQSMView] render->failed"); });
     }
 }
 
@@ -67,23 +61,18 @@ export class ErrorSWEView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ErrorSWEView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ErrorSWEView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             // EventHandler Tabellen-Zeilen jedes Mal aufs neue hinzufuegen
             [...document.getElementsByClassName("tr--fehler")].forEach((x) => {
                 x.addEventListener("click", function() {
                     console.log(this.ausgewaehle_tabellenzeile);
-                    console.log(x);
 
                     // Überprüfen ob bereits markiertes erneut ausgewählt wurde
                     if (this.ausgewaehle_tabellenzeile == x) {
@@ -115,13 +104,9 @@ export class ErrorSWEView {
                     // Hier muss noch ueberprueft werden, ob Fehler schon behoben und ob SWEs Id mit der im Fehler uebereinstimmt!
                     let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
                     APPUTIL.eventService.publish("app.cmd", ["fehler--edit", id]);
-                } else {
-                    alert("Keinen Fehler ausgewaehlt!")
-                }
+                } else { alert("Keinen Fehler ausgewaehlt!") }
             }.bind(this));
-        }.bind(this), function (response) {
-            alert("[ErrorSWEView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ErrorSWEView] render->failed"); });
     }
 }
 
@@ -143,24 +128,18 @@ export class ErrorErkanntView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ErrorErkanntView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ErrorErkanntView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--fehler--back").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["fehler--back", null]);
             });
-        }.bind(this), function (response) {
-            alert("[ErrorErkanntView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ErrorErkanntView] render->failed"); });
     }
 }
 
@@ -182,24 +161,18 @@ export class ErrorBehobenView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ErrorBehobenView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ErrorBehobenView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--fehler--back").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["fehler--back", null]);
             });
-        }.bind(this), function (response) {
-            alert("[ErrorBehobenView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ErrorBehobenView] render->failed"); });
     }
 }
 
@@ -221,9 +194,7 @@ export class ErrorEditView {
 
             let markup = APPUTIL.templateManager.execute(this.template, data);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ErrorEditView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ErrorEditView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--fehler--back").addEventListener("click", function() {
@@ -268,26 +239,20 @@ export class ErrorEditView {
 
                 fetch("/fehler/" + id, {
                     method: "PUT",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
+                    headers : { "Content-Type" : "application/json" },
                     body : JSON.stringify(put_data)
                 }).then(function (response) {
                     let rueckgabe = null;
                     if (response.ok) { // 200er-Status-Code
                         alert("[ErrorEditView] PUT hat funktioniert");
                         APPUTIL.eventService.publish("app.cmd", ["fehler--back", null]);
-                    } else {
-                        alert("[ErrorEditView] PUT hat nicht funktioniert");
-                    }
+                    } else { alert("[ErrorEditView] PUT hat nicht funktioniert"); }
                     return rueckgabe;
                 }).catch(function (error) {
                     console.log("[ErrorEditView] PUT-Problem: ", error.message);
                 });
             });
-        }.bind(this), function (response) {
-            alert("[ErrorEditView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ErrorEditView] render->failed"); });
     }
 }
 
@@ -302,9 +267,7 @@ export class ErrorAddView {
     render () {
         let markup = APPUTIL.templateManager.execute(this.template, []);
         let html_element = document.querySelector(this.name);
-        if (html_element == null) {
-            alert("[ErrorAddView] render -> html_element=null")
-        }
+        if (html_element == null) alert("[ErrorAddView] render -> html_element=null");
         html_element.innerHTML = markup;
 
         document.getElementById("btn--fehler--back").addEventListener("click", function() {
@@ -339,18 +302,14 @@ export class ErrorAddView {
 
             fetch("/fehler/", {
                 method: "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
+                headers : { "Content-Type" : "application/json" },
                 body : JSON.stringify(post_data)
             }).then(function (response) {
                 let rueckgabe = null;
                 if (response.ok) { // 200er-Status-Code
                     alert("[ErrorAddView] POST hat funktioniert");
                     APPUTIL.eventService.publish("app.cmd", ["fehler--back", null]);
-                } else {
-                    alert("[ErrorAddView] POST hat nicht funktioniert");
-                }
+                } else { alert("[ErrorAddView] POST hat nicht funktioniert"); }
                 return rueckgabe;
             }).catch(function (error) {
                 console.log("[ErrorAddView] POST-Problem: ", error.message);

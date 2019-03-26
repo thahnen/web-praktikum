@@ -90,19 +90,15 @@ import {
             }
         }
 
-
         // 2) "Editieren" gedrückt
         edit_event_handler(div_failure, offen);
-
 
         // 3) Input-Event-Listener hinzufügen
         input_event_handler(div_failure, offen, true);
 
-
         // 4) Input-Event-Listener hinzufuegen (Bearbeitungszeitraum)
         // 5) Select-Event-Listener hinzufuegen (Mitarbeiter)
         zuordnung_event_handler();
-
 
         // 6) "Speichern" gedrückt
         document.getElementById("btn--save").addEventListener("click", function () {

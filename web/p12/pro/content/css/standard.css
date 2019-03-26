@@ -1,13 +1,11 @@
 @charset "UTF-8";
 
-/*
-    Hier ist alles, was (nahezu) alle Seiten (inklusive) Templates gleichhaben
+/*  Hier ist alles, was (nahezu) alle Seiten (inklusive) Templates gleichhaben
 
     1. Generelle Inforamtion zu Objekten
     2. Headline mit 3D-Effekt
     3. Navigations-Bar
-    4. Tabellenformatierung
-*/
+    4. Tabellenformatierung */
 
 
 /* General */
@@ -145,6 +143,3 @@ button:hover span::after {
     opacity: 1;
     right: 0;
 }
-
-
-/* Edit.css */

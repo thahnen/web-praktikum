@@ -30,3 +30,8 @@ Der Inhalt ist ein "Bug-Tracker" mit Template-Engine und REST-API.
   * Realisierung über JavaScript only
 2. Bug-Tracker:
   * Realisierung über Beims seine Template-Engine und REST-API
+
+## DISCLAIMER
+Letzte Aufgabe wurde so abgenommen, Einzelheiten funktionieren allerdings nicht (mehr).
+Die Aufgaben waren eigentlich ein Witz, es wurde sich kaum etwas angeguckt.
+Die Template Engine von Beims in der Rohfassung ist die Hoelle, ich hab die mir mal refactored!

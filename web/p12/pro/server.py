@@ -108,7 +108,6 @@ class WebServer(object):
 
         # EINZIGER Try-Except Block im Server, sollte eigentlich NUR in der Application sein
         try:
-            # War ein POST :)
             input_json = cherrypy.request.json
 
             # Alle Annahmen, dass übergebenes JSON richtig formattiert ist

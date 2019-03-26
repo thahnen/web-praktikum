@@ -107,9 +107,9 @@ Verweise:
 Werden verwendet, wenn die Integrität der JSON-Dateien nicht gewährleistet ist oder fehlerhafte Daten nicht wieder hergestellt werden können.
 Um bei der Validierung die Datei wiederherstellen zu können!
 
-- [Projektdaten](/template/projektdaten.json)
-- [Kundendaten](/template/kundendaten-tpl.json)
-- [Mitarbeiterdaten](/template/mitarbeiterdaten-tpl.json)
+- [Projektdaten](template/projektdaten.json)
+- [Kundendaten](template/kundendaten-tpl.json)
+- [Mitarbeiterdaten](template/mitarbeiterdaten-tpl.json)
 
 ---
 

@@ -19,24 +19,18 @@ export class ComponentQSMView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ComponentQSMView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ComponentQSMView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--komponente--sort").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["komponente--sort", null]);
             });
-        }.bind(this), function (response) {
-            alert("[ComponentQSMView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ComponentQSMView] render->failed"); });
     }
 }
 
@@ -59,22 +53,17 @@ export class ComponentSWEView {
 
             let context = [];
             for (var fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element != null) {
-                html_element.innerHTML = markup;
-            }
+            if (html_element != null) html_element.innerHTML = markup;
 
             // Hier noch EventHandler und so hinzufuegen fuer die einzelnen Tabellen-Zeilen
             [...document.getElementsByClassName("tr--komponente")].forEach((x) => {
                 x.addEventListener("click", function() {
                     console.log(this.ausgewaehle_tabellenzeile);
-                    console.log(x);
 
                     // Überprüfen ob bereits markiertes erneut ausgewählt wurde
                     if (this.ausgewaehle_tabellenzeile == x) {
@@ -93,19 +82,11 @@ export class ComponentSWEView {
                 }.bind(this)); // -> muss, da sonst mit "this" das falsche gemeint ist!
             });
 
-            /*
-            document.getElementById("btn--komponente--sort").addEventListener("click", function() {
-                APPUTIL.eventService.publish("app.cmd", ["komponente--sort", null]);
-            });
-            */
-
             document.getElementById("btn--komponente--edit").addEventListener("click", function() {
                 if (this.ausgewaehle_tabellenzeile != null) {
                     let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
                     APPUTIL.eventService.publish("app.cmd", ["komponente--edit", id]);
-                } else {
-                    alert("Keine Komponente ausgewaehlt!")
-                }
+                } else { alert("Keine Komponente ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--komponente--delete").addEventListener("click", function() {
@@ -120,24 +101,18 @@ export class ComponentSWEView {
                         if (response.ok) { // 200er-Status-Code
                             alert("[ComponentSWEView] DELETE hat funktioniert");
                             APPUTIL.eventService.publish("app.cmd", ["komponente--back", null]);
-                        } else {
-                            alert("[ComponentSWEView] DELETE hat nicht funktioniert");
-                        }
+                        } else { alert("[ComponentSWEView] DELETE hat nicht funktioniert"); }
                         return rueckgabe;
                     }).catch(function (error) {
                         console.log("[ComponentSWEView] DELETE-Problem: ", error.message);
                     });
-                } else {
-                    alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!")
-                }
+                } else { alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--komponente--add").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["komponente--add", null]);
             });
-        }.bind(this), function (response) {
-            alert("[ComponentSWEView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ComponentSWEView] render->failed"); });
     }
 }
 
@@ -148,8 +123,7 @@ export class ComponentProjectView {
         this.template = "component.view-project.tpl";
     }
 
-    render () {
-    }
+    render () { }
 }
 
 // Bearbeitung-Seite für SWE
@@ -169,9 +143,7 @@ export class ComponentEditView {
 
             let markup = APPUTIL.templateManager.execute(this.template, data);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ComponentEditView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ComponentEditView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--komponente--back").addEventListener("click", function() {
@@ -189,26 +161,20 @@ export class ComponentEditView {
 
                 fetch("/komponente/" + id, {
                     method: "PUT",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
+                    headers : { "Content-Type" : "application/json" },
                     body : JSON.stringify(put_data)
                 }).then(function (response) {
                     let rueckgabe = null;
                     if (response.ok) { // 200er-Status-Code
                         alert("[ComponentEditView] PUT hat funktioniert");
                         APPUTIL.eventService.publish("app.cmd", ["komponente--back", null]);
-                    } else {
-                        alert("[ComponentEditView] PUT hat nicht funktioniert");
-                    }
+                    } else { alert("[ComponentEditView] PUT hat nicht funktioniert"); }
                     return rueckgabe;
                 }).catch(function (error) {
                     console.log("[ComponentEditView] PUT-Problem: ", error.message);
                 });
             });
-        }.bind(this), function (response) {
-            alert("[ComponentEditView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ComponentEditView] render->failed"); });
     }
 }
 
@@ -222,9 +188,7 @@ export class ComponentAddView {
     render () {
         let markup = APPUTIL.templateManager.execute(this.template, []);
         let html_element = document.querySelector(this.name);
-        if (html_element == null) {
-            alert("[ComponentAddView] render -> html_element=null")
-        }
+        if (html_element == null) alert("[ComponentAddView] render -> html_element=null");
         html_element.innerHTML = markup;
 
         document.getElementById("btn--komponente--back").addEventListener("click", function() {
@@ -242,18 +206,14 @@ export class ComponentAddView {
 
             fetch("/komponente/" + project_id, {
                 method: "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
+                headers : { "Content-Type" : "application/json" },
                 body : JSON.stringify(post_data)
             }).then(function (response) {
                 let rueckgabe = null;
                 if (response.ok) { // 200er-Status-Code
                     alert("[ComponentAddView] POST hat funktioniert");
                     APPUTIL.eventService.publish("app.cmd", ["komponente--back", null]);
-                } else {
-                    alert("[ComponentAddView] POST hat nicht funktioniert");
-                }
+                } else { alert("[ComponentAddView] POST hat nicht funktioniert"); }
                 return rueckgabe;
             }).catch(function (error) {
                 console.log("[ComponentAddView] POST-Problem: ", error.message);

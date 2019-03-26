@@ -66,15 +66,12 @@ import {
             mitarbeiter_select.appendChild(option);
         }
 
-
         // 2) Input-Event-Listener hinzufuegen
         input_event_handler(div_failure, offen, false);
-
 
         // 3) Input-Event-Listener hinzufuegen (Bearbeitungszeitraum)
         // 4) Select-Event-Listener hinzufuegen (Mitarbeiter)
         zuordnung_event_handler();
-
 
         // 5) "Hinzufuegen" gedrückt
         document.getElementById("btn--new").addEventListener("click", function () {

@@ -31,7 +31,6 @@
  *  5. "Eintrag löschen" gedrückt:
  *  => Irgendein Eintrag ausgewählt?
  *  => XMLHttpRequest an /api/delete mit Löschen-Auftrag!
- *
 */
 
 import { hide_failure, set_title_headline } from "./lib.js";
@@ -51,7 +50,6 @@ import { hide_failure, set_title_headline } from "./lib.js";
         // 1.3) Eintrag editieren" und "Eintrag löschen" disablen
         document.getElementById("btn--edit").disabled = true;
         document.getElementById("btn--delete").disabled = true;
-
 
         // 2. Input-Event-Listener hinzufügen
         [...document.getElementsByClassName("tbl--data")].forEach((x) => {
@@ -82,18 +80,15 @@ import { hide_failure, set_title_headline } from "./lib.js";
             });
         });
 
-
         // 3. "Neues Element hinzufügen" gedrückt
         document.getElementById("btn--new").addEventListener("click", function () {
             window.location.href += "/neu";
         });
 
-
         // 4. "Eintrag editieren" gedrückt
         document.getElementById("btn--edit").addEventListener("click", function () {
             window.location.href += "/" + highlighted_entry.firstElementChild.innerHTML;
         });
-
 
         // 5. "Eintrag löschen" gedrückt
         document.getElementById("btn--delete").addEventListener("click", function () {

@@ -28,9 +28,9 @@ APPUTIL.TemplateManager = class {
         requester.request(pfad, function (response) {
             let data = JSON.parse(response);
             this.templates = data["templates"];
-
             console.log("[TemplateManager] init->publish templates.loaded");
             APPUTIL.eventService.publish("templates.loaded", null);
+
         }.bind(this), function (response) {
             console.log("[TemplateManager] init->publish templates.failed");
             APPUTIL.eventService.publish("templates.failed", response);
@@ -38,11 +38,8 @@ APPUTIL.TemplateManager = class {
     }
 
     get (name) {
-        if (name in this.templates) {
-            return this.templates[name];
-        } else {
-            return null;
-        }
+        if (name in this.templates) return this.templates[name];
+        else return null;
     }
 
     execute (name, data) {
@@ -59,10 +56,7 @@ APPUTIL.TemplateManager = class {
             }
         }
 
-        if (code_compiled != null) {
-            return code_compiled(data);
-        } else {
-            return null;
-        }
+        if (code_compiled != null) return code_compiled(data);
+        else return null;
     }
 }

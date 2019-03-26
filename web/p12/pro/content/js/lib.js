@@ -24,7 +24,6 @@
  *
  *  6) zuordnung_event_handler():
  *  => Event-Handler für alle Elemente, bei deren Änderung die Zuordnung neugeneriert werden muss
- *
 */
 
 // Hilfsfunktion um JSON von Server synchron(!) zu laden
@@ -103,28 +102,24 @@ export function zuordnung_event_handler() {
     document.getElementById("bearbeitungszeitraum").addEventListener("input", function () {
         let neue = parseInt(this.value);
         let anzahl_mitarbeiter = [...document.getElementById("select_mitarbeiter_ids").selectedOptions];
-
         generate_zuordnung(neue, anzahl_mitarbeiter);
     });
 
     document.getElementById("select_mitarbeiter_ids").addEventListener("click", function () {
         let neue = parseInt(document.getElementById("bearbeitungszeitraum").value);
         let anzahl_mitarbeiter = [...this.selectedOptions];
-
         generate_zuordnung(neue, anzahl_mitarbeiter);
     });
 }
 
 // Zuordnung der Arbeit/ Wochenstunden generieren (nicht exportiert)
 function generate_zuordnung(neue, anzahl_mitarbeiter) {
-    if (isNaN(neue)) { return; }
-
+    if (isNaN(neue)) return;
     // An Tabelle anfügen zu viel Aufwand, daher einfach neu generieren (nicht optimal)
     let zuordnung_arbeit = document.getElementById("zuordnung_arbeit");
     while (zuordnung_arbeit.firstChild) {
         zuordnung_arbeit.removeChild(zuordnung_arbeit.firstChild);
     }
-
     let header = document.createElement("tr");
     let header_id = document.createElement("th");
     header_id.innerText = "Id / Woche";
@@ -135,13 +130,11 @@ function generate_zuordnung(neue, anzahl_mitarbeiter) {
         header.appendChild(week_n);
     }
     zuordnung_arbeit.appendChild(header);
-
     for (let i=0; i<anzahl_mitarbeiter.length; i++) {
         let data_row = document.createElement("tr");
         let name = document.createElement("td");
         name.innerText = anzahl_mitarbeiter[i].value;
         data_row.appendChild(name);
-
         for (let j = 0; j < neue; j++) {
             let week_n = document.createElement("th");
             let week_n_input = document.createElement("input");

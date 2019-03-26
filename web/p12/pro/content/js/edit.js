@@ -40,14 +40,11 @@ import {
         // 1.2) Titel und Header richtig setzen
         let link = set_title_headline();
 
-
         // 2) "Editieren" gedrückt
         edit_event_handler(div_failure, offen);
 
-
         // 3) Input-Event-Listener hinzufügen
         input_event_handler(div_failure, offen, true);
-
 
         // 4) "Speichern" gedrückt
         document.getElementById("btn--save").addEventListener("click", function () {

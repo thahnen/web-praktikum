@@ -32,9 +32,7 @@ APPUTIL.EventService = class {
                 entry[index] = null;
                 entry = this.compact(entry);
 
-                if (entry.length == 0) {
-                    delete this.Subscriber[message];
-                }
+                if (entry.length == 0) delete this.Subscriber[message];
             }
         } else {
             console.log("[EventService] unsubscribe->falsche Anforderung");
@@ -58,24 +56,18 @@ APPUTIL.EventService = class {
     }
 
     each (object, iterator) {
-        for (let key in object) {
-            iterator.call(this, object[key], key);
-        }
+        for (let key in object) iterator.call(this, object[key], key);
     }
 
     findAll (object, iterator) {
         let results = [];
         this.each(object, function(value, index) {
-            if (iterator.call(this, value, index)) {
-                results.push(value);
-            }
+            if (iterator.call(this, value, index)) results.push(value);
         });
         return results;
     }
 
     compact (object) {
-        return this.findAll(object, function(value) {
-            return value != null;
-        });
+        return this.findAll(object, function(value) { return value != null; });
     }
 }

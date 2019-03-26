@@ -1,18 +1,15 @@
-
-* {
-   box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-   margin: 0;
-   padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-   position: absolute;
-   height: 15vh;
-   background-color: blue;
-   color: white;
+    position: absolute;
+    height: 15vh;
+    background-color: blue;
+    color: white;
 }
 
 .div--headline {
@@ -23,9 +20,7 @@ header {
     border-bottom: 2px solid black;
 }
 
-h1 {
-    margin-left: 0.5vw;
-}
+h1 { margin-left: 0.5vw; }
 
 .div--logout {
     position: absolute;

@@ -48,12 +48,10 @@ class Application {
             alert("Vorlagen konnten nicht geladen werden.");
             break;
         case "templates.loaded":
-            /*
-                Templates konnten geladen werden:
+            /*  Templates konnten geladen werden:
                 1) Header laden mit Inhalt des Cookies
                 2) Navigationsleiste laden mit vorgegebenen Seiten
-                3) Startseite laden (soll ein bisschen aussehen wie ein Dashboard)
-            */
+                3) Startseite laden (soll ein bisschen aussehen wie ein Dashboard) */
             // Cookie-Aufbau: "password=<...>; type=<...>; username=<...>"
             let cookie_data = [...document.cookie.split("; ")];
             cookie_data.shift();
@@ -80,9 +78,7 @@ class Application {
             markup = APPUTIL.templateManager.execute("home.tpl", null);
             html_element = document.querySelector("main");
 
-            if (html_element != null) {
-                html_element.innerHTML = markup;
-            }
+            if (html_element != null) html_element.innerHTML = markup;
             break;
         case "app.cmd":
             switch (data[0]) {
@@ -90,9 +86,7 @@ class Application {
                 let markup = APPUTIL.templateManager.execute("home.tpl", null);
                 let html_element = document.querySelector("main");
 
-                if (html_element != null) {
-                    html_element.innerHTML = markup;
-                }
+                if (html_element != null) html_element.innerHTML = markup;
                 break;
 
             // Alles was mit den Fehlern zu tun hat!
@@ -151,8 +145,6 @@ class Application {
                 this.errorsByCategoryView.render();
                 break;
             }
-
-            break;
         }
     }
 }

@@ -19,21 +19,15 @@ export class ProjectQSMView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ProjectQSMView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ProjectQSMView] render -> html_element=null");
             html_element.innerHTML = markup;
 
-        }.bind(this), function (response) {
-            alert("[ProjectQSMView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ProjectQSMView] render->failed"); });
     }
 }
 
@@ -55,16 +49,12 @@ export class ProjectSWEView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ProjectSWEView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ProjectSWEView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             // EventHandler Tabellen-Zeilen jedes Mal aufs neue hinzufuegen
@@ -95,9 +85,7 @@ export class ProjectSWEView {
                     // Hier muss noch ueberprueft werden, ob Fehler schon behoben und ob SWEs Id mit der im Fehler uebereinstimmt!
                     let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
                     APPUTIL.eventService.publish("app.cmd", ["projekt--edit", id]);
-                } else {
-                    alert("Keinen Fehler ausgewaehlt!")
-                }
+                } else { alert("Keinen Fehler ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--projekt--delete").addEventListener("click", function() {
@@ -112,24 +100,18 @@ export class ProjectSWEView {
                         if (response.ok) { // 200er-Status-Code
                             alert("[ProjectSWEView] DELETE hat funktioniert");
                             APPUTIL.eventService.publish("app.cmd", ["projekt--back", null]);
-                        } else {
-                            alert("[ProjectSWEView] DELETE hat nicht funktioniert");
-                        }
+                        } else { alert("[ProjectSWEView] DELETE hat nicht funktioniert"); }
                         return rueckgabe;
                     }).catch(function (error) {
                         console.log("[ProjectSWEView] DELETE-Problem: ", error.message);
                     });
-                } else {
-                    alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!")
-                }
+                } else { alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--projekt--add").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["projekt--add", null]);
             });
-        }.bind(this), function (response) {
-            alert("[ProjectSWEView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ProjectSWEView] render->failed"); });
     }
 }
 
@@ -150,9 +132,7 @@ export class ProjectEditView {
 
             let markup = APPUTIL.templateManager.execute(this.template, data);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ProjectEditView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ProjectEditView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--projekt--back").addEventListener("click", function() {
@@ -170,18 +150,14 @@ export class ProjectEditView {
 
                 fetch("/projekt/" + id, {
                     method: "PUT",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
+                    headers : { "Content-Type" : "application/json" },
                     body : JSON.stringify(put_data)
                 }).then(function (response) {
                     let rueckgabe = null;
                     if (response.ok) { // 200er-Status-Code
                         alert("[ProjectEditView] PUT hat funktioniert");
                         APPUTIL.eventService.publish("app.cmd", ["projekt--back", null]);
-                    } else {
-                        alert("[ProjectEditView] PUT hat nicht funktioniert");
-                    }
+                    } else { alert("[ProjectEditView] PUT hat nicht funktioniert"); }
                     return rueckgabe;
                 }).catch(function (error) {
                     console.log("[ProjectEditView] PUT-Problem: ", error.message);
@@ -203,9 +179,7 @@ export class ProjectAddView {
     render () {
         let markup = APPUTIL.templateManager.execute(this.template, []);
         let html_element = document.querySelector(this.name);
-        if (html_element == null) {
-            alert("[ProjectAddView] render -> html_element=null")
-        }
+        if (html_element == null) alert("[ProjectAddView] render -> html_element=null");
         html_element.innerHTML = markup;
 
         document.getElementById("btn--projekt--back").addEventListener("click", function() {
@@ -222,18 +196,14 @@ export class ProjectAddView {
 
             fetch("/projekt/", {
                 method: "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
+                headers : { "Content-Type" : "application/json" },
                 body : JSON.stringify(post_data)
             }).then(function (response) {
                 let rueckgabe = null;
                 if (response.ok) { // 200er-Status-Code
                     alert("[ProjectAddView] POST hat funktioniert");
                     APPUTIL.eventService.publish("app.cmd", ["projekt--back", null]);
-                } else {
-                    alert("[ProjectAddView] POST hat nicht funktioniert");
-                }
+                } else { alert("[ProjectAddView] POST hat nicht funktioniert"); }
                 return rueckgabe;
             }).catch(function (error) {
                 console.log("[ProjectAddView] POST-Problem: ", error.message);

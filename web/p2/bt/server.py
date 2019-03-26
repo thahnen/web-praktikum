@@ -72,7 +72,6 @@ class WebServer(object):
         if "type" in cookie and "username" in cookie and "password" in cookie:
             code, user_type, _ = self.application.eval_login(cookie["username"].value, cookie["password"].value, True)
             if code == 200:
-                # Noch testen, ob es ein QS-Mitarbeiter oder SW-Entwickler ist!
                 if user_type == "QSM":
                     return self.application.get_static_page("bt-qsm")
                 return self.application.get_static_page("bt-swe")

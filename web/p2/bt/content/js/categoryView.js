@@ -20,16 +20,12 @@ export class KatFehlerView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[KatFehlerView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[KatFehlerView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             // EventHandler Tabellen-Zeilen jedes Mal aufs neue hinzufuegen
@@ -57,9 +53,7 @@ export class KatFehlerView {
                     // Hier muss noch ueberprueft werden, ob Fehler schon behoben und ob SWEs Id mit der im Fehler uebereinstimmt!
                     let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
                     APPUTIL.eventService.publish("app.cmd", ["katfehler--edit", id]);
-                } else {
-                    alert("Keine Fehlerkategorie zum bearbeiten ausgewaehlt!")
-                }
+                } else { alert("Keine Fehlerkategorie zum bearbeiten ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--katfehler--delete").addEventListener("click", function() {
@@ -74,24 +68,18 @@ export class KatFehlerView {
                         if (response.ok) { // 200er-Status-Code
                             alert("[KatFehlerView] DELETE hat funktioniert");
                             APPUTIL.eventService.publish("app.cmd", ["katfehler--back", null]);
-                        } else {
-                            alert("[KatFehlerView] DELETE hat nicht funktioniert");
-                        }
+                        } else { alert("[KatFehlerView] DELETE hat nicht funktioniert"); }
                         return rueckgabe;
                     }).catch(function (error) {
                         console.log("[KatFehlerView] DELETE-Problem: ", error.message);
                     });
-                } else {
-                    alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!")
-                }
+                } else { alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--katfehler--add").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["katfehler--add", null]);
             });
-        }.bind(this), function (response) {
-            alert("[KatFehlerView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[KatFehlerView] render->failed"); });
     }
 }
 
@@ -113,23 +101,18 @@ export class KatUrsacheView {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[KatUrsacheView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[KatUrsacheView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             // EventHandler Tabellen-Zeilen jedes Mal aufs neue hinzufuegen
             [...document.getElementsByClassName("tr--katursache")].forEach((x) => {
                 x.addEventListener("click", function() {
                     console.log(this.ausgewaehle_tabellenzeile);
-                    console.log(x);
 
                     // Überprüfen ob bereits markiertes erneut ausgewählt wurde
                     if (this.ausgewaehle_tabellenzeile == x) {
@@ -153,9 +136,7 @@ export class KatUrsacheView {
                     // Hier muss noch ueberprueft werden, ob Fehler schon behoben und ob SWEs Id mit der im Fehler uebereinstimmt!
                     let id = parseInt(this.ausgewaehle_tabellenzeile.id.split("-").pop());
                     APPUTIL.eventService.publish("app.cmd", ["katursache--edit", id]);
-                } else {
-                    alert("Keine Fehlerursachenkategorie ausgewaehlt!")
-                }
+                } else { alert("Keine Fehlerursachenkategorie ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--katursache--delete").addEventListener("click", function() {
@@ -170,24 +151,18 @@ export class KatUrsacheView {
                         if (response.ok) { // 200er-Status-Code
                             alert("[KatUrsacheView] DELETE hat funktioniert");
                             APPUTIL.eventService.publish("app.cmd", ["katursache--back", null]);
-                        } else {
-                            alert("[KatUrsacheView] DELETE hat nicht funktioniert");
-                        }
+                        } else { alert("[KatUrsacheView] DELETE hat nicht funktioniert"); }
                         return rueckgabe;
                     }).catch(function (error) {
                         console.log("[KatUrsacheView] DELETE-Problem: ", error.message);
                     });
-                } else {
-                    alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!")
-                }
+                } else { alert("Keine Fehlerkategorie zum loeschen ausgewaehlt!") }
             }.bind(this));
 
             document.getElementById("btn--katursache--add").addEventListener("click", function() {
                 APPUTIL.eventService.publish("app.cmd", ["katursache--add", null]);
             });
-        }.bind(this), function (response) {
-            alert("[KatUrsacheView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[KatUrsacheView] render->failed"); });
     }
 }
 
@@ -208,9 +183,7 @@ export class KatFehlerEditView {
 
             let markup = APPUTIL.templateManager.execute(this.template, data);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[KatFehlerEditView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[KatFehlerEditView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--katfehler--back").addEventListener("click", function() {
@@ -228,26 +201,20 @@ export class KatFehlerEditView {
 
                 fetch("/katfehler/" + id, {
                     method: "PUT",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
+                    headers : { "Content-Type" : "application/json" },
                     body : JSON.stringify(put_data)
                 }).then(function (response) {
                     let rueckgabe = null;
                     if (response.ok) { // 200er-Status-Code
                         alert("[KatFehlerEditView] PUT hat funktioniert");
                         APPUTIL.eventService.publish("app.cmd", ["katfehler--back", null]);
-                    } else {
-                        alert("[KatFehlerEditView] PUT hat nicht funktioniert");
-                    }
+                    } else { alert("[KatFehlerEditView] PUT hat nicht funktioniert"); }
                     return rueckgabe;
                 }).catch(function (error) {
                     console.log("[KatFehlerEditView] PUT-Problem: ", error.message);
                 });
             });
-        }.bind(this), function (response) {
-            alert("[KatFehlerEditView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[KatFehlerEditView] render->failed"); });
     }
 }
 
@@ -268,9 +235,7 @@ export class KatUrsacheEditView {
 
             let markup = APPUTIL.templateManager.execute(this.template, data);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[KatUrsacheEditView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[KatUrsacheEditView] render -> html_element=null");
             html_element.innerHTML = markup;
 
             document.getElementById("btn--katursache--back").addEventListener("click", function() {
@@ -288,26 +253,20 @@ export class KatUrsacheEditView {
 
                 fetch("/katursache/" + id, {
                     method: "PUT",
-                    headers : {
-                        "Content-Type" : "application/json"
-                    },
+                    headers : { "Content-Type" : "application/json" },
                     body : JSON.stringify(put_data)
                 }).then(function (response) {
                     let rueckgabe = null;
                     if (response.ok) { // 200er-Status-Code
                         alert("[KatUrsacheEditView] PUT hat funktioniert");
                         APPUTIL.eventService.publish("app.cmd", ["katursache--back", null]);
-                    } else {
-                        alert("[KatUrsacheEditView] PUT hat nicht funktioniert");
-                    }
+                    } else { alert("[KatUrsacheEditView] PUT hat nicht funktioniert"); }
                     return rueckgabe;
                 }).catch(function (error) {
                     console.log("[KatUrsacheEditView] PUT-Problem: ", error.message);
                 });
             });
-        }.bind(this), function (response) {
-            alert("[KatUrsacheEditView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[KatUrsacheEditView] render->failed"); });
     }
 }
 
@@ -321,9 +280,7 @@ export class KatFehlerAddView {
     render () {
         let markup = APPUTIL.templateManager.execute(this.template, []);
         let html_element = document.querySelector(this.name);
-        if (html_element == null) {
-            alert("[KatFehlerAddView] render -> html_element=null")
-        }
+        if (html_element == null) alert("[KatFehlerAddView] render -> html_element=null");
         html_element.innerHTML = markup;
 
         document.getElementById("btn--katfehler--back").addEventListener("click", function() {
@@ -340,18 +297,14 @@ export class KatFehlerAddView {
 
             fetch("/katfehler/", {
                 method: "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
+                headers : { "Content-Type" : "application/json" },
                 body : JSON.stringify(post_data)
             }).then(function (response) {
                 let rueckgabe = null;
                 if (response.ok) { // 200er-Status-Code
                     alert("[KatFehlerAddView] POST hat funktioniert");
                     APPUTIL.eventService.publish("app.cmd", ["katfehler--back", null]);
-                } else {
-                    alert("[KatFehlerAddView] POST hat nicht funktioniert");
-                }
+                } else { alert("[KatFehlerAddView] POST hat nicht funktioniert"); }
                 return rueckgabe;
             }).catch(function (error) {
                 console.log("[KatFehlerAddView] POST-Problem: ", error.message);
@@ -370,9 +323,7 @@ export class KatUrsacheAddView {
     render () {
         let markup = APPUTIL.templateManager.execute(this.template, []);
         let html_element = document.querySelector(this.name);
-        if (html_element == null) {
-            alert("[KatUrsacheAddView] render -> html_element=null")
-        }
+        if (html_element == null) alert("[KatUrsacheAddView] render -> html_element=null");
         html_element.innerHTML = markup;
 
         document.getElementById("btn--katursache--back").addEventListener("click", function() {
@@ -389,18 +340,14 @@ export class KatUrsacheAddView {
 
             fetch("/katursache/", {
                 method: "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
+                headers : { "Content-Type" : "application/json" },
                 body : JSON.stringify(post_data)
             }).then(function (response) {
                 let rueckgabe = null;
                 if (response.ok) { // 200er-Status-Code
                     alert("[KatUrsacheAddView] POST hat funktioniert");
                     APPUTIL.eventService.publish("app.cmd", ["katursache--back", null]);
-                } else {
-                    alert("[KatUrsacheAddView] POST hat nicht funktioniert");
-                }
+                } else { alert("[KatUrsacheAddView] POST hat nicht funktioniert"); }
                 return rueckgabe;
             }).catch(function (error) {
                 console.log("[KatUrsacheAddView] POST-Problem: ", error.message);

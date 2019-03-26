@@ -10,17 +10,17 @@ NOCOL='\033[0m'
 
 # Test, ob der Server ueberhaupt online ist !
 curl 127.0.0.1:8080 &> /dev/null
-if test $? -ne 0; then
+if [[ $? -eq 0 ]]; then
 	echo "Server not up and running on 127.0.0.1:8080 !"
 	echo "Run> cd $HOME/GitHub/web-praktikum/web/p1/"
 	echo "Run> python3 server.py"
-	exit
+	exit 1
 fi
 
 # Test, ob es auch der Server für Aufgabe 1.2 ist !
-if test $(curl -I 127.0.0.1:8080/api 2>/dev/null | head -n 1 | cut -d$' ' -f2) -eq "404"; then
+if [[ $(curl -I 127.0.0.1:8080/api 2>/dev/null | head -n 1 | cut -d$' ' -f2) -eq "404" ]]; then
     echo "Wrong Server up and running, use the one for 1.2 !"
-    exit
+    exit 1
 fi
 
 
@@ -99,7 +99,7 @@ echo ""
 curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 127.0.0.1:8080/api/get
 
 # funktioniert noch alles nicht, weil beim hinzufuegen eine neue unique_id generiert wird!
-exit
+exit 1
 
 echo ""
 echo "2. Hinzufuegen:"
@@ -140,15 +140,9 @@ curl --header "Content-Type: application/json" --request POST --data "$(K_GET)" 
 
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
-	N|n)	exit
+	N|n)	exit 1 ;;
 	*)		;;
 esac
-
-#if test "$ANSWER" != "y"; then
-#	echo ""
-#	exit
-#fi
-#echo ""
 
 
 ################################################################################
@@ -255,15 +249,9 @@ curl --header "Content-Type: application/json" --request POST --data "$(M_GET)" 
 
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
-	N|n)	exit
+	N|n)	exit 1 ;;
 	*)		;;
 esac
-
-#if test "$ANSWER" != "y"; then
-#	echo ""
-#	exit
-#fi
-#echo ""
 
 
 ################################################################################

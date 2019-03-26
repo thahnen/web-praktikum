@@ -7,13 +7,9 @@
 var APPUTIL = APPUTIL || {};
 
 APPUTIL.Generator = class {
-    constructor () {
-        this.reset();
-    }
+    constructor () { this.reset(); }
 
-    reset () {
-        this.code_after = ['var result_after = [];\n'];
-    }
+    reset () { this.code_after = ['var result_after = [];\n']; }
 
     write (text) {
         // Escape-Zeichen bei Strings ergänzen
@@ -255,13 +251,9 @@ APPUTIL.TemplateCompiler = class {
         } else if (state == 3) {
             this.generator.substitute(substitute_source);
         } else if (state == 4) {
-            if (this.preservePRE == true) {
-                this.generator.write(text_source);
-            }
+            if (this.preservePRE == true) this.generator.write(text_source);
         } else if (state == 5) {
-            if (this.preservePOST == true) {
-                this.generator.write(text_source);
-            }
+            if (this.preservePOST == true) this.generator.write(text_source);
         }
 
         return this.generator.generate();

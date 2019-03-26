@@ -17,19 +17,13 @@ export default class {
 
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[ErrorsByCategoryView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[ErrorsByCategoryView] render -> html_element=null");
             html_element.innerHTML = markup;
-        }.bind(this), function (response) {
-            alert("[ErrorsByCategoryView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[ErrorsByCategoryView] render->failed"); });
     }
 }

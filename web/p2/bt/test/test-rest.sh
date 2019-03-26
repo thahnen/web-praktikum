@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
-
 # Test, ob der Server ueberhaupt online ist !
 curl 127.0.0.1:8080 &> /dev/null
-if test $? -ne 0; then
+if [[ $? -ne 0 ]]; then
 	echo "Server not up and running on 127.0.0.1:8080 !"
 	echo "Run> cd $HOME/GitHub/web-praktikum/web/p2/bt/"
 	echo "Run> python3 server.py"
-	exit
+	exit 1
 fi
-
 
 RED='\033[0;31m'
 NOCOL='\033[0m'
@@ -96,7 +94,7 @@ printf "\n${RED}================================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -124,7 +122,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -213,7 +211,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -304,7 +302,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -394,7 +392,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -483,7 +481,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -572,7 +570,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -687,7 +685,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -715,7 +713,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 
@@ -743,7 +741,7 @@ printf "\n\n${RED}==============================================================
 read -n 1 -p "Weiter (y|n): " ANSWER
 case $ANSWER in
 	N|n)	printf "\nBeende...\n${NOCOL}"
-            exit;;
+            exit 1 ;;
 	*)		;;
 esac
 

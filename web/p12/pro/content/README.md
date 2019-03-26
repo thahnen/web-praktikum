@@ -52,15 +52,15 @@ Eine Custom 500-Seite, aus einem meiner Projekte genommen als Lückenfüller
 ## JavaScript-Dateien
 Syntax und Stilkonventionen ist grob angelehnt an den [AirBnB Style Guide](https://github.com/airbnb/javascript)
 Siehe: [Unterordner js für JavaScript](/js)
-1. [view.js](/js/view.js)
+1. [view.js](js/view.js)
 Logik für die Übersichtsseite jedes Datenbestandes
-2. [new.js](/js/new.js)
+2. [new.js](js/new.js)
 Logik für die Neu-Hinzufügen-Seite der Kunden- und Mitarbeiterdaten
-3. [new-project.js](/js/new-project.js)
+3. [new-project.js](js/new-project.js)
 Logik für die Neu-Hinzufügen-Seite der Projektdaten
-4. [edit.js](/js/edit.js)
+4. [edit.js](js/edit.js)
 Logik für die Editieren-Seite der Kunden- und Mitarbeiterdaten
-5. [edit-project.js](/js/edit-project.js)
+5. [edit-project.js](js/edit-project.js)
 Logik für die Editieren-Seite der Projektdaten
 
 ---
@@ -69,11 +69,11 @@ Logik für die Editieren-Seite der Projektdaten
 ## CSS-Dateien
 Namensgebung erfolgt, grob angelehnt, an die ["Block Element Modifier"-Methode](getbem.com/introduction/)
 Siehe: [Unterordner css für CSS](/css)
-1. [view.css](/css/view.css)
+1. [view.css](css/view.css)
 CSS-Regeln für die Übersichtsseite jedes Datenbestandes
-2. [new.css](/css/new.css)
+2. [new.css](css/new.css)
 CSS-Regeln für die Neu-Hinzufügen-Seite jedes Datenbestandes
-3. [edit.css](/css/edit.css)
+3. [edit.css](css/edit.css)
 CSS-Regeln für die Editieren-Seite jedes Datenbestandes
-4. [standard.css](/css/standard.css)
+4. [standard.css](css/standard.css)
 Alle CSS-Regeln zusammengefasst übersichtshalber

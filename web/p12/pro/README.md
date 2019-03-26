@@ -6,18 +6,11 @@ Stand: 29.10.2018 | Version: **1.1.1**
 ## Table of Contents
 Element | Abschnitt
 --------|----------
-*Übersicht* | [--> Klick mich <--](#overview)
 *Routing* | [--> Klick mich <--](#routing)
 *Python-Applikation (Ordner /app/)* | [--> Klick mich <--](#python-app)
 *JSON-Dateien (Ordner /data/)* | [--> Klick mich <--](#json-data)
 *Mako-Templates (Ordner /template/)* | [--> Klick mich <--](#template-files)
 *Statische HTML/CSS/JS (Ordner /content/)* | [--> Klick mich <--](#static-files)
-
----
-
-<a name="overview"></a>
-## Übersicht
-...
 
 ---
 
@@ -70,22 +63,22 @@ Die Datei beinhaltet ausserdem die Server-Konfiguration für die jeweilige Aufga
 
 <a name="python-app"></a>
 ## Python-Applikation
-Für mehr Informationen siehe [README.md](/app/README.md)
+Für mehr Informationen siehe [README.md](app/README.md)
 
 ---
 
 <a name="json-data"></a>
 ## JSON-Dateien
-Für mehr Informationen siehe [README.md](/data/README.md)
+Für mehr Informationen siehe [README.md](data/README.md)
 
 ---
 
 <a name="template-files"></a>
 ## Mako-Templates
-Für mehr Informationen siehe [README.md](/template/README.md)
+Für mehr Informationen siehe [README.md](template/README.md)
 
 ---
 
 <a name="static-files"></a>
 ## Statische HTML/CSS/JS
-Für mehr Informationen siehe [README.md](/content/README.md)
+Für mehr Informationen siehe [README.md](content/README.md)

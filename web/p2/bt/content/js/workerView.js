@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO: Wenn alles getan ist, alles noch zusammenfassen!
-
 // Übersicht für QSM (Knöpfe: Bearbeiten + Hinzufügen) BZW Keine!
 export class QSMView {
     constructor () {
@@ -16,24 +14,17 @@ export class QSMView {
         console.log("[QSMView] render -> Request /qsmitarbeiter");
         requester.request(path, function (response) {
             let data = JSON.parse(response);
-
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[QSMView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[QSMView] render -> html_element=null");
             html_element.innerHTML = markup;
 
-        }.bind(this), function (response) {
-            alert("[QSMView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[QSMView] render->failed"); });
     }
 }
 
@@ -51,24 +42,17 @@ export class SWEView {
         console.log("[SWEView] render -> Request /swentwickler");
         requester.request(path, function (response) {
             let data = JSON.parse(response);
-
             let context = [];
             for (let fehler in data) {
-                if (data.hasOwnProperty(fehler)) {
-                    context.push(data[fehler]);
-                }
+                if (data.hasOwnProperty(fehler)) context.push(data[fehler]);
             }
 
             let markup = APPUTIL.templateManager.execute(this.template, context);
             let html_element = document.querySelector(this.name);
-            if (html_element == null) {
-                alert("[SWEView] render -> html_element=null")
-            }
+            if (html_element == null) alert("[SWEView] render -> html_element=null");
             html_element.innerHTML = markup;
 
-        }.bind(this), function (response) {
-            alert("[SWEView] render->failed");
-        });
+        }.bind(this), function (response) { alert("[SWEView] render->failed"); });
     }
 }
 
@@ -79,8 +63,7 @@ export class QSMEditView {
         this.template = "worker.edit-qsm.tpl";
     }
 
-    render () {
-    }
+    render () { }
 }
 
 // Bearbeitung-Seite für SWE
@@ -90,8 +73,7 @@ export class SWEEditView {
         this.template = "worker.edit-swe.tpl";
     }
 
-    render () {
-    }
+    render () { }
 }
 
 // Hinzufügen-Seite für QSM
@@ -101,8 +83,7 @@ export class QSMAddView {
         this.template = "worker.add-qsm.tpl";
     }
 
-    render () {
-    }
+    render () { }
 }
 
 // Hinzufügen-Seite für SWE
@@ -112,6 +93,5 @@ export class SWEAddView {
         this.template = "worker.add-swe.tpl";
     }
 
-    render () {
-    }
+    render () { }
 }

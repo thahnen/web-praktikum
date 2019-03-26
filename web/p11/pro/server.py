@@ -139,7 +139,7 @@ class WebServer(object):
             # Überprüfen, ob die kunden_id und alle mitarbeiter_ids überhaupt existieren!
             alle_kunden = self.application.database.read_json_into_dict("kundendaten.json")
             alle_mitarbeiter = self.application.database.read_json_into_dict("mitarbeiterdaten.json")
-            
+
             gefunden_k :bool = False
             for elem in alle_kunden["Elements"]:
                 if alle_kunden["Elements"][elem]["unique_id"] == data["kunden_id"]:
@@ -236,7 +236,7 @@ class WebServer(object):
             # Überprüfen, ob die kunden_id und alle mitarbeiter_ids überhaupt existieren!
             alle_kunden = self.application.database.read_json_into_dict("kundendaten.json")
             alle_mitarbeiter = self.application.database.read_json_into_dict("mitarbeiterdaten.json")
-            
+
             gefunden_k :bool = False
             for elem in alle_kunden["Elements"]:
                 if alle_kunden["Elements"][elem]["unique_id"] == data["kunden_id"]:
@@ -245,7 +245,7 @@ class WebServer(object):
 
             if not gefunden_k:
                 return self.application.view.render_dynamic_page("funktion-erfolgreich", {"erfolgreich":False})
-            
+
             for mid in data["mitarbeiter_ids"]:
                 gefunden_m = False
                 for elem in alle_mitarbeiter["Elements"]:

@@ -20,9 +20,7 @@
  *  => alle Input-Felder mit gleicher Klasse "un-disablen"
 */
 
-import {
-    hide_failure, set_title_headline, input_event_handler
-} from "./lib.js";
+import { hide_failure, set_title_headline, input_event_handler } from "./lib.js";
 
 (function () {
     let offen = false;
@@ -35,10 +33,8 @@ import {
         // 1.2) Titel und Header richtig setzen
         let link = set_title_headline();
 
-
         // 2) Input-Event-Listener hinzufügen
         input_event_handler(div_failure, offen, false);
-
 
         // 4) "Hinzufuegen" gedrückt
         document.getElementById("btn--new").addEventListener("click", function () {
